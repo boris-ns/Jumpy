@@ -5,25 +5,43 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
+import handlers.BlockHandler;
+import handlers.CollisionHandler;
 import graphics.Window;
+import input.KeyInput;
+import objects.Player;
 
 public class Game extends Canvas implements Runnable
 {
-	public static final int width = 600, height = 550;
+	public static final int width = 640, height = 480;
 	
 	private static final long serialVersionUID = 1L;
 	private boolean running = false;
 	private Thread thread;
+	private KeyInput keyInput;
+	private Player player;
+	private BlockHandler blockHandler;
+	private CollisionHandler collisionHandler;
 
 	
 	public Game()
 	{
 		new Window(width, height, "Jumpy", this);
+		
+		player = new Player(20, 20);
+		keyInput = new KeyInput(player);
+		this.addKeyListener(keyInput);
+		blockHandler = new BlockHandler();
+		collisionHandler = new CollisionHandler(player, blockHandler);
 	}
 	
 	public void tick()
 	{
+		keyInput.tick();
 		
+		player.tick();
+		
+		collisionHandler.tick();
 	}
 	
 	public void render()
@@ -40,6 +58,9 @@ public class Game extends Canvas implements Runnable
 		
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, width, height);
+		
+		player.render(g);
+		blockHandler.render(g);
 		
 		g.dispose();
 		bs.show();
