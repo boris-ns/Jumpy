@@ -2,6 +2,7 @@ package objects;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 public class Player 
@@ -42,6 +43,10 @@ public class Player
 	{
 		g.setColor(Color.blue);
 		g.fillRect((int)x, (int)y, width, height);
+		
+//		g.setColor(Color.yellow);
+//		Graphics2D g2d = (Graphics2D) g;
+//		g2d.fill(getBoundsBottom());
 	}
 	
 	public Rectangle getBounds()
@@ -49,8 +54,14 @@ public class Player
 		return new Rectangle((int)x, (int)y, width, height);
 	}
 	
+	public Rectangle getBoundsBottom()
+	{
+		return new Rectangle((int)x, (int)y + height - 5, width, 5);
+	}
+	
 	public float getVelX() { return velX;}
 	public float getVelY() { return velY;}
+	public float getY() { return y;}
 	public boolean getFalling() { return falling;}
 	public boolean getJumping() { return jumping;}
 	public int getHeight() { return height;}

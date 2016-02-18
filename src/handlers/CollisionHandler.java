@@ -17,7 +17,7 @@ public class CollisionHandler
 	{
 		for(int i = 0; i < bl.blocks.size(); i++)
 		{
-			if(p.getBounds().intersects(bl.blocks.get(i).getBounds()))
+			if(p.getBoundsBottom().intersects(bl.blocks.get(i).getBoundsForJump()))
 			{
 				p.setY(bl.blocks.get(i).getY() - p.getHeight());
 				p.setVelY(0);
@@ -26,6 +26,7 @@ public class CollisionHandler
 			}
 			else
 				p.setFalling(true);
+				
 		}
 	}
 }

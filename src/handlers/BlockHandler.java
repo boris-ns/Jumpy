@@ -12,7 +12,7 @@ public class BlockHandler
 	
 	public BlockHandler()
 	{
-		levelDesign();
+		//levelDesign();
 	}
 	
 	public void render(Graphics g)
@@ -33,9 +33,9 @@ public class BlockHandler
 		blocks.remove(i);
 	}
 	
-	public void levelDesign()
-	{
-		for(int i = 0; i < Game.width; i += Block.size)
-			blocks.add(new Block(i, 420));
-	}
+//	public void levelDesign()
+//	{
+//		for(int i = 0; i < Game.width; i += Block.size)
+//			blocks.add(new Block(i, 420));
+//	}
 }

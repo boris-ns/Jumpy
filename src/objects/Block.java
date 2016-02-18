@@ -26,5 +26,10 @@ public class Block
 		return new Rectangle((int)x, (int)y, size, size);
 	}
 	
+	public Rectangle getBoundsForJump()
+	{
+		return new Rectangle((int)x, (int)y, size, 5);
+	}
+	
 	public float getY() { return y;}
 }
