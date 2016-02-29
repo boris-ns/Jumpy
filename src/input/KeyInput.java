@@ -30,7 +30,7 @@ public class KeyInput extends KeyAdapter
 		if(jump && !player.getJumping())
 		{
 			player.setJumping(true);
-			player.setVelY(-11);
+			player.setVelY(-15);
 		}
 		
 		if(moveLeft) 

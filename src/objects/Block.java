@@ -6,8 +6,8 @@ import java.awt.Rectangle;
 
 public class Block 
 {
-	private float x, y;
 	public static final int size = 32;
+	private float x, y;
 	
 	public Block(float x, float y)
 	{
@@ -26,10 +26,6 @@ public class Block
 		return new Rectangle((int)x, (int)y, size, size);
 	}
 	
-	public Rectangle getBoundsForJump()
-	{
-		return new Rectangle((int)x, (int)y, size, 5);
-	}
-	
+	public float getX() { return x;}
 	public float getY() { return y;}
 }

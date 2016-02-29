@@ -18,7 +18,7 @@ import objects.Player;
 
 public class Game extends Canvas implements Runnable
 {
-	public static final int width = 650, height = 480;
+	public static final int width = 646, height = 480;
 	
 	private static final long serialVersionUID = 1L;
 	private boolean running = false;
@@ -35,7 +35,7 @@ public class Game extends Canvas implements Runnable
 	{
 		new Window(width, height, "Jumpy", this);
 
-		player = new Player(width / 2, 1200);
+		player = new Player(70, 1250);
 		camera = new Camera(0, 0);
 		blockHandler = new BlockHandler();		
 		keyInput = new KeyInput(player);

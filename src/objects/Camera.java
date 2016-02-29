@@ -20,5 +20,10 @@ public class Camera
 	public void tick(Player player)
 	{
 		y = -player.getY() + Game.width / 3;
+		
+		if(player.getX() > Game.width - Block.size)
+			x = -Game.width + Block.size + 7;
+		else if(player.getX() < Game.width - Block.size)
+			x = 0;
 	}
 }
