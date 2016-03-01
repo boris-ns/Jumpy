@@ -1,18 +1,23 @@
 package handlers;
 
 import objects.Block;
+import objects.Coin;
 import objects.Player;
 
 public class CollisionHandler 
 {
 	private Player p;
 	private BlockHandler bl;
-	private Block block;
+	private CoinsHandler cl;
 	
-	public CollisionHandler(Player p, BlockHandler bl)
+	private Block block;
+	private Coin coin;
+	
+	public CollisionHandler(Player p, BlockHandler bl, CoinsHandler cl)
 	{
 		this.p = p;
 		this.bl = bl;
+		this.cl = cl;
 	}
 	
 	public void tick()
@@ -39,6 +44,17 @@ public class CollisionHandler
 
 			if(p.getBoundsRight().intersects(block.getBounds()))
 				p.setX(block.getX() - p.getWidth());
+		}
+		
+		for(int i = 0; i < cl.coins.size(); i++)
+		{
+			coin = cl.coins.get(i);
+			
+			if(p.getBounds().intersects(coin.getBounds()))
+			{
+				p.setCoinsCollected(p.getCoinsCollected() + 1);
+				coin.setIsCollected(true);
+			}
 		}
 	}
 }

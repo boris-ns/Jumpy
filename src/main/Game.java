@@ -10,15 +10,18 @@ import java.awt.image.BufferedImage;
 import graphics.BufferedImageLoader;
 import graphics.Window;
 import handlers.BlockHandler;
+import handlers.CoinsHandler;
 import handlers.CollisionHandler;
 import input.KeyInput;
 import objects.Block;
 import objects.Camera;
+import objects.Coin;
 import objects.Player;
 
 public class Game extends Canvas implements Runnable
 {
 	public static final int width = 646, height = 480;
+	public static final int tileSize = 32;
 	
 	private static final long serialVersionUID = 1L;
 	private boolean running = false;
@@ -26,6 +29,7 @@ public class Game extends Canvas implements Runnable
 	private KeyInput keyInput;
 	private Player player;
 	private BlockHandler blockHandler;
+	private CoinsHandler coinsHandler;
 	private CollisionHandler collisionHandler;
 	private BufferedImage level1 = null;
 	private Camera camera;
@@ -37,10 +41,11 @@ public class Game extends Canvas implements Runnable
 
 		player = new Player(70, 1250);
 		camera = new Camera(0, 0);
-		blockHandler = new BlockHandler();		
+		blockHandler = new BlockHandler();
+		coinsHandler = new CoinsHandler();
 		keyInput = new KeyInput(player);
 		this.addKeyListener(keyInput);
-		collisionHandler = new CollisionHandler(player, blockHandler);
+		collisionHandler = new CollisionHandler(player, blockHandler, coinsHandler);
 	}
 	
 	public void init()
@@ -57,6 +62,7 @@ public class Game extends Canvas implements Runnable
 		player.tick();
 		camera.tick(player);
 		
+		coinsHandler.tick();
 		collisionHandler.tick();
 	}
 	
@@ -80,6 +86,7 @@ public class Game extends Canvas implements Runnable
 		
 		player.render(g);
 		blockHandler.render(g);
+		coinsHandler.render(g);
 		
 		g2d.translate(-camera.getX(), -camera.getY());
 		
@@ -106,7 +113,10 @@ public class Game extends Canvas implements Runnable
 				blue = (pixel) & 0xff;
 				
 				if(red == 255 && green == 255 && blue == 255) 
-					blockHandler.blocks.add(new Block(i * 32, j * 32));
+					blockHandler.blocks.add(new Block(i * tileSize, j * tileSize));
+				
+				if(red == 255 && green == 255 && blue == 0)
+					coinsHandler.coins.add(new Coin(i * tileSize, j * tileSize));
 			}
 		}
 	}
@@ -161,7 +171,7 @@ public class Game extends Canvas implements Runnable
 					
 			if(System.currentTimeMillis() - timer > 1000){
 				timer += 1000;
-				System.out.println("FPS: " + frames + " UPDATES: " + updates);
+				System.out.println("FPS: " + frames + " TICKS: " + updates);
 				frames = 0;
 				updates = 0;
 			}
