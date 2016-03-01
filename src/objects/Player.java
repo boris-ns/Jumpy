@@ -12,7 +12,7 @@ public class Player
 	private final int width, height;
 	private boolean falling , jumping;
 	private float gravity = 1f;
-	private boolean isColliding;
+	private int coinsCollected;
 	
 	public Player(float x, float y)
 	{
@@ -21,6 +21,8 @@ public class Player
 		
 		width = 24;
 		height = 48;
+		
+		coinsCollected = 0;
 		
 		falling = true;
 		jumping = false;
@@ -38,7 +40,8 @@ public class Player
 			if(velY > MAX_VELY)
 				velY = MAX_VELY;
 		}
-
+		
+		System.out.println("COINS " + coinsCollected);
 	}
 	
 	public void render(Graphics g)
@@ -80,20 +83,83 @@ public class Player
 	}
 	
 	
-	public float getVelX() { return velX;}
-	public float getVelY() { return velY;}
-	public float getX() { return x;}
-	public float getY() { return y;}
-	public boolean getFalling() { return falling;}
-	public boolean getJumping() { return jumping;}
-	public int getHeight() { return height;}
-	public int getWidth() { return width;}
+	public float getX() 
+	{
+		return x;
+	}
 	
-	public void setVelX(float velX) { this.velX = velX;}
-	public void setVelY(float velY) { this.velY = velY;}
-	public void setFalling(boolean falling) { this.falling = falling;}
-	public void setJumping(boolean jumping) { this.jumping = jumping;}
-	public void setY(float y) { this.y = y;}
-	public void setX(float x) { this.x = x;}
-	public void setIsColliding(boolean isColliding) { this.isColliding = isColliding;}
+	public float getY() 
+	{
+		return y;
+	}
+	
+	public float getVelX()
+	{
+		return velX;
+	}
+	
+	public float getVelY() 
+	{
+		return velY;
+	}
+	
+	public boolean getFalling() 
+	{
+		return falling;
+	}
+	
+	public boolean getJumping()
+	{
+		return jumping;
+	}
+	
+	public int getHeight() 
+	{
+		return height;
+	}
+	
+	public int getWidth() 
+	{
+		return width;
+	}
+	
+	public int getCoinsCollected() 
+	{
+		return coinsCollected;
+	}
+	
+	public void setX(float x)
+	{ 
+		this.x = x;
+	}
+	
+	public void setY(float y) 
+	{ 
+		this.y = y;
+	}
+	
+	public void setVelX(float velX) 
+	{ 
+		this.velX = velX;
+	}
+	
+	public void setVelY(float velY) 
+	{
+		this.velY = velY;
+	}
+	
+	public void setFalling(boolean falling)
+	{
+		this.falling = falling;
+	}
+	
+	public void setJumping(boolean jumping) 
+	{
+		this.jumping = jumping;
+	}
+
+	public void setCoinsCollected(int coinsCollected) 
+	{
+		this.coinsCollected = coinsCollected;
+	}
 }
