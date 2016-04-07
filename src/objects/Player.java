@@ -7,7 +7,7 @@ import java.awt.Rectangle;
 
 public class Player 
 {
-	private float x, y, velX, velY;
+	private float x, y, velX, velY, lastVelX;
 	private final float MAX_VELY = 10;
 	private final int width, height;
 	private boolean falling , jumping;
@@ -18,6 +18,8 @@ public class Player
 	{
 		this.x = x;
 		this.y = y;
+		
+		lastVelX = 0;
 		
 		width = 24;
 		height = 48;
@@ -41,7 +43,8 @@ public class Player
 				velY = MAX_VELY;
 		}
 		
-		System.out.println("COINS " + coinsCollected);
+		if(velX != 0)
+			lastVelX = velX;
 	}
 	
 	public void render(Graphics g)
@@ -101,6 +104,11 @@ public class Player
 	public float getVelY() 
 	{
 		return velY;
+	}
+	
+	public float getLastVelX()
+	{
+		return lastVelX;
 	}
 	
 	public boolean getFalling() 

@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import graphics.BufferedImageLoader;
 import graphics.Window;
 import handlers.BlockHandler;
+import handlers.BulletHandler;
 import handlers.CoinsHandler;
 import handlers.CollisionHandler;
 import input.KeyInput;
@@ -31,6 +32,7 @@ public class Game extends Canvas implements Runnable
 	private BlockHandler blockHandler;
 	private CoinsHandler coinsHandler;
 	private CollisionHandler collisionHandler;
+	private BulletHandler bHandler;
 	private BufferedImage level1 = null;
 	private Camera camera;
 
@@ -43,7 +45,8 @@ public class Game extends Canvas implements Runnable
 		camera = new Camera(0, 0);
 		blockHandler = new BlockHandler();
 		coinsHandler = new CoinsHandler();
-		keyInput = new KeyInput(player);
+		bHandler = new BulletHandler();
+		keyInput = new KeyInput(player, bHandler);
 		this.addKeyListener(keyInput);
 		collisionHandler = new CollisionHandler(player, blockHandler, coinsHandler);
 	}
@@ -64,6 +67,7 @@ public class Game extends Canvas implements Runnable
 		
 		coinsHandler.tick();
 		collisionHandler.tick();
+		bHandler.tick();
 	}
 	
 	public void render()
@@ -87,6 +91,7 @@ public class Game extends Canvas implements Runnable
 		player.render(g);
 		blockHandler.render(g);
 		coinsHandler.render(g);
+		bHandler.render(g);
 		
 		g2d.translate(-camera.getX(), -camera.getY());
 		
