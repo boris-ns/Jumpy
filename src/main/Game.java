@@ -8,6 +8,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 import graphics.BufferedImageLoader;
+import graphics.Textures;
 import graphics.Window;
 import handlers.BlockHandler;
 import handlers.BulletHandler;
@@ -33,14 +34,15 @@ public class Game extends Canvas implements Runnable
 	private CoinsHandler coinsHandler;
 	private CollisionHandler collisionHandler;
 	private BulletHandler bHandler;
-	private BufferedImage level1 = null;
+	private BufferedImage level1 = null, backgroundTile;
 	private Camera camera;
+	private Textures textures;
 
 	
 	public Game()
 	{
 		new Window(width, height, "Jumpy", this);
-
+		
 		player = new Player(70, 1250);
 		camera = new Camera(0, 0);
 		blockHandler = new BlockHandler();
@@ -48,13 +50,16 @@ public class Game extends Canvas implements Runnable
 		bHandler = new BulletHandler();
 		keyInput = new KeyInput(player, bHandler);
 		this.addKeyListener(keyInput);
-		collisionHandler = new CollisionHandler(player, blockHandler, coinsHandler);
+		collisionHandler = new CollisionHandler(player, blockHandler, coinsHandler, bHandler);		
 	}
 	
 	public void init()
 	{
 		BufferedImageLoader loader = new BufferedImageLoader();
 		level1 = loader.loadImage("/level1.png");
+		textures = new Textures();	
+		
+		backgroundTile = textures.blockTiles[1];
 		loadImageLevel(level1);
 	}
 	
@@ -85,6 +90,10 @@ public class Game extends Canvas implements Runnable
 		
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, width, height);
+		
+		for(int i = 0; i < width; i += 32)
+			for(int j = 0; j < height; j += 32)
+				g.drawImage(backgroundTile, i, j, null);
 		
 		g2d.translate(camera.getX(), camera.getY());
 		
@@ -118,7 +127,7 @@ public class Game extends Canvas implements Runnable
 				blue = (pixel) & 0xff;
 				
 				if(red == 255 && green == 255 && blue == 255) 
-					blockHandler.blocks.add(new Block(i * tileSize, j * tileSize));
+					blockHandler.blocks.add(new Block(i * tileSize, j * tileSize, textures));
 				
 				if(red == 255 && green == 255 && blue == 0)
 					coinsHandler.coins.add(new Coin(i * tileSize, j * tileSize));

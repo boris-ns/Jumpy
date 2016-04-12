@@ -1,9 +1,9 @@
 package objects;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
+
+import graphics.Textures;
 
 public class Player 
 {
@@ -13,6 +13,7 @@ public class Player
 	private boolean falling , jumping;
 	private float gravity = 1f;
 	private int coinsCollected;
+	private Textures t = new Textures();
 	
 	public Player(float x, float y)
 	{
@@ -49,8 +50,10 @@ public class Player
 	
 	public void render(Graphics g)
 	{
-		g.setColor(Color.blue);
-		g.fillRect((int)x, (int)y, width, height);
+//		g.setColor(Color.blue);
+//		g.fillRect((int)x, (int)y, width, height);
+		
+		g.drawImage(t.playerTiles[0], (int)x, (int)y, null);
 		
 //		g.setColor(Color.yellow);
 //		Graphics2D g2d = (Graphics2D) g;

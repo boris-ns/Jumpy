@@ -9,15 +9,17 @@ public class CollisionHandler
 	private Player p;
 	private BlockHandler bl;
 	private CoinsHandler cl;
+	private BulletHandler bhl;
 	
 	private Block block;
 	private Coin coin;
 	
-	public CollisionHandler(Player p, BlockHandler bl, CoinsHandler cl)
+	public CollisionHandler(Player p, BlockHandler bl, CoinsHandler cl, BulletHandler bhl)
 	{
 		this.p = p;
 		this.bl = bl;
 		this.cl = cl;
+		this.bhl = bhl;
 	}
 	
 	public void tick()
@@ -44,6 +46,12 @@ public class CollisionHandler
 
 			if(p.getBoundsRight().intersects(block.getBounds()))
 				p.setX(block.getX() - p.getWidth());
+			
+			for(int j = 0; j < bhl.bullets.size(); j++)
+			{
+				if(block.getBounds().intersects(bhl.bullets.get(j).getBounds()))
+					bhl.bullets.remove(j);
+			}
 		}
 		
 		for(int i = 0; i < cl.coins.size(); i++)
