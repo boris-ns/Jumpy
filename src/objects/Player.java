@@ -13,6 +13,7 @@ public class Player
 	private boolean falling , jumping;
 	private float gravity = 1f;
 	private int coinsCollected;
+	private int health;
 	private Textures t = new Textures();
 	
 	public Player(float x, float y)
@@ -26,6 +27,7 @@ public class Player
 		height = 48;
 		
 		coinsCollected = 0;
+		health = 100;
 		
 		falling = true;
 		jumping = false;
@@ -139,6 +141,11 @@ public class Player
 		return coinsCollected;
 	}
 	
+	public int getHealth()
+	{
+		return health;
+	}
+	
 	public void setX(float x)
 	{ 
 		this.x = x;
@@ -172,5 +179,10 @@ public class Player
 	public void setCoinsCollected(int coinsCollected) 
 	{
 		this.coinsCollected = coinsCollected;
+	}
+	
+	public void setHealth(int health)
+	{
+		this.health = health;
 	}
 }

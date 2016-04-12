@@ -8,6 +8,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 import graphics.BufferedImageLoader;
+import graphics.Hud;
 import graphics.Textures;
 import graphics.Window;
 import handlers.BlockHandler;
@@ -37,20 +38,14 @@ public class Game extends Canvas implements Runnable
 	private BufferedImage level1 = null, backgroundTile;
 	private Camera camera;
 	private Textures textures;
+	private Hud hud;
 
 	
 	public Game()
 	{
 		new Window(width, height, "Jumpy", this);
 		
-		player = new Player(70, 1250);
-		camera = new Camera(0, 0);
-		blockHandler = new BlockHandler();
-		coinsHandler = new CoinsHandler();
-		bHandler = new BulletHandler();
-		keyInput = new KeyInput(player, bHandler);
-		this.addKeyListener(keyInput);
-		collisionHandler = new CollisionHandler(player, blockHandler, coinsHandler, bHandler);		
+				
 	}
 	
 	public void init()
@@ -58,6 +53,16 @@ public class Game extends Canvas implements Runnable
 		BufferedImageLoader loader = new BufferedImageLoader();
 		level1 = loader.loadImage("/level1.png");
 		textures = new Textures();	
+		
+		blockHandler = new BlockHandler();
+		player = new Player(70, 1250);
+		camera = new Camera(0, 0);		
+		coinsHandler = new CoinsHandler();
+		bHandler = new BulletHandler();
+		keyInput = new KeyInput(player, bHandler);
+		this.addKeyListener(keyInput);
+		collisionHandler = new CollisionHandler(player, blockHandler, coinsHandler, bHandler);
+		hud = new Hud();
 		
 		backgroundTile = textures.blockTiles[1];
 		loadImageLevel(level1);
@@ -70,6 +75,7 @@ public class Game extends Canvas implements Runnable
 		player.tick();
 		camera.tick(player);
 		
+		hud.tick(player.getCoinsCollected(), player.getHealth());
 		coinsHandler.tick();
 		collisionHandler.tick();
 		bHandler.tick();
@@ -104,6 +110,8 @@ public class Game extends Canvas implements Runnable
 		
 		g2d.translate(-camera.getX(), -camera.getY());
 		
+		hud.render(g);
+		
 		g.dispose();
 		bs.show();
 	}
@@ -130,7 +138,7 @@ public class Game extends Canvas implements Runnable
 					blockHandler.blocks.add(new Block(i * tileSize, j * tileSize, textures));
 				
 				if(red == 255 && green == 255 && blue == 0)
-					coinsHandler.coins.add(new Coin(i * tileSize, j * tileSize));
+					coinsHandler.coins.add(new Coin(i * tileSize, j * tileSize, textures));
 			}
 		}
 	}
