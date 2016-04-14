@@ -3,6 +3,7 @@ package objects;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import graphics.Animation;
 import graphics.Textures;
 
 public class Player 
@@ -15,13 +16,14 @@ public class Player
 	private int coinsCollected;
 	private int health;
 	private Textures t = new Textures();
+	private Animation walkLeftAnim, walkRightAnim;
 	
 	public Player(float x, float y)
 	{
 		this.x = x;
 		this.y = y;
 		
-		lastVelX = 0;
+		lastVelX = 1;
 		
 		width = 24;
 		height = 48;
@@ -31,6 +33,11 @@ public class Player
 		
 		falling = true;
 		jumping = false;
+		
+		walkLeftAnim = new Animation(3, t.playerTiles[2], t.playerTiles[3], t.playerTiles[4],
+				t.playerTiles[5], t.playerTiles[6], t.playerTiles[7], t.playerTiles[8], t.playerTiles[9]);
+		walkRightAnim = new Animation(3, t.playerTiles[10], t.playerTiles[11], t.playerTiles[12],
+				t.playerTiles[13], t.playerTiles[14], t.playerTiles[15], t.playerTiles[16], t.playerTiles[17]);
 	}
 	
 	public void tick()
@@ -48,14 +55,22 @@ public class Player
 		
 		if(velX != 0)
 			lastVelX = velX;
+
+		walkLeftAnim.runAnimation();
+		walkRightAnim.runAnimation();
 	}
 	
 	public void render(Graphics g)
-	{
-//		g.setColor(Color.blue);
-//		g.fillRect((int)x, (int)y, width, height);
-		
-		g.drawImage(t.playerTiles[0], (int)x, (int)y, null);
+	{		
+		if(velX == 0 && lastVelX > 0)
+			g.drawImage(t.playerTiles[0], (int)x, (int)y, null);
+		else if(velX == 0 && lastVelX < 0)
+			g.drawImage(t.playerTiles[1], (int)x, (int)y, null);
+	
+		else if(velX > 0)
+			walkLeftAnim.drawAnimation(g, (int)x, (int)y);
+		else if(velX < 0)
+			walkRightAnim.drawAnimation(g, (int)x, (int)y);
 		
 //		g.setColor(Color.yellow);
 //		Graphics2D g2d = (Graphics2D) g;

@@ -10,16 +10,18 @@ public class CollisionHandler
 	private BlockHandler bl;
 	private CoinsHandler cl;
 	private BulletHandler bhl;
+	private SpikeHandler sh;
 	
 	private Block block;
 	private Coin coin;
 	
-	public CollisionHandler(Player p, BlockHandler bl, CoinsHandler cl, BulletHandler bhl)
+	public CollisionHandler(Player p, BlockHandler bl, CoinsHandler cl, BulletHandler bhl, SpikeHandler sh)
 	{
 		this.p = p;
 		this.bl = bl;
 		this.cl = cl;
 		this.bhl = bhl;
+		this.sh = sh;
 	}
 	
 	public void tick()
@@ -62,6 +64,14 @@ public class CollisionHandler
 			{
 				p.setCoinsCollected(p.getCoinsCollected() + 1);
 				coin.setIsCollected(true);
+			}
+		}
+		
+		for(int i = 0; i < sh.spikes.size(); i++)
+		{
+			if(sh.spikes.get(i).getBounds().intersects(p.getBounds()))
+			{
+				p.setHealth(p.getHealth() - sh.spikes.get(i).getDamage());
 			}
 		}
 	}

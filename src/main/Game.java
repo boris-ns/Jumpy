@@ -15,11 +15,13 @@ import handlers.BlockHandler;
 import handlers.BulletHandler;
 import handlers.CoinsHandler;
 import handlers.CollisionHandler;
+import handlers.SpikeHandler;
 import input.KeyInput;
 import objects.Block;
 import objects.Camera;
 import objects.Coin;
 import objects.Player;
+import objects.Spike;
 
 public class Game extends Canvas implements Runnable
 {
@@ -35,6 +37,7 @@ public class Game extends Canvas implements Runnable
 	private CoinsHandler coinsHandler;
 	private CollisionHandler collisionHandler;
 	private BulletHandler bHandler;
+	private SpikeHandler spikeHandler;
 	private BufferedImage level1 = null, backgroundTile;
 	private Camera camera;
 	private Textures textures;
@@ -59,9 +62,10 @@ public class Game extends Canvas implements Runnable
 		camera = new Camera(0, 0);		
 		coinsHandler = new CoinsHandler();
 		bHandler = new BulletHandler();
+		spikeHandler = new SpikeHandler();
 		keyInput = new KeyInput(player, bHandler);
 		this.addKeyListener(keyInput);
-		collisionHandler = new CollisionHandler(player, blockHandler, coinsHandler, bHandler);
+		collisionHandler = new CollisionHandler(player, blockHandler, coinsHandler, bHandler, spikeHandler);
 		hud = new Hud();
 		
 		backgroundTile = textures.blockTiles[1];
@@ -107,6 +111,7 @@ public class Game extends Canvas implements Runnable
 		blockHandler.render(g);
 		coinsHandler.render(g);
 		bHandler.render(g);
+		spikeHandler.render(g);
 		
 		g2d.translate(-camera.getX(), -camera.getY());
 		
@@ -139,6 +144,9 @@ public class Game extends Canvas implements Runnable
 				
 				if(red == 255 && green == 255 && blue == 0)
 					coinsHandler.coins.add(new Coin(i * tileSize, j * tileSize, textures));
+			
+				if(red == 255 && green == 0 && blue == 0)
+					spikeHandler.spikes.add(new Spike(i * tileSize, j * tileSize, textures));
 			}
 		}
 	}

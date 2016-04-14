@@ -13,6 +13,8 @@ public class CoinsHandler
 	{
 		for(int i = 0; i < coins.size(); i++)
 		{
+			coins.get(i).tick();
+			
 			if(coins.get(i).getIsCollected())
 				coins.remove(i);
 		}
