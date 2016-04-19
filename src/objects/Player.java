@@ -14,7 +14,7 @@ public class Player
 	private boolean falling , jumping;
 	private float gravity = 1f;
 	private int coinsCollected;
-	private int health;
+	private int health, damage;
 	private Textures t = new Textures();
 	private Animation walkLeftAnim, walkRightAnim;
 	
@@ -30,6 +30,7 @@ public class Player
 		
 		coinsCollected = 0;
 		health = 100;
+		damage = 50;
 		
 		falling = true;
 		jumping = false;
@@ -159,6 +160,11 @@ public class Player
 	public int getHealth()
 	{
 		return health;
+	}
+	
+	public int getDamage()
+	{
+		return damage;
 	}
 	
 	public void setX(float x)
