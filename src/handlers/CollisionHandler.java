@@ -11,17 +11,19 @@ public class CollisionHandler
 	private CoinsHandler cl;
 	private BulletHandler bhl;
 	private SpikeHandler sh;
+	private EnemiesHandler eh;
 	
 	private Block block;
 	private Coin coin;
 	
-	public CollisionHandler(Player p, BlockHandler bl, CoinsHandler cl, BulletHandler bhl, SpikeHandler sh)
+	public CollisionHandler(Player p, BlockHandler bl, CoinsHandler cl, BulletHandler bhl, SpikeHandler sh, EnemiesHandler eh)
 	{
 		this.p = p;
 		this.bl = bl;
 		this.cl = cl;
 		this.bhl = bhl;
 		this.sh = sh;
+		this.eh = eh;
 	}
 	
 	public void tick()
@@ -33,7 +35,7 @@ public class CollisionHandler
 			if(p.getBoundsTop().intersects(block.getBounds()))
 				p.setY(block.getY() + Block.size);
 			
-			if(p.getBoundsBottom().intersects(bl.blocks.get(i).getBounds()))
+			if(p.getBoundsBottom().intersects(block.getBounds()))
 			{
 				p.setVelY(0);
 				p.setY(block.getY() - p.getHeight());
@@ -54,6 +56,14 @@ public class CollisionHandler
 				if(block.getBounds().intersects(bhl.bullets.get(j).getBounds()))
 					bhl.bullets.remove(j);
 			}
+			
+			for(int j = 0; j < eh.enemies.size(); j++)
+			{	
+				if(eh.enemies.get(j).getBoundsRight().intersects(block.getBounds()))
+					eh.enemies.get(j).setVelX(eh.enemies.get(j).getVelX() * (-1));
+				else if(eh.enemies.get(j).getBoundsLeft().intersects(block.getBounds()))
+					eh.enemies.get(j).setVelX(eh.enemies.get(j).getVelX() * (-1));
+			}			
 		}
 		
 		for(int i = 0; i < cl.coins.size(); i++)
@@ -72,6 +82,25 @@ public class CollisionHandler
 			if(sh.spikes.get(i).getBounds().intersects(p.getBounds()))
 			{
 				p.setHealth(p.getHealth() - sh.spikes.get(i).getDamage());
+			}
+		}
+		
+		for(int i = 0; i < eh.enemies.size(); i++)
+		{
+			if(eh.enemies.get(i).getBounds().intersects(p.getBounds()))
+			{
+				p.setHealth(p.getHealth() - eh.enemies.get(i).getDamage());
+				p.setJumping(true);
+				p.setVelY(-15);
+			}
+			
+			for(int j = 0; j < bhl.bullets.size(); j++)
+			{
+				if(eh.enemies.get(i).getBounds().intersects(bhl.bullets.get(j).getBounds()))
+				{
+					eh.enemies.get(i).setHealth(eh.enemies.get(i).getHealth() - p.getDamage());
+					bhl.bullets.remove(j);
+				}
 			}
 		}
 	}
