@@ -10,6 +10,7 @@ public class Textures
 	public BufferedImage[] playerTiles = new BufferedImage[18];
 	public BufferedImage[] blockTiles = new BufferedImage[2];
 	public BufferedImage[] coinTiles = new BufferedImage[6];
+	public BufferedImage[] enemyTiles = new BufferedImage[4];
 	public BufferedImage spikes = null;
 	
 	
@@ -39,6 +40,11 @@ public class Textures
 		coinTiles[3] = blockSheet.grabImage(4, 2, 32, 32);
 		coinTiles[4] = blockSheet.grabImage(5, 2, 32, 32);
 		coinTiles[5] = blockSheet.grabImage(6, 2, 32, 32);
+		
+		enemyTiles[0] = blockSheet.grabImage(1, 4, 32, 32); // velX < 0
+		enemyTiles[1] = blockSheet.grabImage(2, 4, 32, 32);	// velX < 0
+		enemyTiles[2] = blockSheet.grabImage(3, 4, 32, 32); // velX > 0
+		enemyTiles[3] = blockSheet.grabImage(4, 4, 32, 32); // velX > 0
 		
 		playerTiles[0] = playerSheet.grabImage(1, 1, 24, 48); // Steady velX > 0
 		playerTiles[1] = playerSheet.grabImage(2, 1, 24, 48); // Steady velX < 0

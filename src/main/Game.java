@@ -15,11 +15,13 @@ import handlers.BlockHandler;
 import handlers.BulletHandler;
 import handlers.CoinsHandler;
 import handlers.CollisionHandler;
+import handlers.EnemiesHandler;
 import handlers.SpikeHandler;
 import input.KeyInput;
 import objects.Block;
 import objects.Camera;
 import objects.Coin;
+import objects.Enemy;
 import objects.Player;
 import objects.Spike;
 
@@ -38,6 +40,7 @@ public class Game extends Canvas implements Runnable
 	private CollisionHandler collisionHandler;
 	private BulletHandler bHandler;
 	private SpikeHandler spikeHandler;
+	private EnemiesHandler enemiesHandler;
 	private BufferedImage level1 = null, backgroundTile;
 	private Camera camera;
 	private Textures textures;
@@ -63,9 +66,10 @@ public class Game extends Canvas implements Runnable
 		coinsHandler = new CoinsHandler();
 		bHandler = new BulletHandler();
 		spikeHandler = new SpikeHandler();
+		enemiesHandler = new EnemiesHandler();
 		keyInput = new KeyInput(player, bHandler);
 		this.addKeyListener(keyInput);
-		collisionHandler = new CollisionHandler(player, blockHandler, coinsHandler, bHandler, spikeHandler);
+		collisionHandler = new CollisionHandler(player, blockHandler, coinsHandler, bHandler, spikeHandler, enemiesHandler);
 		hud = new Hud();
 		
 		backgroundTile = textures.blockTiles[1];
@@ -83,6 +87,7 @@ public class Game extends Canvas implements Runnable
 		coinsHandler.tick();
 		collisionHandler.tick();
 		bHandler.tick();
+		enemiesHandler.tick();
 	}
 	
 	public void render()
@@ -112,6 +117,7 @@ public class Game extends Canvas implements Runnable
 		coinsHandler.render(g);
 		bHandler.render(g);
 		spikeHandler.render(g);
+		enemiesHandler.render(g);
 		
 		g2d.translate(-camera.getX(), -camera.getY());
 		
@@ -147,6 +153,12 @@ public class Game extends Canvas implements Runnable
 			
 				if(red == 255 && green == 0 && blue == 0)
 					spikeHandler.spikes.add(new Spike(i * tileSize, j * tileSize, textures));
+			
+				if(red == 255 && green == 0 && blue == 255)
+					enemiesHandler.enemies.add(new Enemy(i * tileSize, j * tileSize, 1, textures));
+				
+				if(red == 255 && green == 200 && blue == 255)
+					enemiesHandler.enemies.add(new Enemy(i * tileSize, j * tileSize, 2, textures));
 			}
 		}
 	}
@@ -201,7 +213,7 @@ public class Game extends Canvas implements Runnable
 					
 			if(System.currentTimeMillis() - timer > 1000){
 				timer += 1000;
-				System.out.println("FPS: " + frames + " TICKS: " + updates);
+				//System.out.println("FPS: " + frames + " TICKS: " + updates);
 				frames = 0;
 				updates = 0;
 			}
