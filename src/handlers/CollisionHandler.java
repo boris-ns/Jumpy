@@ -3,6 +3,7 @@ package handlers;
 import objects.Block;
 import objects.Coin;
 import objects.Player;
+import objects.SmartWall;
 
 public class CollisionHandler 
 {
@@ -12,11 +13,12 @@ public class CollisionHandler
 	private BulletHandler bhl;
 	private SpikeHandler sh;
 	private EnemiesHandler eh;
+	private SmartWallHandler swh;
 	
 	private Block block;
 	private Coin coin;
 	
-	public CollisionHandler(Player p, BlockHandler bl, CoinsHandler cl, BulletHandler bhl, SpikeHandler sh, EnemiesHandler eh)
+	public CollisionHandler(Player p, BlockHandler bl, CoinsHandler cl, BulletHandler bhl, SpikeHandler sh, EnemiesHandler eh, SmartWallHandler swh)
 	{
 		this.p = p;
 		this.bl = bl;
@@ -24,6 +26,7 @@ public class CollisionHandler
 		this.bhl = bhl;
 		this.sh = sh;
 		this.eh = eh;
+		this.swh = swh;
 	}
 	
 	public void tick()
@@ -104,6 +107,44 @@ public class CollisionHandler
 					bhl.bullets.remove(j);
 				}
 			}
+		}
+		
+		for(int i = 0; i < swh.smartWalls.size(); i++)
+		{	
+			if(p.getBoundsRight().intersects(swh.smartWalls.get(i).getBounds()) && !swh.smartWalls.get(i).getVisible())
+			{
+				p.setX(swh.smartWalls.get(i).getX() + SmartWall.size);
+				swh.smartWalls.get(i).setVisible(true);
+				swh.smartWalls.get(i + 1).setVisible(true);
+			}
+			else if(p.getBoundsLeft().intersects(swh.smartWalls.get(i).getBounds()) && !swh.smartWalls.get(i).getVisible())
+			{
+				p.setX(swh.smartWalls.get(i).getX() - p.getWidth());
+				swh.smartWalls.get(i).setVisible(true);
+				swh.smartWalls.get(i + 1).setVisible(true);
+			}			
+			else if(p.getBoundsRight().intersects(swh.smartWalls.get(i).getBounds()))
+			{
+				p.setX(swh.smartWalls.get(i).getX() - p.getWidth());
+			}
+			else if(p.getBoundsLeft().intersects(swh.smartWalls.get(i).getBounds()))
+			{
+				p.setX(swh.smartWalls.get(i).getX() + SmartWall.size);
+			}
+			
+			for(int j = 0; j < bhl.bullets.size(); j++)
+			{
+				if(bhl.bullets.get(j).getBounds().intersects(swh.smartWalls.get(i).getBounds()))
+					bhl.bullets.remove(j);
+			}
+			
+			for(int j = 0; j < eh.enemies.size(); j++)
+			{	
+				if(eh.enemies.get(j).getBoundsRight().intersects(swh.smartWalls.get(i).getBounds()) && swh.smartWalls.get(i).getVisible())
+					eh.enemies.get(j).setVelX(eh.enemies.get(j).getVelX() * (-1));
+				else if(eh.enemies.get(j).getBoundsLeft().intersects(swh.smartWalls.get(i).getBounds()) && swh.smartWalls.get(i).getVisible())
+					eh.enemies.get(j).setVelX(eh.enemies.get(j).getVelX() * (-1));
+			}	
 		}
 	}
 }

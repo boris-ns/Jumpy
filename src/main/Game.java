@@ -16,6 +16,7 @@ import handlers.BulletHandler;
 import handlers.CoinsHandler;
 import handlers.CollisionHandler;
 import handlers.EnemiesHandler;
+import handlers.SmartWallHandler;
 import handlers.SpikeHandler;
 import input.KeyInput;
 import objects.Block;
@@ -23,6 +24,7 @@ import objects.Camera;
 import objects.Coin;
 import objects.Enemy;
 import objects.Player;
+import objects.SmartWall;
 import objects.Spike;
 
 public class Game extends Canvas implements Runnable
@@ -41,6 +43,7 @@ public class Game extends Canvas implements Runnable
 	private BulletHandler bHandler;
 	private SpikeHandler spikeHandler;
 	private EnemiesHandler enemiesHandler;
+	private SmartWallHandler smartWallHandler;
 	private BufferedImage level1 = null, backgroundTile;
 	private Camera camera;
 	private Textures textures;
@@ -67,9 +70,10 @@ public class Game extends Canvas implements Runnable
 		bHandler = new BulletHandler();
 		spikeHandler = new SpikeHandler();
 		enemiesHandler = new EnemiesHandler();
+		smartWallHandler = new SmartWallHandler();
 		keyInput = new KeyInput(player, bHandler);
 		this.addKeyListener(keyInput);
-		collisionHandler = new CollisionHandler(player, blockHandler, coinsHandler, bHandler, spikeHandler, enemiesHandler);
+		collisionHandler = new CollisionHandler(player, blockHandler, coinsHandler, bHandler, spikeHandler, enemiesHandler, smartWallHandler);
 		hud = new Hud();
 		
 		backgroundTile = textures.blockTiles[1];
@@ -118,6 +122,7 @@ public class Game extends Canvas implements Runnable
 		bHandler.render(g);
 		spikeHandler.render(g);
 		enemiesHandler.render(g);
+		smartWallHandler.render(g);
 		
 		g2d.translate(-camera.getX(), -camera.getY());
 		
@@ -159,6 +164,9 @@ public class Game extends Canvas implements Runnable
 				
 				if(red == 255 && green == 200 && blue == 255)
 					enemiesHandler.enemies.add(new Enemy(i * tileSize, j * tileSize, 2, textures));
+			
+				if(red == 0 && green == 255 && blue == 255)
+					smartWallHandler.smartWalls.add(new SmartWall(i * tileSize, j * tileSize, textures));
 			}
 		}
 	}
