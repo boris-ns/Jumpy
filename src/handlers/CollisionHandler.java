@@ -134,7 +134,7 @@ public class CollisionHandler
 			
 			for(int j = 0; j < bhl.bullets.size(); j++)
 			{
-				if(bhl.bullets.get(j).getBounds().intersects(swh.smartWalls.get(i).getBounds()))
+				if(bhl.bullets.get(j).getBounds().intersects(swh.smartWalls.get(i).getBounds()) && swh.smartWalls.get(j).getVisible())
 					bhl.bullets.remove(j);
 			}
 			
