@@ -21,9 +21,12 @@ public class Camera
 	{
 		y = -player.getY() + Game.width / 3;
 		
-		if(player.getX() > Game.width - Block.size)
+		if(player.getX() > Game.width * 2 - Block.size * 2)
+			x = -Game.width * 2 + Block.size * 2 + 10;
+		else if(player.getX() > Game.width - Block.size)
 			x = -Game.width + Block.size + 7;
 		else if(player.getX() < Game.width - Block.size)
 			x = 0;
+		
 	}
 }
