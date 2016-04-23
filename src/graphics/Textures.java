@@ -8,7 +8,7 @@ public class Textures
 	private BufferedImage player, blocks;
 	
 	public BufferedImage[] playerTiles = new BufferedImage[18];
-	public BufferedImage[] blockTiles = new BufferedImage[2];
+	public BufferedImage[] blockTiles = new BufferedImage[3];
 	public BufferedImage[] coinTiles = new BufferedImage[6];
 	public BufferedImage[] enemyTiles = new BufferedImage[4];
 	public BufferedImage spikes = null;
@@ -31,6 +31,7 @@ public class Textures
 	{
 		blockTiles[0] = blockSheet.grabImage(1, 1, 32, 32);
 		blockTiles[1] = blockSheet.grabImage(2, 1, 32, 32);
+		blockTiles[2] = blockSheet.grabImage(3, 1, 32, 32);
 		
 		spikes = blockSheet.grabImage(1, 3, 32, 32);
 		
