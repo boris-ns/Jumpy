@@ -9,8 +9,8 @@ import graphics.Textures;
 public class Block 
 {
 	public static final int size = 32;
-	private float x, y;
-	private Textures t;
+	protected float x, y;
+	protected Textures t;
 	
 	public Block(float x, float y, Textures t)
 	{
