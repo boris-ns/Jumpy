@@ -52,9 +52,7 @@ public class Game extends Canvas implements Runnable
 	
 	public Game()
 	{
-		new Window(width, height, "Jumpy", this);
-		
-				
+		new Window(width, height, "Jumpy", this);			
 	}
 	
 	public void init()
@@ -62,10 +60,10 @@ public class Game extends Canvas implements Runnable
 		BufferedImageLoader loader = new BufferedImageLoader();
 		level1 = loader.loadImage("/level1.png");
 		textures = new Textures();	
-		
+			
 		blockHandler = new BlockHandler();
 		player = new Player(70, 1250);
-		camera = new Camera(0, 0);		
+		camera = new Camera(0, 0);	
 		coinsHandler = new CoinsHandler();
 		bHandler = new BulletHandler();
 		spikeHandler = new SpikeHandler();
@@ -73,6 +71,7 @@ public class Game extends Canvas implements Runnable
 		smartWallHandler = new SmartWallHandler();
 		keyInput = new KeyInput(player, bHandler);
 		this.addKeyListener(keyInput);
+		
 		collisionHandler = new CollisionHandler(player, blockHandler, coinsHandler, bHandler, spikeHandler, enemiesHandler, smartWallHandler);
 		hud = new Hud();
 		
@@ -195,7 +194,7 @@ public class Game extends Canvas implements Runnable
 	
 	@Override
 	public void run() 
-	{
+	{	
 		init();
 		
 		requestFocus();
