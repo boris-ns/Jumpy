@@ -1,1 +1,3 @@
-# Game
+# Jumpy
+
+Java game
