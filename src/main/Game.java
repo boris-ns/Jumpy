@@ -49,7 +49,8 @@ public class Game extends Canvas implements Runnable
 	private Camera camera;
 	private Textures textures;
 	private Hud hud;
-
+	private PauseScreen pScreen;
+	private int timer = 20;
 	
 	public Game()
 	{
@@ -75,6 +76,7 @@ public class Game extends Canvas implements Runnable
 		
 		collisionHandler = new CollisionHandler(player, blockHandler, coinsHandler, bHandler, spikeHandler, enemiesHandler, smartWallHandler);
 		hud = new Hud();
+		pScreen = new PauseScreen();
 		
 		backgroundTile = textures.blockTiles[1];
 		loadImageLevel(level1);
@@ -84,14 +86,37 @@ public class Game extends Canvas implements Runnable
 	{
 		keyInput.tick();
 		
-		player.tick();
-		camera.tick(player);
-		
-		hud.tick(player.getCoinsCollected(), player.getHealth());
-		coinsHandler.tick();
-		collisionHandler.tick();
-		bHandler.tick();
-		enemiesHandler.tick();
+		if(paused)
+			pScreen.tick();
+		else if(gameOver)
+		{
+			--timer;
+			
+			if(timer == 0)
+			{
+				player.setX(70);
+				player.setY(1250);
+				player.setHealth(100);
+				player.setCoinsCollected(0);
+				
+				init();
+				
+				gameOver = false;
+				timer = 20;
+			}
+		}
+		else if(!paused)
+		{	
+			player.tick();
+			camera.tick(player);
+			
+			hud.tick(player.getCoinsCollected(), player.getHealth());
+			coinsHandler.tick();
+			collisionHandler.tick();
+			bHandler.tick();
+			enemiesHandler.tick();
+		}
+	
 	}
 	
 	public void render()
@@ -126,7 +151,10 @@ public class Game extends Canvas implements Runnable
 		
 		g2d.translate(-camera.getX(), -camera.getY());
 		
-		hud.render(g);
+		if(paused)
+			pScreen.render(g);
+		else
+			hud.render(g);
 		
 		g.dispose();
 		bs.show();
