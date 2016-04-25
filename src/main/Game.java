@@ -2,6 +2,7 @@ package main;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
@@ -83,14 +84,14 @@ public class Game extends Canvas implements Runnable
 	}
 	
 	public void tick()
-	{
-		keyInput.tick();
-		
+	{	
 		if(paused)
 			pScreen.tick();
 		else if(gameOver)
 		{
 			--timer;
+			
+			keyInput.tick();
 			
 			if(timer == 0)
 			{
@@ -100,16 +101,16 @@ public class Game extends Canvas implements Runnable
 				player.setCoinsCollected(0);
 				
 				init();
-				
+
 				gameOver = false;
 				timer = 20;
 			}
 		}
 		else if(!paused)
 		{	
+			keyInput.tick();
 			player.tick();
-			camera.tick(player);
-			
+			camera.tick(player);			
 			hud.tick(player.getCoinsCollected(), player.getHealth());
 			coinsHandler.tick();
 			collisionHandler.tick();
@@ -155,6 +156,13 @@ public class Game extends Canvas implements Runnable
 			pScreen.render(g);
 		else
 			hud.render(g);
+		
+		if(gameOver)
+		{
+			g.setFont(new Font("Arial Black", 1, 32));
+			g.setColor(Color.ORANGE);
+			g.drawString("GAME OVER", 200, 150);
+		}
 		
 		g.dispose();
 		bs.show();
