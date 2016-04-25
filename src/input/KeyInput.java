@@ -4,11 +4,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import handlers.BulletHandler;
+import main.Game;
+import main.PauseScreen;
 import objects.Bullet;
 import objects.Player;
 
 public class KeyInput extends KeyAdapter
 {
+	public static boolean menuUp, menuDown, menuEnter;
 	private Player player;
 	private BulletHandler bHandler;
 	
@@ -29,10 +32,7 @@ public class KeyInput extends KeyAdapter
 		moveRight = keyboard[KeyEvent.VK_RIGHT];
 		fire = keyboard[KeyEvent.VK_SPACE];
 		jump = keyboard[KeyEvent.VK_UP];
-		
-		if(keyboard[KeyEvent.VK_ESCAPE])
-			System.exit(-1);
-		
+				
 		if(jump && !player.getJumping())
 		{
 			player.setJumping(true);
@@ -58,6 +58,26 @@ public class KeyInput extends KeyAdapter
 	public void keyPressed(KeyEvent e)
 	{
 		keyboard[e.getKeyCode()] = true;
+		
+		if(keyboard[KeyEvent.VK_ESCAPE] && !Game.paused && !Game.gameOver)
+			Game.paused = true;
+		
+		if(Game.paused)
+		{
+			menuUp = keyboard[KeyEvent.VK_UP];
+			menuDown = keyboard[KeyEvent.VK_DOWN];
+			menuEnter = keyboard[KeyEvent.VK_ENTER];
+			
+			if(PauseScreen.pauseState == PauseScreen.State.resume && menuDown)
+				PauseScreen.pauseState = PauseScreen.State.quit;
+			else if(PauseScreen.pauseState == PauseScreen.State.quit && menuDown)
+				PauseScreen.pauseState = PauseScreen.State.resume;
+			
+			if(PauseScreen.pauseState == PauseScreen.State.resume && menuUp)
+				PauseScreen.pauseState = PauseScreen.State.quit;
+			else if(PauseScreen.pauseState == PauseScreen.State.quit && menuUp)
+				PauseScreen.pauseState = PauseScreen.State.resume;
+		}
 	}
 	
 	@Override

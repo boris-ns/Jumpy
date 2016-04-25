@@ -31,6 +31,7 @@ public class Game extends Canvas implements Runnable
 {
 	public static final int width = 646, height = 480;
 	public static final int tileSize = 32;
+	public static boolean paused = false, gameOver = false;
 	
 	private static final long serialVersionUID = 1L;
 	private boolean running = false;

@@ -2,9 +2,11 @@ package objects;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 
 import graphics.Animation;
 import graphics.Textures;
+import main.Game;
 
 public class Player 
 {
@@ -56,7 +58,13 @@ public class Player
 		
 		if(velX != 0)
 			lastVelX = velX;
-
+		
+		if(health <= 0)
+		{
+			health = 0;
+			Game.gameOver = true;
+		}
+		
 		walkLeftAnim.runAnimation();
 		walkRightAnim.runAnimation();
 	}
