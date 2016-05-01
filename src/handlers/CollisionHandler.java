@@ -1,6 +1,5 @@
 package handlers;
 
-import main.Game;
 import objects.Block;
 import objects.Coin;
 import objects.Player;
@@ -31,22 +30,7 @@ public class CollisionHandler
 	}
 	
 	public void tick()
-	{
-		if(Game.gameOver)
-		{
-			for(int i = 0; i < cl.coins.size(); i++)
-				cl.coins.remove(i);
-			
-			for(int i = 0; i < bhl.bullets.size(); i++)
-				bhl.bullets.remove(i);
-			
-			for(int i = 0; i < eh.enemies.size(); i++)
-				eh.enemies.remove(i);
-			
-			for(int i = 0; i < swh.smartWalls.size(); i++)
-				swh.smartWalls.remove(i);
-		}
-		
+	{	
 		for(int i = 0; i < bl.blocks.size(); i++)
 		{
 			block = bl.blocks.get(i);
