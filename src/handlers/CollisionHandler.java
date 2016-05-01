@@ -26,7 +26,7 @@ public class CollisionHandler
 		this.bhl = bhl;
 		this.sh = sh;
 		this.eh = eh;
-		this.swh = swh;
+		this.swh = swh;		
 	}
 	
 	public void tick()

@@ -57,21 +57,25 @@ public class Game extends Canvas implements Runnable
 	
 	public Game()
 	{
-		new Window(width, height, "Jumpy", this);	
-	}
-	
-	private void init()
-	{
-		System.out.println("INIT !");
+		System.out.println("Konstruktor !");
+		
+		new Window(width, height, "Jumpy", this);		
+		
+		keyInput = new KeyInput();
+		addKeyListener(keyInput);	
 			
-		loader = new BufferedImageLoader();
 		textures = new Textures();		
 		pScreen = new PauseScreen();
 		hud = new Hud();		
+			
+		backgroundTile = textures.blockTiles[1];
+	}
+	
+	private void init()
+	{						
 		
 		player = new Player(70, 1250);
-		camera = new Camera(0, 0);	
-			
+		camera = new Camera(0, 0);
 		blockHandler = new BlockHandler();
 		coinsHandler = new CoinsHandler();
 		bHandler = new BulletHandler();
@@ -80,33 +84,38 @@ public class Game extends Canvas implements Runnable
 		smartWallHandler = new SmartWallHandler();
 		collisionHandler = new CollisionHandler(player, blockHandler, coinsHandler, bHandler, spikeHandler, 
 				enemiesHandler, smartWallHandler);
-		
-		keyInput = new KeyInput(player, bHandler);
-		this.addKeyListener(keyInput);	
-		
+
+		loader = new BufferedImageLoader();		
 		level1 = loader.loadImage("/level1.png");
-		backgroundTile = textures.blockTiles[1];
 		loadImageLevel(level1);			
 	}
 	
-	private void initAfterGameOver()
-	{
-		player.setX(70);
-		player.setY(1250);
-		player.setHealth(100);
-		player.setCoinsCollected(0);
-		
+//	private void initAfterGameOver()
+//	{
+//		player.setX(70);
+//		player.setY(1250);
+//		player.setHealth(100);
+//		player.setCoinsCollected(0);
+//		
 //		coinsHandler.coins.removeAll(coinsHandler.coins);
 //		bHandler.bullets.removeAll(bHandler.bullets);
 //		enemiesHandler.enemies.removeAll(enemiesHandler.enemies);
 //		smartWallHandler.smartWalls.removeAll(smartWallHandler.smartWalls);
-		
-		//loadImageLevel(level1);
-		
-		//collisionHandler = new CollisionHandler(player, blockHandler, coinsHandler, bHandler, spikeHandler,
-			//	enemiesHandler, smartWallHandler);
-	}
-			
+//
+//		loadImageLevel(level1);	
+//		
+//		//collisionHandler = new CollisionHandler(player, blockHandler, coinsHandler, bHandler, spikeHandler,
+//			//	enemiesHandler, smartWallHandler);
+//	}
+	
+//	private void freeLists()
+//	{
+//		coinsHandler.coins.removeAll(coinsHandler.coins);
+//		bHandler.bullets.removeAll(bHandler.bullets);
+//		enemiesHandler.enemies.removeAll(enemiesHandler.enemies);
+//		smartWallHandler.smartWalls.removeAll(smartWallHandler.smartWalls);
+//	}
+//			
 	private void tick()
 	{	
 		if(paused)
@@ -117,14 +126,15 @@ public class Game extends Canvas implements Runnable
 		
 			if(timer == 0)
 			{		
-				initAfterGameOver();		
+				//freeLists();
+				init();		
 				gameOver = false;
 				timer = 20;
 			}
 		}
 		else if(!paused)
 		{	
-			keyInput.tick();
+			keyInput.tick(player, bHandler);
 			player.tick();
 			camera.tick(player);			
 			hud.tick(player.getCoinsCollected(), player.getHealth());
@@ -184,7 +194,7 @@ public class Game extends Canvas implements Runnable
 		bs.show();
 	}
 	
-	public void loadImageLevel(BufferedImage image)
+	private void loadImageLevel(BufferedImage image)
 	{
 		int w = image.getWidth();
 		int h = image.getHeight();
@@ -276,7 +286,7 @@ public class Game extends Canvas implements Runnable
 					
 			if(System.currentTimeMillis() - timer > 1000){
 				timer += 1000;
-				System.out.println("FPS: " + frames + " TICKS: " + updates);
+				//System.out.println("FPS: " + frames + " TICKS: " + updates);
 				frames = 0;
 				updates = 0;
 			}
