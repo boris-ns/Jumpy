@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 public class Textures 
 {
 	private SpriteSheet playerSheet, blockSheet;
-	private BufferedImage player, blocks;
+	private BufferedImage player = null, blocks = null;
 	
 	public BufferedImage[] playerTiles = new BufferedImage[18];
 	public BufferedImage[] blockTiles = new BufferedImage[3];
