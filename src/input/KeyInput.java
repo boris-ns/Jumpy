@@ -20,14 +20,9 @@ public class KeyInput extends KeyAdapter
 	
 	private int timer = 17;
 	
-	public KeyInput(Player player, BulletHandler bHandler)
-	{
-		this.player = player;
-		this.bHandler = bHandler;
-	}
 	
-	public void tick()
-	{
+	public void tick(Player player, BulletHandler bHandler)
+	{	
 		moveLeft = keyboard[KeyEvent.VK_LEFT];
 		moveRight = keyboard[KeyEvent.VK_RIGHT];
 		fire = keyboard[KeyEvent.VK_SPACE];
