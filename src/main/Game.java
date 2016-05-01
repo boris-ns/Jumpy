@@ -49,7 +49,7 @@ public class Game extends Canvas implements Runnable
 	private SmartWallHandler smartWallHandler;
 	private BufferedImage level1 = null, backgroundTile;
 	private Camera camera;
-	private Textures textures;
+	private Textures textures = new Textures();
 	private Hud hud;
 	private PauseScreen pScreen;
 	private int timer = 20;
@@ -64,7 +64,7 @@ public class Game extends Canvas implements Runnable
 		keyInput = new KeyInput();
 		addKeyListener(keyInput);	
 			
-		textures = new Textures();		
+		//textures = new Textures();	
 		pScreen = new PauseScreen();
 		hud = new Hud();		
 			
@@ -73,7 +73,7 @@ public class Game extends Canvas implements Runnable
 	
 	private void init()
 	{						
-		
+			
 		player = new Player(70, 1250);
 		camera = new Camera(0, 0);
 		blockHandler = new BlockHandler();
