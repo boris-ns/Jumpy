@@ -6,9 +6,9 @@ import java.awt.Rectangle;
 
 public class Bullet 
 {
-	private float x, y;
-	private float velX;
-	private int size;
+	protected float x, y;
+	protected float velX;
+	protected int size;
 	
 	public Bullet(float x, float y, float playerLastVelX, float playerHeight, float playerWidth)
 	{
