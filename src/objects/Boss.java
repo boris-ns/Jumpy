@@ -6,6 +6,8 @@ import java.awt.Rectangle;
 
 import graphics.Animation;
 import graphics.Textures;
+import handlers.BossBulletsHandler;
+import main.Game;
 
 public class Boss 
 {
@@ -15,27 +17,45 @@ public class Boss
 	private Textures t;
 	private Animation animation;
 	
-	public Boss(float x, float y, Textures t)
+	private int timer = 25;
+	private BossBulletsHandler bbh;
+	
+	public Boss(float x, float y, Textures t, BossBulletsHandler bbh)
 	{
 		this.x = x;
 		this.y =y;
 		this.t = t;
+		this.bbh = bbh;
 		
 		velY = 1.5f;
-		health = 1000;
+		health = 10;
 		damage = 20;
 		size = 64;
 		
 		animation = new Animation(4, t.bossTiles[0], t.bossTiles[1]);
 	}
 	
-	public void tick()
+	public void tick(int playerX, int playerY)
 	{
 		if(health > 0)
 		{
 			y += velY;
+			
+			if(playerY > 2464)
+			{			
+				--timer;
+				if(timer == 0)
+				{
+					bbh.bullets.add(new BossBullet((int)x, (int)y, (playerX < x + size / 2) ? -1 : 1, 
+							size, size));
+					timer = 25;
+				}
+			}
+			
 			animation.runAnimation();
 		}
+		else
+			Game.gameFinished = true;
 	}
 	
 	public void render(Graphics g)
@@ -46,7 +66,6 @@ public class Boss
 			g.fillRect((int)x - 20, (int)y - 15, health / 10, 10);
 		
 			animation.drawAnimation(g, (int)x, (int)y);
-
 		}
 	}
 	public Rectangle getBounds()
