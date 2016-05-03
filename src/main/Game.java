@@ -13,6 +13,7 @@ import graphics.Hud;
 import graphics.Textures;
 import graphics.Window;
 import handlers.BlockHandler;
+import handlers.BossBulletsHandler;
 import handlers.BulletHandler;
 import handlers.CoinsHandler;
 import handlers.CollisionHandler;
@@ -33,7 +34,7 @@ public class Game extends Canvas implements Runnable
 {
 	public static final int width = 646, height = 480;
 	public static final int tileSize = 32;
-	public static boolean paused = false, gameOver = false;
+	public static boolean paused = false, gameOver = false, gameFinished = false;
 	
 	private static final long serialVersionUID = 1L;
 	private boolean running = false;
@@ -46,6 +47,7 @@ public class Game extends Canvas implements Runnable
 	private CoinsHandler coinsHandler;
 	private CollisionHandler collisionHandler;
 	private BulletHandler bHandler;
+	private BossBulletsHandler bossBHandler;
 	private SpikeHandler spikeHandler;
 	private EnemiesHandler enemiesHandler;
 	private SmartWallHandler smartWallHandler;
@@ -54,7 +56,7 @@ public class Game extends Canvas implements Runnable
 	private Textures textures = new Textures();
 	private Hud hud;
 	private PauseScreen pScreen;
-	private int timer = 20;
+	private int timer = 70;
 	
 	
 	public Game()
@@ -77,16 +79,17 @@ public class Game extends Canvas implements Runnable
 	{									
 		//player = new Player(70, 1250);
 		player = new Player(55 * 32, 74 * 32);
-		boss = new Boss(44 * 32, 85 * 32, textures);
 		camera = new Camera(0, 0);
 		blockHandler = new BlockHandler();
 		coinsHandler = new CoinsHandler();
 		bHandler = new BulletHandler();
+		bossBHandler = new BossBulletsHandler();
+		boss = new Boss(44 * 32, 85 * 32, textures, bossBHandler);
 		spikeHandler = new SpikeHandler();
 		enemiesHandler = new EnemiesHandler();
 		smartWallHandler = new SmartWallHandler();
-		collisionHandler = new CollisionHandler(player, boss, blockHandler, coinsHandler, bHandler, spikeHandler, 
-				enemiesHandler, smartWallHandler);
+		collisionHandler = new CollisionHandler(player, boss, blockHandler, coinsHandler, bHandler, bossBHandler, 
+				spikeHandler, enemiesHandler, smartWallHandler);
 
 		loader = new BufferedImageLoader();		
 		level1 = loader.loadImage("/level1.png");
@@ -123,28 +126,28 @@ public class Game extends Canvas implements Runnable
 	{	
 		if(paused)
 			pScreen.tick();
-		else if(gameOver)
+		else if(gameOver || gameFinished)
 		{
-			--timer;
-		
-			if(timer == 0)
+			if(timer-- == 0)
 			{		
 				//freeLists();
 				init();		
 				gameOver = false;
-				timer = 20;
+				gameFinished = false;
+				timer = 70;
 			}
 		}
 		else if(!paused)
 		{	
 			keyInput.tick(player, bHandler);
 			player.tick();
-			boss.tick();
+			boss.tick((int)player.getX(), (int)player.getY());
 			camera.tick(player);			
 			hud.tick(player.getCoinsCollected(), player.getHealth());
 			coinsHandler.tick();
 			collisionHandler.tick();
 			bHandler.tick();
+			bossBHandler.tick();
 			enemiesHandler.tick();
 		}
 	
@@ -177,6 +180,7 @@ public class Game extends Canvas implements Runnable
 		boss.render(g);
 		coinsHandler.render(g);
 		bHandler.render(g);
+		bossBHandler.render(g);
 		spikeHandler.render(g);
 		enemiesHandler.render(g);
 		smartWallHandler.render(g);
@@ -193,6 +197,12 @@ public class Game extends Canvas implements Runnable
 			g.setFont(new Font("Arial Black", 1, 32));
 			g.setColor(Color.ORANGE);
 			g.drawString("GAME OVER", 200, 150);
+		}
+		
+		if(boss.getHealth() <= 0)
+		{
+			g.setFont(new Font("Arial Black", 1, 40));
+			g.drawString("CONGRATULATIONS", 80, 150);
 		}
 		
 		g.dispose();
