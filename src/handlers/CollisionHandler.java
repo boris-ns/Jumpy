@@ -63,7 +63,16 @@ public class CollisionHandler
 			for(int j = 0; j < bhl.bullets.size(); j++)
 			{
 				if(block.getBounds().intersects(bhl.bullets.get(j).getBounds()))
+				{
 					bhl.bullets.remove(j);
+					continue;
+				}
+				
+				if(boss.getBoundsFull().intersects(bhl.bullets.get(j).getBounds()))
+				{
+					boss.setHealth(boss.getHealth() - p.getDamage());
+					bhl.bullets.remove(j);
+				}
 			}
 			
 			for(int j = 0; j < eh.enemies.size(); j++)
@@ -152,5 +161,8 @@ public class CollisionHandler
 					eh.enemies.get(j).setVelX(eh.enemies.get(j).getVelX() * (-1));
 			}	
 		}
+		
+		if(p.getBounds().intersects(boss.getBoundsFull()))
+			p.setHealth(0);
 	}
 }
