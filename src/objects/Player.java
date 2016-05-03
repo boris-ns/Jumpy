@@ -1,5 +1,7 @@
 package objects;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
@@ -19,6 +21,7 @@ public class Player
 	private int health, damage;
 	private Textures t = new Textures();
 	private Animation walkLeftAnim, walkRightAnim;
+	private int timer = 0;
 	
 	public Player(float x, float y)
 	{
@@ -32,7 +35,7 @@ public class Player
 		
 		coinsCollected = 0;
 		health = 100;
-		damage = 50;
+		damage = 25;
 		
 		falling = true;
 		jumping = false;
@@ -65,6 +68,13 @@ public class Player
 			Game.gameOver = true;
 		}
 		
+		if(coinsCollected == 25)
+		{
+			coinsCollected -= 25;
+			damage += 25;
+			timer = 70;
+		}
+		
 		walkLeftAnim.runAnimation();
 		walkRightAnim.runAnimation();
 	}
@@ -81,12 +91,13 @@ public class Player
 		else if(velX < 0)
 			walkRightAnim.drawAnimation(g, (int)x, (int)y);
 		
-//		g.setColor(Color.yellow);
-//		Graphics2D g2d = (Graphics2D) g;
-//		g2d.draw(getBoundsBottom());
-//		g2d.draw(getBoundsTop());
-//		g2d.draw(getBoundsLeft());
-//		g2d.draw(getBoundsRight());
+		if(timer-- >= 0)
+		{
+			g.setFont(new Font("Arial Black", 1, 15));
+			g.setColor(Color.ORANGE);
+			g.drawString("Damage", (int)x - 25, (int)y - 30);
+			g.drawString("increased", (int)x - 35, (int)y - 10);
+		}
 	}
 	
 	public Rectangle getBounds()
