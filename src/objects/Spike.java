@@ -19,7 +19,7 @@ public class Spike
 		this.t = t;
 		
 		size = 32;
-		damage = 40;
+		damage = 10;
 	}
 	
 	public void tick()
