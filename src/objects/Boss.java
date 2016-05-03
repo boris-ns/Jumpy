@@ -28,7 +28,7 @@ public class Boss
 		this.bbh = bbh;
 		
 		velY = 1.5f;
-		health = 10;
+		health = 1000;
 		damage = 20;
 		size = 64;
 		

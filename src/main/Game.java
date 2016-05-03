@@ -77,8 +77,8 @@ public class Game extends Canvas implements Runnable
 	
 	private void init()
 	{									
-		//player = new Player(70, 1250);
-		player = new Player(55 * 32, 74 * 32);
+		player = new Player(70, 1250);
+		//player = new Player(55 * 32, 74 * 32);
 		camera = new Camera(0, 0);
 		blockHandler = new BlockHandler();
 		coinsHandler = new CoinsHandler();
