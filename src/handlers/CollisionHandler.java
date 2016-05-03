@@ -13,6 +13,7 @@ public class CollisionHandler
 	private BlockHandler bl;
 	private CoinsHandler cl;
 	private BulletHandler bhl;
+	private BossBulletsHandler bbh;
 	private SpikeHandler sh;
 	private EnemiesHandler eh;
 	private SmartWallHandler swh;
@@ -20,13 +21,15 @@ public class CollisionHandler
 	private Block block;
 	private Coin coin;
 	
-	public CollisionHandler(Player p, Boss boss, BlockHandler bl, CoinsHandler cl, BulletHandler bhl, SpikeHandler sh, EnemiesHandler eh, SmartWallHandler swh)
+	public CollisionHandler(Player p, Boss boss, BlockHandler bl, CoinsHandler cl, BulletHandler bhl,
+			 BossBulletsHandler bbh, SpikeHandler sh, EnemiesHandler eh, SmartWallHandler swh)
 	{
 		this.p = p;
 		this.boss = boss;
 		this.bl = bl;
 		this.cl = cl;
 		this.bhl = bhl;
+		this.bbh = bbh;
 		this.sh = sh;
 		this.eh = eh;
 		this.swh = swh;		
@@ -81,7 +84,22 @@ public class CollisionHandler
 					eh.enemies.get(j).setVelX(eh.enemies.get(j).getVelX() * (-1));
 				else if(eh.enemies.get(j).getBoundsLeft().intersects(block.getBounds()))
 					eh.enemies.get(j).setVelX(eh.enemies.get(j).getVelX() * (-1));
-			}			
+			}	
+			
+			for(int j = 0; j < bbh.bullets.size(); j++)
+			{
+				if(bbh.bullets.get(j).getBounds().intersects(block.getBounds()))
+				{
+					bbh.bullets.remove(j);
+					continue;
+				}
+				
+				if(bbh.bullets.get(j).getBounds().intersects(p.getBounds()))
+				{
+					bbh.bullets.remove(j);
+					p.setHealth(p.getHealth() - boss.getDamage());
+				}
+			}
 		}
 		
 		for(int i = 0; i < cl.coins.size(); i++)
@@ -162,7 +180,7 @@ public class CollisionHandler
 			}	
 		}
 		
-		if(p.getBounds().intersects(boss.getBoundsFull()))
+		if(p.getBounds().intersects(boss.getBoundsFull()) && boss.getHealth() > 0)
 			p.setHealth(0);
 	}
 }
