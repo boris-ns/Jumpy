@@ -21,6 +21,7 @@ import handlers.SmartWallHandler;
 import handlers.SpikeHandler;
 import input.KeyInput;
 import objects.Block;
+import objects.Boss;
 import objects.Camera;
 import objects.Coin;
 import objects.Enemy;
@@ -40,6 +41,7 @@ public class Game extends Canvas implements Runnable
 	private BufferedImageLoader loader;
 	private KeyInput keyInput;
 	private Player player;
+	private Boss boss;
 	private BlockHandler blockHandler;
 	private CoinsHandler coinsHandler;
 	private CollisionHandler collisionHandler;
@@ -72,9 +74,10 @@ public class Game extends Canvas implements Runnable
 	}
 	
 	private void init()
-	{						
-			
-		player = new Player(70, 1250);
+	{									
+		//player = new Player(70, 1250);
+		player = new Player(55 * 32, 74 * 32);
+		boss = new Boss(42 * 32, 85 * 32, textures);
 		camera = new Camera(0, 0);
 		blockHandler = new BlockHandler();
 		coinsHandler = new CoinsHandler();
@@ -82,7 +85,7 @@ public class Game extends Canvas implements Runnable
 		spikeHandler = new SpikeHandler();
 		enemiesHandler = new EnemiesHandler();
 		smartWallHandler = new SmartWallHandler();
-		collisionHandler = new CollisionHandler(player, blockHandler, coinsHandler, bHandler, spikeHandler, 
+		collisionHandler = new CollisionHandler(player, boss, blockHandler, coinsHandler, bHandler, spikeHandler, 
 				enemiesHandler, smartWallHandler);
 
 		loader = new BufferedImageLoader();		
@@ -136,6 +139,7 @@ public class Game extends Canvas implements Runnable
 		{	
 			keyInput.tick(player, bHandler);
 			player.tick();
+			boss.tick();
 			camera.tick(player);			
 			hud.tick(player.getCoinsCollected(), player.getHealth());
 			coinsHandler.tick();
@@ -169,6 +173,7 @@ public class Game extends Canvas implements Runnable
 		g2d.translate(camera.getX(), camera.getY());
 		
 		player.render(g);
+		boss.render(g);
 		blockHandler.render(g);
 		coinsHandler.render(g);
 		bHandler.render(g);

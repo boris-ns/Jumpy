@@ -1,6 +1,7 @@
 package handlers;
 
 import objects.Block;
+import objects.Boss;
 import objects.Coin;
 import objects.Player;
 import objects.SmartWall;
@@ -8,6 +9,7 @@ import objects.SmartWall;
 public class CollisionHandler 
 {
 	private Player p;
+	private Boss boss;
 	private BlockHandler bl;
 	private CoinsHandler cl;
 	private BulletHandler bhl;
@@ -18,9 +20,10 @@ public class CollisionHandler
 	private Block block;
 	private Coin coin;
 	
-	public CollisionHandler(Player p, BlockHandler bl, CoinsHandler cl, BulletHandler bhl, SpikeHandler sh, EnemiesHandler eh, SmartWallHandler swh)
+	public CollisionHandler(Player p, Boss boss, BlockHandler bl, CoinsHandler cl, BulletHandler bhl, SpikeHandler sh, EnemiesHandler eh, SmartWallHandler swh)
 	{
 		this.p = p;
+		this.boss = boss;
 		this.bl = bl;
 		this.cl = cl;
 		this.bhl = bhl;
@@ -53,6 +56,9 @@ public class CollisionHandler
 
 			if(p.getBoundsRight().intersects(block.getBounds()))
 				p.setX(block.getX() - p.getWidth());
+			
+			if(boss.getBounds().intersects(block.getBounds()))
+				boss.setVelY(boss.getVelY() * (-1));
 			
 			for(int j = 0; j < bhl.bullets.size(); j++)
 			{
