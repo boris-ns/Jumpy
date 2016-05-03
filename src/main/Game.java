@@ -77,7 +77,7 @@ public class Game extends Canvas implements Runnable
 	{									
 		//player = new Player(70, 1250);
 		player = new Player(55 * 32, 74 * 32);
-		boss = new Boss(42 * 32, 85 * 32, textures);
+		boss = new Boss(44 * 32, 85 * 32, textures);
 		camera = new Camera(0, 0);
 		blockHandler = new BlockHandler();
 		coinsHandler = new CoinsHandler();
@@ -173,8 +173,8 @@ public class Game extends Canvas implements Runnable
 		g2d.translate(camera.getX(), camera.getY());
 		
 		player.render(g);
-		boss.render(g);
 		blockHandler.render(g);
+		boss.render(g);
 		coinsHandler.render(g);
 		bHandler.render(g);
 		spikeHandler.render(g);
