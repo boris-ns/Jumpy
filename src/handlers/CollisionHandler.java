@@ -118,7 +118,7 @@ public class CollisionHandler
 			if(sh.spikes.get(i).getBounds().intersects(p.getBounds()))
 			{
 				p.setHealth(p.getHealth() - sh.spikes.get(i).getDamage());
-				p.setVelY(-7);
+				p.setVelY(-15);
 				p.setJumping(true);
 			}
 		}
