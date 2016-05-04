@@ -43,7 +43,7 @@ public class Coin
 	
 	public Rectangle getBounds()
 	{
-		return new Rectangle((int)x, (int)y, size, size);
+		return new Rectangle((int)x + 5, (int)y + 5, size - 5, size - 5);
 	}
 
 	public boolean getIsCollected() 

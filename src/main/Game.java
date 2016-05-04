@@ -175,15 +175,15 @@ public class Game extends Canvas implements Runnable
 		
 		g2d.translate(camera.getX(), camera.getY());
 		
-		player.render(g);
 		blockHandler.render(g);
-		boss.render(g);
 		coinsHandler.render(g);
 		bHandler.render(g);
 		bossBHandler.render(g);
-		spikeHandler.render(g);
-		enemiesHandler.render(g);
 		smartWallHandler.render(g);
+		enemiesHandler.render(g);
+		boss.render(g);
+		player.render(g);
+		spikeHandler.render(g);
 		
 		g2d.translate(-camera.getX(), -camera.getY());
 		

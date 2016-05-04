@@ -68,11 +68,12 @@ public class Player
 			Game.gameOver = true;
 		}
 		
-		if(coinsCollected == 25)
+		if(coinsCollected >= 25)
 		{
 			coinsCollected -= 25;
 			damage += 25;
 			timer = 70;
+			System.out.println("Damage: " + damage);
 		}
 		
 		walkLeftAnim.runAnimation();

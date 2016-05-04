@@ -106,7 +106,7 @@ public class CollisionHandler
 		{
 			coin = cl.coins.get(i);
 			
-			if(p.getBounds().intersects(coin.getBounds()))
+			if(p.getBounds().intersects(coin.getBounds()) && !coin.getIsCollected())
 			{
 				p.setCoinsCollected(p.getCoinsCollected() + 1);
 				coin.setIsCollected(true);
