@@ -8,6 +8,7 @@ import main.Game;
 import main.PauseScreen;
 import objects.Bullet;
 import objects.Player;
+import sound.AudioPlayer;
 
 public class KeyInput extends KeyAdapter
 {
@@ -17,6 +18,8 @@ public class KeyInput extends KeyAdapter
 	
 	private boolean[] keyboard = new boolean[150];
 	private boolean moveLeft, moveRight, fire, jump;
+	
+	private AudioPlayer shootingSFX = new AudioPlayer("/pistol.mp3");
 	
 	private int timer = 17;
 	
@@ -44,6 +47,7 @@ public class KeyInput extends KeyAdapter
 		--timer;
 		if(fire && timer <= 0)
 		{
+			shootingSFX.play(-10.0f);
 			bHandler.bullets.add(new Bullet((int)player.getX(), (int)player.getY(), player.getLastVelX(), player.getHeight(), player.getWidth()));
 			timer = 17;
 		}

@@ -18,6 +18,7 @@ import handlers.BulletHandler;
 import handlers.CoinsHandler;
 import handlers.CollisionHandler;
 import handlers.EnemiesHandler;
+import handlers.RenderBlocksHandler;
 import handlers.SmartWallHandler;
 import handlers.SpikeHandler;
 import input.KeyInput;
@@ -29,6 +30,7 @@ import objects.Enemy;
 import objects.Player;
 import objects.SmartWall;
 import objects.Spike;
+import sound.AudioPlayer;
 
 public class Game extends Canvas implements Runnable
 {
@@ -44,6 +46,7 @@ public class Game extends Canvas implements Runnable
 	private Player player;
 	private Boss boss;
 	private BlockHandler blockHandler;
+	private RenderBlocksHandler rBlocksHandler;
 	private CoinsHandler coinsHandler;
 	private CollisionHandler collisionHandler;
 	private BulletHandler bHandler;
@@ -56,7 +59,8 @@ public class Game extends Canvas implements Runnable
 	private Textures textures = new Textures();
 	private Hud hud;
 	private PauseScreen pScreen;
-	private int timer = 70;
+	private AudioPlayer bgMusic; // background music
+	private int timer = 150;
 	
 	
 	public Game()
@@ -71,20 +75,23 @@ public class Game extends Canvas implements Runnable
 		//textures = new Textures();	
 		pScreen = new PauseScreen();
 		hud = new Hud();		
-			
+		bgMusic = new AudioPlayer("/bgMusic.mp3");	
+		bgMusic.loopPlay(-20.0f);
+		
 		backgroundTile = textures.blockTiles[1];
 	}
 	
 	private void init()
 	{									
-		player = new Player(70, 1250);
-		//player = new Player(55 * 32, 74 * 32);
+		player = new Player(70, 1450);
+		//player = new Player(55 * 32, 80 * 32);
 		camera = new Camera(0, 0);
 		blockHandler = new BlockHandler();
+		rBlocksHandler = new RenderBlocksHandler();
 		coinsHandler = new CoinsHandler();
 		bHandler = new BulletHandler();
 		bossBHandler = new BossBulletsHandler();
-		boss = new Boss(44 * 32, 85 * 32, textures, bossBHandler);
+		boss = new Boss(44 * 32, 90 * 32, textures, bossBHandler);
 		spikeHandler = new SpikeHandler();
 		enemiesHandler = new EnemiesHandler();
 		smartWallHandler = new SmartWallHandler();
@@ -134,7 +141,7 @@ public class Game extends Canvas implements Runnable
 				init();		
 				gameOver = false;
 				gameFinished = false;
-				timer = 70;
+				timer = 150;
 			}
 		}
 		else if(!paused)
@@ -149,8 +156,7 @@ public class Game extends Canvas implements Runnable
 			bHandler.tick();
 			bossBHandler.tick();
 			enemiesHandler.tick();
-		}
-	
+		}	
 	}
 	
 	private void render()
@@ -176,6 +182,7 @@ public class Game extends Canvas implements Runnable
 		g2d.translate(camera.getX(), camera.getY());
 		
 		blockHandler.render(g);
+		rBlocksHandler.render(g);
 		coinsHandler.render(g);
 		bHandler.render(g);
 		bossBHandler.render(g);
@@ -230,6 +237,9 @@ public class Game extends Canvas implements Runnable
 				if(red == 255 && green == 255 && blue == 255) 
 					blockHandler.blocks.add(new Block(i * tileSize, j * tileSize, textures));
 				
+				if(red == 180 && green == 180 && blue == 180)
+					rBlocksHandler.blocks.add(new Block(i * tileSize, j * tileSize, textures));
+					
 				if(red == 255 && green == 255 && blue == 0)
 					coinsHandler.coins.add(new Coin(i * tileSize, j * tileSize, textures));
 			

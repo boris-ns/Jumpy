@@ -4,11 +4,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
 
 import graphics.Animation;
 import graphics.Textures;
 import main.Game;
+import sound.AudioPlayer;
 
 public class Player 
 {
@@ -22,6 +22,7 @@ public class Player
 	private Textures t = new Textures();
 	private Animation walkLeftAnim, walkRightAnim;
 	private int timer = 0;
+	private AudioPlayer sfxGameOver;
 	
 	public Player(float x, float y)
 	{
@@ -39,6 +40,8 @@ public class Player
 		
 		falling = true;
 		jumping = false;
+		
+		sfxGameOver = new AudioPlayer("/gameOver.wav");
 		
 		walkLeftAnim = new Animation(3, t.playerTiles[2], t.playerTiles[3], t.playerTiles[4],
 				t.playerTiles[5], t.playerTiles[6], t.playerTiles[7], t.playerTiles[8], t.playerTiles[9]);
@@ -64,6 +67,7 @@ public class Player
 		
 		if(health <= 0)
 		{
+			sfxGameOver.play(6.0f);
 			health = 0;
 			Game.gameOver = true;
 		}

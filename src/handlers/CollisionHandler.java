@@ -1,10 +1,13 @@
 package handlers;
 
+import java.util.HashMap;
+
 import objects.Block;
 import objects.Boss;
 import objects.Coin;
 import objects.Player;
 import objects.SmartWall;
+import sound.AudioPlayer;
 
 public class CollisionHandler 
 {
@@ -17,6 +20,8 @@ public class CollisionHandler
 	private SpikeHandler sh;
 	private EnemiesHandler eh;
 	private SmartWallHandler swh;
+	
+	private HashMap<String, AudioPlayer> sfx;
 	
 	private Block block;
 	private Coin coin;
@@ -33,6 +38,17 @@ public class CollisionHandler
 		this.sh = sh;
 		this.eh = eh;
 		this.swh = swh;		
+		
+		initSFX();
+	}
+	
+	private void initSFX()
+	{
+		sfx = new HashMap<String, AudioPlayer>();
+		sfx.put("Coin", new AudioPlayer("/coinflip.wav"));
+		sfx.put("Punch", new AudioPlayer("/punch.wav"));
+		sfx.put("Door", new AudioPlayer("/jail_cell_door.wav"));
+		sfx.put("Hurt", new AudioPlayer("/hurt.wav"));
 	}
 	
 	public void tick()
@@ -108,6 +124,7 @@ public class CollisionHandler
 			
 			if(p.getBounds().intersects(coin.getBounds()) && !coin.getIsCollected())
 			{
+				sfx.get("Coin").play(-20.0f);
 				p.setCoinsCollected(p.getCoinsCollected() + 1);
 				coin.setIsCollected(true);
 			}
@@ -117,6 +134,7 @@ public class CollisionHandler
 		{
 			if(sh.spikes.get(i).getBounds().intersects(p.getBounds()))
 			{
+				sfx.get("Hurt").play(-10.0f);
 				p.setHealth(p.getHealth() - sh.spikes.get(i).getDamage());
 				p.setVelY(-15);
 				p.setJumping(true);
@@ -127,6 +145,7 @@ public class CollisionHandler
 		{
 			if(eh.enemies.get(i).getBounds().intersects(p.getBounds()))
 			{
+				sfx.get("Punch").play(-20.0f);
 				p.setHealth(p.getHealth() - eh.enemies.get(i).getDamage());
 				p.setJumping(true);
 				p.setVelY(-15);
@@ -146,12 +165,14 @@ public class CollisionHandler
 		{	
 			if(p.getBoundsRight().intersects(swh.smartWalls.get(i).getBounds()) && !swh.smartWalls.get(i).getVisible())
 			{
+				sfx.get("Door").play(-10.0f);
 				p.setX(swh.smartWalls.get(i).getX() + SmartWall.size);
 				swh.smartWalls.get(i).setVisible(true);
 				swh.smartWalls.get(i + 1).setVisible(true);
 			}
 			else if(p.getBoundsLeft().intersects(swh.smartWalls.get(i).getBounds()) && !swh.smartWalls.get(i).getVisible())
 			{
+				sfx.get("Door").play(-10.0f);
 				p.setX(swh.smartWalls.get(i).getX() - p.getWidth());
 				swh.smartWalls.get(i).setVisible(true);
 				swh.smartWalls.get(i + 1).setVisible(true);
@@ -181,6 +202,9 @@ public class CollisionHandler
 		}
 		
 		if(p.getBounds().intersects(boss.getBoundsFull()) && boss.getHealth() > 0)
+		{
+			sfx.get("Punch").play(-20.0f);
 			p.setHealth(0);
+		}
 	}
 }

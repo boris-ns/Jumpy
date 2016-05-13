@@ -8,6 +8,7 @@ import graphics.Animation;
 import graphics.Textures;
 import handlers.BossBulletsHandler;
 import main.Game;
+import sound.AudioPlayer;
 
 public class Boss 
 {
@@ -19,6 +20,8 @@ public class Boss
 	
 	private int timer = 25;
 	private BossBulletsHandler bbh;
+	
+	private AudioPlayer shootingSFX;
 	
 	public Boss(float x, float y, Textures t, BossBulletsHandler bbh)
 	{
@@ -32,6 +35,8 @@ public class Boss
 		damage = 20;
 		size = 64;
 		
+		shootingSFX = new AudioPlayer("/pistol.mp3");
+		
 		animation = new Animation(4, t.bossTiles[0], t.bossTiles[1]);
 	}
 	
@@ -41,11 +46,12 @@ public class Boss
 		{
 			y += velY;
 			
-			if(playerY > 2464)
+			if(playerY > 85 * 32)
 			{			
 				--timer;
 				if(timer == 0)
 				{
+					shootingSFX.play(-10.0f);
 					bbh.bullets.add(new BossBullet((int)x, (int)y, (playerX < x + size / 2) ? -1 : 1, 
 							size, size));
 					timer = 25;
