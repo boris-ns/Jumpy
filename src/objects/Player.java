@@ -41,7 +41,7 @@ public class Player
 		falling = true;
 		jumping = false;
 		
-		sfxGameOver = new AudioPlayer("/gameOver.wav");
+		sfxGameOver = new AudioPlayer("/gameOver.mp3");
 		
 		walkLeftAnim = new Animation(3, t.playerTiles[2], t.playerTiles[3], t.playerTiles[4],
 				t.playerTiles[5], t.playerTiles[6], t.playerTiles[7], t.playerTiles[8], t.playerTiles[9]);

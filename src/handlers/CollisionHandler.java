@@ -45,10 +45,10 @@ public class CollisionHandler
 	private void initSFX()
 	{
 		sfx = new HashMap<String, AudioPlayer>();
-		sfx.put("Coin", new AudioPlayer("/coinflip.wav"));
-		sfx.put("Punch", new AudioPlayer("/punch.wav"));
-		sfx.put("Door", new AudioPlayer("/jail_cell_door.wav"));
-		sfx.put("Hurt", new AudioPlayer("/hurt.wav"));
+		sfx.put("Coin", new AudioPlayer("/coinflip.mp3"));
+		sfx.put("Punch", new AudioPlayer("/punch.mp3"));
+		sfx.put("Door", new AudioPlayer("/jail_cell_door.mp3"));
+		sfx.put("Hurt", new AudioPlayer("/hurt.mp3"));
 	}
 	
 	public void tick()
