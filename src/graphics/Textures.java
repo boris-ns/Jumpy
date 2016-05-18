@@ -2,32 +2,36 @@ package graphics;
 
 import java.awt.image.BufferedImage;
 
+// Klasa koja predstavlja skup svih tekstura
 public class Textures 
 {
 	private SpriteSheet playerSheet, blockSheet;
 	private BufferedImage player = null, blocks = null;
 	
-	public BufferedImage[] playerTiles = new BufferedImage[18];
-	public BufferedImage[] blockTiles = new BufferedImage[3];
-	public BufferedImage[] coinTiles = new BufferedImage[6];
-	public BufferedImage[] enemyTiles = new BufferedImage[4];
-	public BufferedImage[] bossTiles = new BufferedImage[2];
-	public BufferedImage spikes = null;
+	public BufferedImage[] playerTiles = new BufferedImage[18];	// Niz textura Player-a
+	public BufferedImage[] blockTiles = new BufferedImage[3];	// Niz textura Block-ova
+	public BufferedImage[] coinTiles = new BufferedImage[6];	// Niz textura Coins-a
+	public BufferedImage[] enemyTiles = new BufferedImage[4];	// Niz textura Enemy-a
+	public BufferedImage[] bossTiles = new BufferedImage[2];	// Niz textura Boss-a
+	public BufferedImage spikes = null;							// Textura za Spike
 	
-	
+	// Konstruktor
 	public Textures()
 	{	
 		BufferedImageLoader loader = new BufferedImageLoader();
 		
+		// Ucitavanje velikih slika
 		player = loader.loadImage("/player.png");
 		blocks = loader.loadImage("/blocks.png");
 		
+		// Smestanje velikih slika u SpriteSheet 
 		playerSheet = new SpriteSheet(player);
 		blockSheet = new SpriteSheet(blocks);
 		
 		getTextures();
 	}
 	
+	// Uzimanje malih(pojedinacnih) textura iz velikih slika
 	private void getTextures()
 	{
 		blockTiles[0] = blockSheet.grabImage(1, 1, 32, 32);

@@ -3,18 +3,20 @@ package graphics;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 
+// Klasa Heads up Display (HUD) sluzi da obavestava igraca o njegovim heltima i sakupljenim novcicima
 public class Hud 
 {	
 	private int coinsCollected, playerHealth;
 	
+	// Dobija trenutne vrednosti sakupljenih novcica i helta
 	public void tick(int coins, int health)
 	{
 		coinsCollected = coins;
 		playerHealth = health;
 	}
 	
+	// Iscrtava i ispisuje na ekran dobijene vrednosti iz tick() metode
 	public void render(Graphics g)
 	{
 		g.setColor(Color.RED);
