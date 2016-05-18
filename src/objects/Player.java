@@ -67,7 +67,7 @@ public class Player
 		
 		if(health <= 0)
 		{
-			sfxGameOver.play(6.0f);
+			sfxGameOver.play(-5.0f);
 			health = 0;
 			Game.gameOver = true;
 		}
