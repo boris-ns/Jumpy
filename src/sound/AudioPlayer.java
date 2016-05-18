@@ -1,12 +1,13 @@
 package sound;
 
 import java.io.IOException;
-
 import javax.sound.sampled.*;
+
 public class AudioPlayer 
 {
-	private Clip clip;
+	private Clip clip; // clip-sound effect koji se pusta
 	
+	// Konstruktor
 	public AudioPlayer(String path)
 	{
 		try 
@@ -39,18 +40,35 @@ public class AudioPlayer
 		}
 	}
 	
+	// Metoda koja startuje SFX 
 	public void play(float volume)
 	{
 		playClip(volume);
 		clip.start();
 	}
 	
+	// Metoda koja startuje SFX i prilikom njegovog zavrsetka pusta ga opet
 	public void loopPlay(float volume)
 	{
 		playClip(volume);
-		clip.loop(clip.LOOP_CONTINUOUSLY);
+		clip.loop(Clip.LOOP_CONTINUOUSLY);
 	}
 	
+	// Metoda koja stopira SFX
+	public void stop()
+	{
+		if(clip.isRunning())
+			clip.stop();
+	}
+	
+	// Metoda koja zatvara SFX
+	public void close()
+	{
+		stop();
+		clip.close();
+	}
+	
+	// Metoda koja sluzi za podesavanje jacine zvuka sound effect-a
 	private void playClip(float volume)
 	{
 		if(clip == null)
@@ -61,17 +79,5 @@ public class AudioPlayer
 		FloatControl gainControl = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
 		gainControl.setValue(volume);
 		clip.setFramePosition(0);
-	}
-	
-	public void stop()
-	{
-		if(clip.isRunning())
-			clip.stop();
-	}
-	
-	public void close()
-	{
-		stop();
-		clip.close();
 	}
 }
