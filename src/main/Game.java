@@ -1,39 +1,17 @@
 package main;
 
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-
-import graphics.BufferedImageLoader;
-import graphics.Hud;
-import graphics.Textures;
+import java.awt.*;
+import java.awt.image.*;
+import graphics.*;
 import graphics.Window;
-import handlers.BlockHandler;
-import handlers.BossBulletsHandler;
-import handlers.BulletHandler;
-import handlers.CoinsHandler;
-import handlers.CollisionHandler;
-import handlers.EnemiesHandler;
-import handlers.RenderBlocksHandler;
-import handlers.SmartWallHandler;
-import handlers.SpikeHandler;
+import handlers.*;
 import input.KeyInput;
-import objects.Block;
-import objects.Boss;
-import objects.Camera;
-import objects.Coin;
-import objects.Enemy;
-import objects.Player;
-import objects.SmartWall;
-import objects.Spike;
+import objects.*;
 import sound.AudioPlayer;
 
 public class Game extends Canvas implements Runnable
 {
+	// Polja klase
 	public static final int width = 646, height = 480;
 	public static final int tileSize = 32;
 	public static boolean paused = false, gameOver = false, gameFinished = false;
@@ -62,7 +40,7 @@ public class Game extends Canvas implements Runnable
 	private AudioPlayer bgMusic; // background music
 	private int timer = 150;
 	
-	
+	// Konstruktor
 	public Game()
 	{
 		System.out.println("Konstruktor !");
@@ -83,8 +61,8 @@ public class Game extends Canvas implements Runnable
 	
 	private void init()
 	{									
-		player = new Player(70, 1450);
-		//player = new Player(55 * 32, 80 * 32);
+		player = new Player(70, 1450);	// Pozicija igraca na pocetnoj poziciji
+		//player = new Player(55 * 32, 80 * 32);	// Pozicija igraca na poziciji pred Boss fight
 		camera = new Camera(0, 0);
 		blockHandler = new BlockHandler();
 		rBlocksHandler = new RenderBlocksHandler();
@@ -216,6 +194,7 @@ public class Game extends Canvas implements Runnable
 		bs.show();
 	}
 	
+	// Metoda koja uzima sliku levela i pixele pretvara u stvarne blokove na osnovu njihovih boja
 	private void loadImageLevel(BufferedImage image)
 	{
 		int w = image.getWidth();
@@ -258,6 +237,7 @@ public class Game extends Canvas implements Runnable
 		}
 	}
 	
+	// Metoda koja pravi novi Thread za igru
 	public synchronized void start()
 	{
 		if(running)
@@ -268,6 +248,7 @@ public class Game extends Canvas implements Runnable
 		thread.start();
 	}
 	
+	// Metoda koja zaustavlja Thread namenjen za igru
 	public synchronized void stop()
 	{
 		try 

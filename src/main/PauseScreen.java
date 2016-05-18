@@ -1,18 +1,16 @@
 package main;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-
+import java.awt.*;
 import input.KeyInput;
 
 public class PauseScreen 
 {
-	public static enum State {resume, quit};
-	public static State pauseState = State.resume;
+	public static enum State {resume, quit}; 		// Enumeracija-u kojim stanjima moze biti pause screen
+	public static State pauseState = State.resume;	// Trenutno stanje pause screen-a
 	
-	private boolean resume, quit;
+	private boolean resume, quit;	// Koje stanje je trenutno selektovano
 	
+	// Konstruktor
 	public PauseScreen()
 	{
 		resume = false;
@@ -30,6 +28,7 @@ public class PauseScreen
 			System.exit(-1);
 	}
 	
+	// Iscrtavanje pause screen-a
 	public void render(Graphics g)
 	{
 		g.setFont(new Font("Arial Black", 1, 24));
