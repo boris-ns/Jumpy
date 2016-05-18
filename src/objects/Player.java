@@ -12,7 +12,8 @@ import sound.AudioPlayer;
 
 public class Player 
 {
-	private float x, y, velX, velY, lastVelX;
+	// Polja koja opisuju objekat tipa Player
+	private float x, y, velX, velY, lastVelX; // velX,Y-brzina kretanja po X i Y osi, lastVelX-poslednja vrednost velX
 	private final float MAX_VELY = 10;
 	private final int width, height;
 	private boolean falling , jumping;
@@ -21,28 +22,30 @@ public class Player
 	private int health, damage;
 	private Textures t = new Textures();
 	private Animation walkLeftAnim, walkRightAnim;
-	private int timer = 0;
 	private AudioPlayer sfxGameOver;
 	
+	// Pomocna polja
+	private int timer = 0;
+	
+	// Konstruktor
 	public Player(float x, float y)
 	{
 		this.x = x;
 		this.y = y;
 		
 		lastVelX = 1;
-		
 		width = 24;
 		height = 48;
-		
 		coinsCollected = 0;
 		health = 100;
 		damage = 25;
-		
 		falling = true;
 		jumping = false;
 		
 		sfxGameOver = new AudioPlayer("/gameOver.mp3");
-		
+	
+		// Ubacivanje slika za animacije koje se smenjuju brzinom 3
+		// Postoje 2 animacije-za kretanje u levo i kretanje u desno
 		walkLeftAnim = new Animation(3, t.playerTiles[2], t.playerTiles[3], t.playerTiles[4],
 				t.playerTiles[5], t.playerTiles[6], t.playerTiles[7], t.playerTiles[8], t.playerTiles[9]);
 		walkRightAnim = new Animation(3, t.playerTiles[10], t.playerTiles[11], t.playerTiles[12],
@@ -54,6 +57,7 @@ public class Player
 		x += velX;
 		y += velY;
 		
+		// Gravitacija koja sluzi da odredi kretanje igraca tokom njegovog padanja
 		if(falling || jumping)
 		{
 			velY += gravity;
@@ -62,9 +66,11 @@ public class Player
 				velY = MAX_VELY;
 		}
 		
+		// Pamcenje poslednje vrednosti velX da bi se znalo u kom smeru treba ispaljivati metke
 		if(velX != 0)
 			lastVelX = velX;
 		
+		// Kada igrac izgubi zivot, status igre se postavlja na gameOver i pusta se zvuk gameOver.mp3
 		if(health <= 0)
 		{
 			sfxGameOver.play(-5.0f);
@@ -72,6 +78,7 @@ public class Player
 			Game.gameOver = true;
 		}
 		
+		// Ukoliko je igrac sakupio vise od 25 novcica njegov damage se povecava
 		if(coinsCollected >= 25)
 		{
 			coinsCollected -= 25;
@@ -86,16 +93,18 @@ public class Player
 	
 	public void render(Graphics g)
 	{		
+		// Ukoliko igrac stoji u mestu, iscrtavace se 1 slika u zavisnosti od poslednje vrednosti koju je imao velX
 		if(velX == 0 && lastVelX > 0)
 			g.drawImage(t.playerTiles[0], (int)x, (int)y, null);
 		else if(velX == 0 && lastVelX < 0)
 			g.drawImage(t.playerTiles[1], (int)x, (int)y, null);
-	
+		// Ukoliko je igrac u pokretnu u zavisnosti od smera kretanja izvrsava se odredjena animacija
 		else if(velX > 0)
 			walkLeftAnim.drawAnimation(g, (int)x, (int)y);
 		else if(velX < 0)
 			walkRightAnim.drawAnimation(g, (int)x, (int)y);
 		
+		// Sluzi za ispisivanje teksta "Damage increased" da bi igrac bio obavesten da mu je damage povecan
 		if(timer-- >= 0)
 		{
 			g.setFont(new Font("Arial Black", 1, 15));
@@ -105,32 +114,33 @@ public class Player
 		}
 	}
 	
-	public Rectangle getBounds()
+	// Metode koje vracaju kvadrat koji predstavlja okvir i sluzi za detekciju dodira sa drugim objektima
+	public Rectangle getBounds() // Vraca pun okvir
 	{
 		return new Rectangle((int)x, (int)y, width, height);
 	}
 	
-	public Rectangle getBoundsTop()
+	public Rectangle getBoundsTop() // Vraca gornji deo okvira 
 	{
 		return new Rectangle((int)x + 5, (int)y, width - 10, 5);
 	}
 	
-	public Rectangle getBoundsBottom()
+	public Rectangle getBoundsBottom() // Vraca donji deo okvira
 	{
 		return new Rectangle((int)x + 5, (int)y + height - 5, width - 10, 5);
 	}
 	
-	public Rectangle getBoundsLeft()
+	public Rectangle getBoundsLeft() // Vraca levi deo okvira
 	{
 		return new Rectangle((int)x, (int)y + 5, 5, height - 10);
 	}
 
-	public Rectangle getBoundsRight()
+	public Rectangle getBoundsRight() // Vraca desni deo okvira
 	{
 		return new Rectangle((int)x + width - 5, (int)y + 5, 5, height - 10);
 	}
 	
-	
+	// Get metode
 	public float getX() 
 	{
 		return x;
@@ -191,6 +201,7 @@ public class Player
 		return damage;
 	}
 	
+	// Set metode
 	public void setX(float x)
 	{ 
 		this.x = x;

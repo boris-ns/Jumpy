@@ -1,9 +1,6 @@
 package objects;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Rectangle;
-
+import java.awt.*;
 import graphics.Animation;
 import graphics.Textures;
 import handlers.BossBulletsHandler;
@@ -12,17 +9,19 @@ import sound.AudioPlayer;
 
 public class Boss 
 {
-	private float x, y, velY;
+	// Polja koja opisuju objekat tipa Boss
+	public static final int size = 64;
+	private float x, y, velY; // velY-brzina kretanja po Y osi
 	private int health, damage;
-	private int size;
 	private Textures t;
 	private Animation animation;
-	
+
+	// Pomocna polja 
 	private int timer = 25;
 	private BossBulletsHandler bbh;
+	private AudioPlayer shootingSFX;	
 	
-	private AudioPlayer shootingSFX;
-	
+	// Konstruktor
 	public Boss(float x, float y, Textures t, BossBulletsHandler bbh)
 	{
 		this.x = x;
@@ -33,19 +32,21 @@ public class Boss
 		velY = 1.5f;
 		health = 1000;
 		damage = 20;
-		size = 64;
-		
 		shootingSFX = new AudioPlayer("/pistol.mp3");
-		
+		// Ubacivanje slika koje ucestvuju u animaciji Boss-a i menjaju se brzinom 4
 		animation = new Animation(4, t.bossTiles[0], t.bossTiles[1]);
 	}
 	
 	public void tick(int playerX, int playerY)
 	{
+		// Ako je Boss ziv njegova pozicija na Y osi se menja, u suprotnom
+		// gameFinished se postavlja na ture i igrac je pobedio
 		if(health > 0)
 		{
 			y += velY;
 			
+			// Ukoliko je igrac dostigao ovu Y poziciju, timer se smanjuje i na svakih 25 tick-ova
+			// Boss ispaljuje po  1 metak ispred ili iza sebe u zavisnosti gde se igrac nalazi
 			if(playerY > 85 * 32)
 			{			
 				--timer;
@@ -57,7 +58,6 @@ public class Boss
 					timer = 25;
 				}
 			}
-			
 			animation.runAnimation();
 		}
 		else
@@ -68,12 +68,15 @@ public class Boss
 	{
 		if(health > 0)
 		{
+			// Iscrtavanje health bar-a iznad Boss-a
 			g.setColor(Color.RED);
 			g.fillRect((int)x - 20, (int)y - 15, health / 10, 10);
 		
 			animation.drawAnimation(g, (int)x, (int)y);
 		}
 	}
+	
+	// Metoda getBounds() vraca kvadrat koji predstavlja okvir i sluzi za detekciju dodira sa drugim objektima
 	public Rectangle getBounds()
 	{
 		return new Rectangle((int)x, (int)y, size / 2, size);
@@ -84,6 +87,7 @@ public class Boss
 		return new Rectangle((int)x, (int)y, size, size);
 	}
 
+	// Get metode
 	public float getVelY() 
 	{
 		return velY;
@@ -99,6 +103,7 @@ public class Boss
 		return damage;
 	}
 
+	// Set metode
 	public void setVelY(float velY) 
 	{
 		this.velY = velY;

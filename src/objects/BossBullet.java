@@ -3,10 +3,15 @@ package objects;
 import java.awt.Color;
 import java.awt.Graphics;
 
+// Klasa BossBullet predstavlja metke koje ispaljuje Boss
+// BossBullet nasledjuje Bullet i ponasa se isto kao ona, osim sto se koristi druga 
+// boja za iscrtavanje u metodi render()
 public class BossBullet extends Bullet
 {
+	// Konstruktor
 	public BossBullet(float x, float y, float playerLastVelX, float playerHeight, float playerWidth) 
 	{
+		// Poziv konstruktora nadklase 
 		super(x, y, playerLastVelX, playerHeight, playerWidth);
 	}
 	
