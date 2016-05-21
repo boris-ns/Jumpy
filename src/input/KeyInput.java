@@ -46,7 +46,8 @@ public class KeyInput extends KeyAdapter
 			player.setVelX(0);
 		
 		// Deo koji sluzi za ispaljivanje metkova (metkovi se ispaljuju na svakom 17-tom tick-u) i pustanje SFX-a
-		if(fire && --timer <= 0)
+		--timer; // NOTE: Nemoj stavljati u if dole jer je cudan osecaj kada se puca(Ne reaguje na 1 stisak space-a)
+		if(fire && timer <= 0)
 		{
 			shootingSFX.play(-10.0f);
 			bHandler.bullets.add(new Bullet((int)player.getX(), (int)player.getY(), player.getLastVelX(), player.getHeight(), player.getWidth()));
