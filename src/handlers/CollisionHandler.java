@@ -172,7 +172,9 @@ public class CollisionHandler
 				// Ukoliko dodje do dodira smanjuju se helti neprijatelja i metak se unistava
 				if(eh.enemies.get(i).getBounds().intersects(bhl.bullets.get(j).getBounds()))
 				{
+					System.out.println("Enemy health: " + eh.enemies.get(i).getHealth());
 					eh.enemies.get(i).setHealth(eh.enemies.get(i).getHealth() - p.getDamage());
+					System.out.println("Enemy health: " + eh.enemies.get(i).getHealth());
 					bhl.bullets.remove(j);
 				}
 			}
