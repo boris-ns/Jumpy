@@ -21,6 +21,7 @@ public class CollisionHandler
 	private SpikeHandler sh;
 	private EnemiesHandler eh;
 	private SmartWallHandler swh;
+	private HealthPackHandler hph;
 	
 	// HashMap koji sluzi za skladistenje SFX-a
 	private HashMap<String, AudioPlayer> sfx;
@@ -31,7 +32,7 @@ public class CollisionHandler
 	
 	// Konstruktor
 	public CollisionHandler(Player p, Boss boss, BlockHandler bl, CoinsHandler cl, BulletHandler bhl,
-			 BossBulletsHandler bbh, SpikeHandler sh, EnemiesHandler eh, SmartWallHandler swh)
+			 BossBulletsHandler bbh, SpikeHandler sh, EnemiesHandler eh, SmartWallHandler swh, HealthPackHandler hph)
 	{
 		this.p = p;
 		this.boss = boss;
@@ -42,6 +43,7 @@ public class CollisionHandler
 		this.sh = sh;
 		this.eh = eh;
 		this.swh = swh;		
+		this.hph = hph;
 		
 		initSFX();
 	}
@@ -135,7 +137,7 @@ public class CollisionHandler
 			// Ukoliko igrac dodirne Coin objekat,povecava se coinsCollected i pusta se odredjeni SFX
 			if(p.getBounds().intersects(coin.getBounds()) && !coin.getIsCollected())
 			{
-				sfx.get("Coin").play(-20.0f);
+				sfx.get("Coin").play(-10.0f);
 				p.setCoinsCollected(p.getCoinsCollected() + 1);
 				coin.setIsCollected(true);
 			}
@@ -225,6 +227,25 @@ public class CollisionHandler
 			}	
 		}
 		
+		// Detekcija dodira izmedju Playera i HealthPack objekata
+		for(int i = 0; i < hph.healthPack.size(); i++)
+		{
+			if(p.getBounds().intersects(hph.healthPack.get(i).getBounds()))
+			{
+				// Ukoliko Player ima full helte samo preskoci iteraciju i ne dodaje helte
+				if(p.getHealth() == 100)
+					continue;
+				
+				if(p.getHealth() + hph.healthPack.get(i).getHeal() >= 100)
+					p.setHealth(100);
+				else
+					p.setHealth(p.getHealth() + hph.healthPack.get(i).getHeal());
+			
+				sfx.get("Heal").play(-10.0f);
+				hph.healthPack.remove(i);
+			}
+		}
+		
 		// Ako dodje do dodira izmedju Boss-a i igraca, helti igraca se odma postavljaju na 0 i pusta se odredjeni zvuk
 		if(p.getBounds().intersects(boss.getBoundsFull()) && boss.getHealth() > 0)
 		{
@@ -237,9 +258,11 @@ public class CollisionHandler
 	private void initSFX()
 	{
 		sfx = new HashMap<String, AudioPlayer>();
-		sfx.put("Coin", new AudioPlayer("/coinflip.mp3"));
+		//sfx.put("Coin", new AudioPlayer("/coinflip.mp3")); // NOTE: Ako koristis ovaj sfx smanji zvuk na -20.0f
+		sfx.put("Coin", new AudioPlayer("/coinflipCut.mp3"));
 		sfx.put("Punch", new AudioPlayer("/punch.mp3"));
 		sfx.put("Door", new AudioPlayer("/jail_cell_door.mp3"));
 		sfx.put("Hurt", new AudioPlayer("/hurt.mp3"));
+		sfx.put("Heal", new AudioPlayer("/heal.mp3"));
 	}
 }

@@ -32,6 +32,7 @@ public class Game extends Canvas implements Runnable
 	private SpikeHandler spikeHandler;
 	private EnemiesHandler enemiesHandler;
 	private SmartWallHandler smartWallHandler;
+	private HealthPackHandler hpHandler;
 	private BufferedImage level1 = null, backgroundTile;
 	private Camera camera;
 	private Textures textures = new Textures();
@@ -74,8 +75,9 @@ public class Game extends Canvas implements Runnable
 		spikeHandler = new SpikeHandler();
 		enemiesHandler = new EnemiesHandler();
 		smartWallHandler = new SmartWallHandler();
+		hpHandler = new HealthPackHandler();
 		collisionHandler = new CollisionHandler(player, boss, blockHandler, coinsHandler, bHandler, bossBHandler, 
-				spikeHandler, enemiesHandler, smartWallHandler);
+				spikeHandler, enemiesHandler, smartWallHandler, hpHandler);
 
 		loader = new BufferedImageLoader();		
 		level1 = loader.loadImage("/level1.png");
@@ -135,6 +137,7 @@ public class Game extends Canvas implements Runnable
 			bHandler.tick();
 			bossBHandler.tick();
 			enemiesHandler.tick();
+			hpHandler.tick();
 		}	
 	}
 	
@@ -166,6 +169,7 @@ public class Game extends Canvas implements Runnable
 		bHandler.render(g);
 		bossBHandler.render(g);
 		smartWallHandler.render(g);
+		hpHandler.render(g);
 		enemiesHandler.render(g);
 		boss.render(g);
 		player.render(g);
@@ -234,6 +238,9 @@ public class Game extends Canvas implements Runnable
 			
 				if(red == 0 && green == 255 && blue == 255)
 					smartWallHandler.smartWalls.add(new SmartWall(i * tileSize, j * tileSize, textures));
+				
+				if(red == 0 && green == 0 && blue == 255)
+					hpHandler.healthPack.add(new HealthPack(i * tileSize, j * tileSize, textures));
 			}
 		}
 	}
