@@ -174,6 +174,7 @@ public class Game extends Canvas implements Runnable
 		boss.render(g);
 		player.render(g);
 		spikeHandler.render(g);
+		hpHandler.render(g);
 		
 		g2d.translate(-camera.getX(), -camera.getY());
 		
