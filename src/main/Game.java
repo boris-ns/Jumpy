@@ -33,7 +33,7 @@ public class Game extends Canvas implements Runnable
 	private EnemiesHandler enemiesHandler;
 	private SmartWallHandler smartWallHandler;
 	private HealthPackHandler hpHandler;
-	private BufferedImage level1 = null, level2 = null, backgroundTile;
+	private BufferedImage level1 = null, level2 = null, light = null, backgroundTile;
 	private Camera camera;
 	private Textures textures = new Textures();
 	private Hud hud;
@@ -81,6 +81,7 @@ public class Game extends Canvas implements Runnable
 				spikeHandler, enemiesHandler, smartWallHandler, hpHandler);
 
 		loader = new BufferedImageLoader();		
+		light = loader.loadImage("/playerLight.png");
 		level1 = loader.loadImage("/level1.png");
 		level2 = loader.loadImage("/level2.png");
 		//loadImageLevel(level1);		
@@ -179,19 +180,9 @@ public class Game extends Canvas implements Runnable
 		spikeHandler.render(g);
 		hpHandler.render(g);
 		
-		for(int i = 0; i < width; i += 32)
-		{
-			for(int j = 0; j < height; j += 32)
-			{
-				if(i < player.getX() - 32 || i > player.getX() + 32)
-				{
-					g.setColor(Color.black);
-					g.fillRect(i, j, 32, 32);
-				}
-			}
-		}
+		g.drawImage(light, (int)player.getX() - light.getWidth() / 2, (int)player.getY() - light.getHeight() / 2, null);
 		
-		g2d.translate(-camera.getX(), -camera.getY());
+		g2d.translate(-camera.getX(), -camera.getY());		
 		
 		if(paused)
 			pScreen.render(g);
