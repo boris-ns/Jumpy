@@ -33,7 +33,7 @@ public class Game extends Canvas implements Runnable
 	private EnemiesHandler enemiesHandler;
 	private SmartWallHandler smartWallHandler;
 	private HealthPackHandler hpHandler;
-	private BufferedImage level1 = null, backgroundTile;
+	private BufferedImage level1 = null, level2 = null, backgroundTile;
 	private Camera camera;
 	private Textures textures = new Textures();
 	private Hud hud;
@@ -62,9 +62,10 @@ public class Game extends Canvas implements Runnable
 	
 	private void init()
 	{									
-		player = new Player(70, 1450);	// Pozicija igraca na pocetnoj poziciji
+		//player = new Player(70, 1450);	// Pozicija igraca na pocetnoj poziciji
 		//player = new Player(55 * 32, 80 * 32);	// Pozicija igraca na poziciji pred Boss fight
 		//player = new Player(45 * 32, 60*32);	
+		player = new Player(2 * 32, 12 * 32); // Pozicija igraca za pocetak level2
 		camera = new Camera(0, 0);
 		blockHandler = new BlockHandler();
 		rBlocksHandler = new RenderBlocksHandler();
@@ -81,7 +82,9 @@ public class Game extends Canvas implements Runnable
 
 		loader = new BufferedImageLoader();		
 		level1 = loader.loadImage("/level1.png");
-		loadImageLevel(level1);			
+		level2 = loader.loadImage("/level2.png");
+		//loadImageLevel(level1);		
+		loadImageLevel(level2);
 	}
 	
 //	private void initAfterGameOver()
@@ -175,6 +178,18 @@ public class Game extends Canvas implements Runnable
 		player.render(g);
 		spikeHandler.render(g);
 		hpHandler.render(g);
+		
+		for(int i = 0; i < width; i += 32)
+		{
+			for(int j = 0; j < height; j += 32)
+			{
+				if(i < player.getX() - 32 || i > player.getX() + 32)
+				{
+					g.setColor(Color.black);
+					g.fillRect(i, j, 32, 32);
+				}
+			}
+		}
 		
 		g2d.translate(-camera.getX(), -camera.getY());
 		
