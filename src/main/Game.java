@@ -65,7 +65,9 @@ public class Game extends Canvas implements Runnable
 		//player = new Player(70, 1450);	// Pozicija igraca na pocetnoj poziciji
 		//player = new Player(55 * 32, 80 * 32);	// Pozicija igraca na poziciji pred Boss fight
 		//player = new Player(45 * 32, 60*32);	
-		player = new Player(2 * 32, 12 * 32); // Pozicija igraca za pocetak level2
+		
+		//player = new Player(2 * 32, 12 * 32); // Pozicija igraca za pocetak level2
+		player = new Player(56 * 32, 26 * 32); // Pozicija igraca pred lavirint u level2
 		
 		camera = new Camera(0, 0);
 		blockHandler = new BlockHandler();
