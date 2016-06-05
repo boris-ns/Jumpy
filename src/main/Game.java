@@ -66,6 +66,7 @@ public class Game extends Canvas implements Runnable
 		//player = new Player(55 * 32, 80 * 32);	// Pozicija igraca na poziciji pred Boss fight
 		//player = new Player(45 * 32, 60*32);	
 		player = new Player(2 * 32, 12 * 32); // Pozicija igraca za pocetak level2
+		
 		camera = new Camera(0, 0);
 		blockHandler = new BlockHandler();
 		rBlocksHandler = new RenderBlocksHandler();
@@ -180,6 +181,7 @@ public class Game extends Canvas implements Runnable
 		spikeHandler.render(g);
 		hpHandler.render(g);
 		
+		// Lamp effect
 		g.drawImage(light, (int)player.getX() - light.getWidth() / 2, (int)player.getY() - light.getHeight() / 2, null);
 		
 		g2d.translate(-camera.getX(), -camera.getY());		
