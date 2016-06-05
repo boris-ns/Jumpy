@@ -17,7 +17,7 @@ public class Camera
 	public void tick(Player player)
 	{
 		y = -player.getY() + Game.width / 3;
-		
+
 		// Postavljanje kamere na jednu od tri pozicija u zavisnosti X pozicije igraca
 		if(player.getX() > Game.width * 2 - Block.size * 2)
 			x = -Game.width * 2 + Block.size * 2 + 10;
