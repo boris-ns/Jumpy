@@ -251,6 +251,7 @@ public class Game extends Canvas implements Runnable
 					hpHandler.healthPack.add(new HealthPack(i * tileSize, j * tileSize, textures));
 				else if(red == 255 && green == 128 && blue == 0)
 					batHandler.bats.add(new Bat(i * tileSize, j * tileSize, 1, textures));
+// TODO: Dodaj i bat da se krece u drugom smeru a ne samo u ovom jednom 
 			}
 		}
 	}
