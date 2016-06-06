@@ -22,6 +22,7 @@ public class CollisionHandler
 	private EnemiesHandler eh;
 	private SmartWallHandler swh;
 	private HealthPackHandler hph;
+	private BatHandler batH;
 	
 	// HashMap koji sluzi za skladistenje SFX-a
 	private HashMap<String, AudioPlayer> sfx;
@@ -32,7 +33,8 @@ public class CollisionHandler
 	
 	// Konstruktor
 	public CollisionHandler(Player p, Boss boss, BlockHandler bl, CoinsHandler cl, BulletHandler bhl,
-			 BossBulletsHandler bbh, SpikeHandler sh, EnemiesHandler eh, SmartWallHandler swh, HealthPackHandler hph)
+			 BossBulletsHandler bbh, SpikeHandler sh, EnemiesHandler eh, SmartWallHandler swh, HealthPackHandler hph,
+			 BatHandler batH)
 	{
 		this.p = p;
 		this.boss = boss;
@@ -44,6 +46,7 @@ public class CollisionHandler
 		this.eh = eh;
 		this.swh = swh;		
 		this.hph = hph;
+		this.batH = batH;
 		
 		initSFX();
 	}
@@ -110,6 +113,26 @@ public class CollisionHandler
 					eh.enemies.get(j).setVelX(eh.enemies.get(j).getVelX() * (-1));
 			}	
 			
+			// Detekcija dodira izmedju blokova i Bat objekata
+			for(int j = 0; j < batH.bats.size(); j++)
+			{	
+				// Ukoliko dodje do dodira sa blokom menja se smer kretanja Enemy objekta
+				if(batH.bats.get(j).getBoundsRight().intersects(block.getBounds()))
+					batH.bats.get(j).setVelX(batH.bats.get(j).getVelX() * (-1));
+				else if(batH.bats.get(j).getBoundsLeft().intersects(block.getBounds()))
+					batH.bats.get(j).setVelX(batH.bats.get(j).getVelX() * (-1));
+				
+				if(batH.bats.get(j).getBounds().intersects(p.getBounds()))
+				{
+					// TODO: Player se otruje i samnjuje mu HP za 1 svakih 20 tickova i mora da nadje protivotrov
+					
+					sfx.get("Hurt").play(-10.0f);
+					p.setHealth(p.getHealth() - batH.bats.get(j).getDamage());
+					p.setVelY(-15);
+					p.setJumping(true);
+				}
+			}	
+			
 			// Detekcija dodira metkova koje ispaljuje Boss sa blokovima i igracem
 			for(int j = 0; j < bbh.bullets.size(); j++)
 			{
@@ -125,7 +148,7 @@ public class CollisionHandler
 				{
 					bbh.bullets.remove(j);
 					p.setHealth(p.getHealth() - boss.getDamage());
-				}
+				}				
 			}
 		}
 		
@@ -178,6 +201,17 @@ public class CollisionHandler
 					eh.enemies.get(i).setHealth(eh.enemies.get(i).getHealth() - p.getDamage());
 					System.out.println("Enemy health: " + eh.enemies.get(i).getHealth());
 					bhl.bullets.remove(j);
+					continue;
+				}
+				
+				for(int k = 0; k < batH.bats.size(); k++)
+				{
+					if(batH.bats.get(k).getBounds().intersects(bhl.bullets.get(j).getBounds()))
+					{
+						System.out.println("Enemy health: " + batH.bats.get(k).getHealth());
+						batH.bats.get(k).setHealth(batH.bats.get(k).getHealth() - p.getDamage());
+						bhl.bullets.remove(j);
+					}
 				}
 			}
 		}

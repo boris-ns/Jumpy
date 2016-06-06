@@ -33,6 +33,7 @@ public class Game extends Canvas implements Runnable
 	private EnemiesHandler enemiesHandler;
 	private SmartWallHandler smartWallHandler;
 	private HealthPackHandler hpHandler;
+	private BatHandler batHandler;
 	private BufferedImage level1 = null, level2 = null, light = null, backgroundTile;
 	private Camera camera;
 	private Textures textures = new Textures();
@@ -66,8 +67,8 @@ public class Game extends Canvas implements Runnable
 		//player = new Player(55 * 32, 80 * 32);	// Pozicija igraca na poziciji pred Boss fight
 		//player = new Player(45 * 32, 60*32);	
 		
-		//player = new Player(2 * 32, 12 * 32); // Pozicija igraca za pocetak level2
-		player = new Player(56 * 32, 26 * 32); // Pozicija igraca pred lavirint u level2
+		player = new Player(2 * 32, 12 * 32); // Pozicija igraca za pocetak level2
+		//player = new Player(56 * 32, 26 * 32); // Pozicija igraca pred lavirint u level2
 		
 		camera = new Camera(0, 0);
 		blockHandler = new BlockHandler();
@@ -80,8 +81,9 @@ public class Game extends Canvas implements Runnable
 		enemiesHandler = new EnemiesHandler();
 		smartWallHandler = new SmartWallHandler();
 		hpHandler = new HealthPackHandler();
+		batHandler = new BatHandler();
 		collisionHandler = new CollisionHandler(player, boss, blockHandler, coinsHandler, bHandler, bossBHandler, 
-				spikeHandler, enemiesHandler, smartWallHandler, hpHandler);
+				spikeHandler, enemiesHandler, smartWallHandler, hpHandler, batHandler);
 
 		loader = new BufferedImageLoader();		
 		light = loader.loadImage("/playerLight.png");
@@ -145,6 +147,7 @@ public class Game extends Canvas implements Runnable
 			bossBHandler.tick();
 			enemiesHandler.tick();
 			hpHandler.tick();
+			batHandler.tick();
 		}	
 	}
 	
@@ -182,6 +185,7 @@ public class Game extends Canvas implements Runnable
 		player.render(g);
 		spikeHandler.render(g);
 		hpHandler.render(g);
+		batHandler.render(g);
 		
 		// Lamp effect
 		g.drawImage(light, (int)player.getX() - light.getWidth() / 2, (int)player.getY() - light.getHeight() / 2, null);
@@ -230,28 +234,23 @@ public class Game extends Canvas implements Runnable
 				blue = (pixel) & 0xff;
 				
 				if(red == 255 && green == 255 && blue == 255) 
-					blockHandler.blocks.add(new Block(i * tileSize, j * tileSize, textures));
-				
-				if(red == 180 && green == 180 && blue == 180)
-					rBlocksHandler.blocks.add(new Block(i * tileSize, j * tileSize, textures));
-					
-				if(red == 255 && green == 255 && blue == 0)
-					coinsHandler.coins.add(new Coin(i * tileSize, j * tileSize, textures));
-			
-				if(red == 255 && green == 0 && blue == 0)
-					spikeHandler.spikes.add(new Spike(i * tileSize, j * tileSize, textures));
-			
-				if(red == 255 && green == 0 && blue == 255)
-					enemiesHandler.enemies.add(new Enemy(i * tileSize, j * tileSize, 1, textures));
-				
-				if(red == 255 && green == 200 && blue == 255)
-					enemiesHandler.enemies.add(new Enemy(i * tileSize, j * tileSize, 2, textures));
-			
-				if(red == 0 && green == 255 && blue == 255)
+					blockHandler.blocks.add(new Block(i * tileSize, j * tileSize, textures));				
+				else if(red == 180 && green == 180 && blue == 180)
+					rBlocksHandler.blocks.add(new Block(i * tileSize, j * tileSize, textures));	
+				else if(red == 255 && green == 255 && blue == 0)
+					coinsHandler.coins.add(new Coin(i * tileSize, j * tileSize, textures));			
+				else if(red == 255 && green == 0 && blue == 0)
+					spikeHandler.spikes.add(new Spike(i * tileSize, j * tileSize, textures));			
+				else if(red == 255 && green == 0 && blue == 255)
+					enemiesHandler.enemies.add(new Enemy(i * tileSize, j * tileSize, 1, textures));				
+				else if(red == 255 && green == 200 && blue == 255)
+					enemiesHandler.enemies.add(new Enemy(i * tileSize, j * tileSize, 2, textures));			
+				else if(red == 0 && green == 255 && blue == 255)
 					smartWallHandler.smartWalls.add(new SmartWall(i * tileSize, j * tileSize, textures));
-				
-				if(red == 0 && green == 0 && blue == 255)
+				else if(red == 0 && green == 0 && blue == 255)
 					hpHandler.healthPack.add(new HealthPack(i * tileSize, j * tileSize, textures));
+				else if(red == 255 && green == 128 && blue == 0)
+					batHandler.bats.add(new Bat(i * tileSize, j * tileSize, 1, textures));
 			}
 		}
 	}
