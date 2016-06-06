@@ -122,15 +122,10 @@ public class CollisionHandler
 				else if(batH.bats.get(j).getBoundsLeft().intersects(block.getBounds()))
 					batH.bats.get(j).setVelX(batH.bats.get(j).getVelX() * (-1));
 				
-				if(batH.bats.get(j).getBounds().intersects(p.getBounds()))
-				{
-					// TODO: Player se otruje i samnjuje mu HP za 1 svakih 20 tickova i mora da nadje protivotrov
-					
-					sfx.get("Hurt").play(-10.0f);
-					p.setHealth(p.getHealth() - batH.bats.get(j).getDamage());
-					p.setVelY(-15);
-					p.setJumping(true);
-				}
+//				if(batH.bats.get(j).getBounds().intersects(p.getBounds()))
+//				{
+//					// TODO: Player se otruje i samnjuje mu HP za 1 svakih 20 tickova i mora da nadje protivotrov
+//				}
 			}	
 			
 			// Detekcija dodira metkova koje ispaljuje Boss sa blokovima i igracem
@@ -201,17 +196,19 @@ public class CollisionHandler
 					eh.enemies.get(i).setHealth(eh.enemies.get(i).getHealth() - p.getDamage());
 					System.out.println("Enemy health: " + eh.enemies.get(i).getHealth());
 					bhl.bullets.remove(j);
-					continue;
 				}
-				
-				for(int k = 0; k < batH.bats.size(); k++)
+			}
+		}
+		
+		for(int i = 0; i < batH.bats.size(); i++)
+		{
+			for(int j = 0; j < bhl.bullets.size(); j++)
+			{
+				if(batH.bats.get(i).getBounds().intersects(bhl.bullets.get(j).getBounds()))
 				{
-					if(batH.bats.get(k).getBounds().intersects(bhl.bullets.get(j).getBounds()))
-					{
-						System.out.println("Enemy health: " + batH.bats.get(k).getHealth());
-						batH.bats.get(k).setHealth(batH.bats.get(k).getHealth() - p.getDamage());
-						bhl.bullets.remove(j);
-					}
+					System.out.println("Enemy health: " + batH.bats.get(i).getHealth());
+					batH.bats.get(i).setHealth(batH.bats.get(i).getHealth() - p.getDamage());
+					bhl.bullets.remove(j);
 				}
 			}
 		}
