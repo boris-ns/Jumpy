@@ -24,7 +24,7 @@ public class Player
 	private AudioPlayer sfxGameOver;
 	
 	// Pomocna polja
-	private int timer = 0, poisonedTimer = 20;
+	private int timer = 0, poisonedTimer;
 	
 	// Konstruktor
 	public Player(float x, float y)
@@ -44,6 +44,8 @@ public class Player
 		
 		sfxGameOver = new AudioPlayer("/gameOver.mp3");
 	
+		poisonedTimer = 40;
+		
 		// Ubacivanje slika za animacije koje se smenjuju brzinom 3
 		// Postoje 2 animacije-za kretanje u levo i kretanje u desno
 		walkLeftAnim = new Animation(3, t.playerTiles[2], t.playerTiles[3], t.playerTiles[4],
@@ -91,7 +93,7 @@ public class Player
 		if(isPoisoned && --poisonedTimer == 0)
 		{
 			health -= 1;
-			poisonedTimer = 20;
+			poisonedTimer = 40;
 		}
 		
 		walkLeftAnim.runAnimation();
