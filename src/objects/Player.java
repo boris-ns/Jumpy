@@ -16,16 +16,15 @@ public class Player
 	private float x, y, velX, velY, lastVelX; // velX,Y-brzina kretanja po X i Y osi, lastVelX-poslednja vrednost velX
 	private final float MAX_VELY = 10;
 	private final int width, height;
-	private boolean falling , jumping;
+	private boolean falling , jumping, isPoisoned;
 	private float gravity = 1f;
-	private int coinsCollected;
-	private int health, damage;
+	private int health, damage, coinsCollected;
 	private Textures t = new Textures();
 	private Animation walkLeftAnim, walkRightAnim;
 	private AudioPlayer sfxGameOver;
 	
 	// Pomocna polja
-	private int timer = 0;
+	private int timer = 0, poisonedTimer = 20;
 	
 	// Konstruktor
 	public Player(float x, float y)
@@ -41,6 +40,7 @@ public class Player
 		damage = 25;
 		falling = true;
 		jumping = false;
+		isPoisoned = false;
 		
 		sfxGameOver = new AudioPlayer("/gameOver.mp3");
 	
@@ -85,6 +85,13 @@ public class Player
 			damage += 25;
 			timer = 70;
 			System.out.println("Damage: " + damage);
+		}
+		
+		// Ukoliko se igrac otrovao pri dodiru sa Bat-om
+		if(isPoisoned && --poisonedTimer == 0)
+		{
+			health -= 1;
+			poisonedTimer = 20;
 		}
 		
 		walkLeftAnim.runAnimation();
@@ -201,6 +208,11 @@ public class Player
 		return damage;
 	}
 	
+	public boolean getIsPoisoned()
+	{
+		return isPoisoned;
+	}
+	
 	// Set metode
 	public void setX(float x)
 	{ 
@@ -240,5 +252,10 @@ public class Player
 	public void setHealth(int health)
 	{
 		this.health = health;
+	}
+	
+	public void setIsPoisoned(boolean isPoisoned)
+	{
+		this.isPoisoned = isPoisoned;
 	}
 }

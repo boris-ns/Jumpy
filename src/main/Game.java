@@ -63,7 +63,7 @@ public class Game extends Canvas implements Runnable
 	
 	private void init()
 	{									
-		//player = new Player(70, 1450);	// Pozicija igraca na pocetnoj poziciji
+		//player = new Player(70, 1450);	// Pozicija igraca na pocetnoj poziciji level1
 		//player = new Player(55 * 32, 80 * 32);	// Pozicija igraca na poziciji pred Boss fight
 		//player = new Player(45 * 32, 60*32);	
 		
@@ -187,8 +187,9 @@ public class Game extends Canvas implements Runnable
 		hpHandler.render(g);
 		batHandler.render(g);
 		
+// TODO: Probaj da nadjes neki bolji nacin da realizuje Lamp effect jer ovaj uzima 25-30 MB dodatne memorije
 		// Lamp effect
-		g.drawImage(light, (int)player.getX() - light.getWidth() / 2, (int)player.getY() - light.getHeight() / 2, null);
+		//g.drawImage(light, (int)player.getX() - light.getWidth() / 2, (int)player.getY() - light.getHeight() / 2, null);
 		
 		g2d.translate(-camera.getX(), -camera.getY());		
 		

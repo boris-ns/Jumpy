@@ -200,6 +200,7 @@ public class CollisionHandler
 			}
 		}
 		
+		// Detekcija dodira Bat-ova i igraca i igracevih metkova
 		for(int i = 0; i < batH.bats.size(); i++)
 		{
 			for(int j = 0; j < bhl.bullets.size(); j++)
@@ -211,6 +212,9 @@ public class CollisionHandler
 					bhl.bullets.remove(j);
 				}
 			}
+			
+			if(batH.bats.get(i).getBounds().intersects(p.getBounds().getBounds()))
+				p.setIsPoisoned(true);
 		}
 		
 		// Detekcija dodira igraca i SmartWall objekata
@@ -263,8 +267,10 @@ public class CollisionHandler
 		{
 			if(p.getBounds().intersects(hph.healthPack.get(i).getBounds()))
 			{
-				// Ukoliko Player ima full helte samo preskoci iteraciju i ne dodaje helte
-				if(p.getHealth() == 100)
+				p.setIsPoisoned(false);
+				
+				// Ukoliko Player ima full helte i nije zarazen samo preskoci iteraciju i ne dodaje helte
+				if(p.getHealth() == 100 && !p.getIsPoisoned())
 					continue;
 				
 				if(p.getHealth() + hph.healthPack.get(i).getHeal() >= 100)
