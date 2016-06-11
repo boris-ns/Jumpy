@@ -47,7 +47,10 @@ public class Boss
 			
 			// Ukoliko je igrac dostigao ovu Y poziciju, timer se smanjuje i na svakih 25 tick-ova
 			// Boss ispaljuje po  1 metak ispred ili iza sebe u zavisnosti gde se igrac nalazi
-			if(playerY > 85 * 32)
+			
+// TODO: playerY > 75 je za level2 , nadji neki bolji nacin da realizujes ovo a ne da moras da stavljas || 
+			// u svakom levelu gde se ovaj Boss ubaci
+			if(playerY > 85 * 32 || playerY > 75 * 32)
 			{			
 				--timer;
 				if(timer == 0)
