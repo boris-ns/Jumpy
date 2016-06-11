@@ -69,8 +69,8 @@ public class Game extends Canvas implements Runnable
 		//player = new Player(45 * 32, 60*32);	
 		
 		//player = new Player(2 * 32, 12 * 32); // Pozicija igraca za pocetak level2
-		player = new Player(56 * 32, 26 * 32); // Pozicija igraca pred lavirint u level2
-		//player = new Player(36 * 32, 72 * 32); // Pozicija igraca pred Boss fight u level2
+		//player = new Player(56 * 32, 26 * 32); // Pozicija igraca pred lavirint u level2
+		player = new Player(36 * 32, 72 * 32); // Pozicija igraca pred Boss fight u level2
 		
 		camera = new Camera(0, 0);
 		blockHandler = new BlockHandler();
@@ -79,7 +79,7 @@ public class Game extends Canvas implements Runnable
 		bHandler = new BulletHandler();
 		bossBHandler = new BossBulletsHandler();
 		//boss = new Boss(44 * 32, 90 * 32, textures, bossBHandler);
-		boss = new Boss(23 * 32, 80 * 32, textures, bossBHandler);
+		boss = new Boss(23 * 32, 82 * 32, textures, bossBHandler);
 		spikeHandler = new SpikeHandler();
 		enemiesHandler = new EnemiesHandler();
 		smartWallHandler = new SmartWallHandler();
