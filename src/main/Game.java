@@ -70,6 +70,7 @@ public class Game extends Canvas implements Runnable
 		
 		//player = new Player(2 * 32, 12 * 32); // Pozicija igraca za pocetak level2
 		player = new Player(56 * 32, 26 * 32); // Pozicija igraca pred lavirint u level2
+		//player = new Player(36 * 32, 72 * 32); // Pozicija igraca pred Boss fight u level2
 		
 		camera = new Camera(0, 0);
 		blockHandler = new BlockHandler();
@@ -176,11 +177,11 @@ public class Game extends Canvas implements Runnable
 		
 		g2d.translate(camera.getX(), camera.getY());
 		
-		blockHandler.render(g);
 		rBlocksHandler.render(g);
 		coinsHandler.render(g);
 		bHandler.render(g);
 		bossBHandler.render(g);
+		blockHandler.render(g);
 		smartWallHandler.render(g);
 		hpHandler.render(g);
 		enemiesHandler.render(g);
