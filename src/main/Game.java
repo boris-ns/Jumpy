@@ -68,8 +68,8 @@ public class Game extends Canvas implements Runnable
 		//player = new Player(55 * 32, 80 * 32);	// Pozicija igraca na poziciji pred Boss fight
 		//player = new Player(45 * 32, 60*32);	
 		
-		//player = new Player(2 * 32, 12 * 32); // Pozicija igraca za pocetak level2
-		player = new Player(56 * 32, 26 * 32); // Pozicija igraca pred lavirint u level2
+		player = new Player(2 * 32, 12 * 32); // Pozicija igraca za pocetak level2
+		//player = new Player(56 * 32, 26 * 32); // Pozicija igraca pred lavirint u level2
 		
 		camera = new Camera(0, 0);
 		blockHandler = new BlockHandler();
@@ -255,7 +255,8 @@ public class Game extends Canvas implements Runnable
 					hpHandler.healthPack.add(new HealthPack(i * tileSize, j * tileSize, textures));
 				else if(red == 255 && green == 128 && blue == 0)
 					batHandler.bats.add(new Bat(i * tileSize, j * tileSize, 1, textures));
-// TODO: Dodaj i bat da se krece u drugom smeru a ne samo u ovom jednom 
+				else if(red == 255 && green == 128 && blue == 90)
+					batHandler.bats.add(new Bat(i * tileSize, j * tileSize, 2, textures));
 				else if(red == 0 && green == 161 && blue == 255)
 					lHandler.lava.add(new Lava(i * tileSize, j * tileSize, textures));
 				else if(red == 5 && green == 90 && blue == 255)
