@@ -34,7 +34,7 @@ public class Game extends Canvas implements Runnable
 	private SmartWallHandler smartWallHandler;
 	private HealthPackHandler hpHandler;
 	private BatHandler batHandler;
-	private WaterHandler wHandler;
+	private LavaHandler lHandler;
 	private BufferedImage level1 = null, level2 = null, light = null, backgroundTile;
 	private Camera camera;
 	private Textures textures = new Textures();
@@ -83,7 +83,7 @@ public class Game extends Canvas implements Runnable
 		smartWallHandler = new SmartWallHandler();
 		hpHandler = new HealthPackHandler();
 		batHandler = new BatHandler();
-		wHandler = new WaterHandler();
+		lHandler = new LavaHandler();
 		collisionHandler = new CollisionHandler(player, boss, blockHandler, coinsHandler, bHandler, bossBHandler, 
 				spikeHandler, enemiesHandler, smartWallHandler, hpHandler, batHandler);
 
@@ -188,7 +188,7 @@ public class Game extends Canvas implements Runnable
 		spikeHandler.render(g);
 		hpHandler.render(g);
 		batHandler.render(g);
-		wHandler.render(g);
+		lHandler.render(g);
 		
 // TODO: Probaj da nadjes neki bolji nacin da realizuje Lamp effect jer ovaj uzima 25-30 MB dodatne memorije
 		// Lamp effect
@@ -257,10 +257,10 @@ public class Game extends Canvas implements Runnable
 					batHandler.bats.add(new Bat(i * tileSize, j * tileSize, 1, textures));
 // TODO: Dodaj i bat da se krece u drugom smeru a ne samo u ovom jednom 
 				else if(red == 0 && green == 161 && blue == 255)
-					wHandler.water.add(new Water(i * tileSize, j * tileSize, textures));
+					lHandler.lava.add(new Lava(i * tileSize, j * tileSize, textures));
 				else if(red == 5 && green == 90 && blue == 255)
 				{
-					wHandler.water.add(new Water(i * tileSize, j * tileSize, textures));
+					lHandler.lava.add(new Lava(i * tileSize, j * tileSize, textures));
 					spikeHandler.spikes.add(new Spike(i * tileSize, j * tileSize, textures));
 				}
 			}
