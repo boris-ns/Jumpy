@@ -63,7 +63,7 @@ public class Boss
 			}
 			animation.runAnimation();
 		}
-		else
+		else if(Game.level == 1)
 			Game.gameFinished = true;
 	}
 	

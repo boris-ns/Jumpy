@@ -15,6 +15,7 @@ public class Game extends Canvas implements Runnable
 	public static final int width = 646, height = 480;
 	public static final int tileSize = 32;
 	public static boolean paused = false, gameOver = false, gameFinished = false;
+	public static int level;
 	
 	private static final long serialVersionUID = 1L;
 	private boolean running = false;
@@ -46,6 +47,8 @@ public class Game extends Canvas implements Runnable
 	// Konstruktor
 	public Game()
 	{
+		level = 1;
+		
 		System.out.println("Konstruktor !");
 		
 		new Window(width, height, "Jumpy", this);		
@@ -69,8 +72,9 @@ public class Game extends Canvas implements Runnable
 		//player = new Player(45 * 32, 60*32);	
 		
 		//player = new Player(2 * 32, 12 * 32); // Pozicija igraca za pocetak level2
-		//player = new Player(56 * 32, 26 * 32); // Pozicija igraca pred lavirint u level2
-		player = new Player(36 * 32, 72 * 32); // Pozicija igraca pred Boss fight u level2
+		player = new Player(56 * 32, 26 * 32); // Pozicija igraca pred lavirint u level2
+		//player = new Player(36 * 32, 72 * 32); // Pozicija igraca pred Boss fight u level2
+		//player = new Player(56 * 32, 92 * 32);
 		
 		camera = new Camera(0, 0);
 		blockHandler = new BlockHandler();
@@ -95,6 +99,8 @@ public class Game extends Canvas implements Runnable
 		level2 = loader.loadImage("/level2.png");
 		//loadImageLevel(level1);		
 		loadImageLevel(level2);
+		
+		level = 2;
 	}
 	
 //	private void initAfterGameOver()
