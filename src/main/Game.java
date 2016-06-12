@@ -71,8 +71,8 @@ public class Game extends Canvas implements Runnable
 		//player = new Player(55 * 32, 80 * 32);	// Pozicija igraca na poziciji pred Boss fight
 		//player = new Player(45 * 32, 60*32);	
 		
-		//player = new Player(2 * 32, 12 * 32); // Pozicija igraca za pocetak level2
-		player = new Player(56 * 32, 26 * 32); // Pozicija igraca pred lavirint u level2
+		player = new Player(2 * 32, 12 * 32); // Pozicija igraca za pocetak level2
+		//player = new Player(56 * 32, 26 * 32); // Pozicija igraca pred lavirint u level2
 		//player = new Player(36 * 32, 72 * 32); // Pozicija igraca pred Boss fight u level2
 		//player = new Player(56 * 32, 92 * 32);
 		
@@ -216,7 +216,7 @@ public class Game extends Canvas implements Runnable
 			g.drawString("GAME OVER", 200, 150);
 		}
 		
-		if(boss.getHealth() <= 0)
+		if(boss.getHealth() <= 0 && level == 1)
 		{
 			g.setFont(new Font("Arial Black", 1, 40));
 			g.drawString("CONGRATULATIONS", 80, 150);
