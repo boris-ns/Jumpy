@@ -72,6 +72,8 @@ public class KeyInput extends KeyAdapter
 			menuDown = keyboard[KeyEvent.VK_DOWN];
 			menuEnter = keyboard[KeyEvent.VK_ENTER];
 			
+			System.out.println("KeyInput.menuEnter " + menuEnter);
+			
 			if(PauseScreen.pauseState == PauseScreen.State.resume && menuDown)
 				PauseScreen.pauseState = PauseScreen.State.restart;
 			else if(PauseScreen.pauseState == PauseScreen.State.restart && menuDown)
@@ -81,7 +83,7 @@ public class KeyInput extends KeyAdapter
 			
 			else if(PauseScreen.pauseState == PauseScreen.State.resume && menuUp)
 				PauseScreen.pauseState = PauseScreen.State.quit;
-			else if(PauseScreen.pauseState == PauseScreen.State.restart)
+			else if(PauseScreen.pauseState == PauseScreen.State.restart && menuUp)
 				PauseScreen.pauseState = PauseScreen.State.resume;
 			else if(PauseScreen.pauseState == PauseScreen.State.quit && menuUp)
 				PauseScreen.pauseState = PauseScreen.State.restart;

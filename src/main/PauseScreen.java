@@ -25,22 +25,19 @@ public class PauseScreen
 		quit = pauseState == State.quit;
 		
 		System.out.println("Resume " + resume + " restart " + restart + " quit " + quit);
-		
-		if(KeyInput.menuEnter)
+			
+		if(resume && KeyInput.menuEnter)
 		{
-			if(resume)
-			{
-				Game.paused = false;
-				System.out.println("Resume " + resume);
-			}
-			else if(restart)
-			{
-				System.out.println("Restart " + Game.restart);
-				Game.restart = true;
-			}
-			else if(quit)
-				System.exit(-1);
+			Game.paused = false;
+			System.out.println("Resume " + resume);
 		}
+		else if(restart && KeyInput.menuEnter)
+		{
+			System.out.println("Restart " + Game.restart);
+			Game.restart = true;
+		}
+		else if(quit && KeyInput.menuEnter)
+			System.exit(-1);
 	}
 	
 	// Iscrtavanje pause screen-a
