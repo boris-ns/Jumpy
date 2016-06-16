@@ -5,27 +5,42 @@ import input.KeyInput;
 
 public class PauseScreen 
 {
-	public static enum State {resume, quit}; 		// Enumeracija-u kojim stanjima moze biti pause screen
+	public static enum State {resume, restart, quit}; 		// Enumeracija-u kojim stanjima moze biti pause screen
 	public static State pauseState = State.resume;	// Trenutno stanje pause screen-a
 	
-	private boolean resume, quit;	// Koje stanje je trenutno selektovano
+	private boolean resume, restart, quit;	// Koje stanje je trenutno selektovano
 	
 	// Konstruktor
 	public PauseScreen()
 	{
 		resume = false;
+		restart = false;
 		quit = false;
 	}
 	
 	public void tick()
 	{
 		resume = pauseState == State.resume;
+		restart = pauseState == State.restart;
 		quit = pauseState == State.quit;
 		
-		if(resume && KeyInput.menuEnter)
-			Game.paused = false;
-		else if(quit && KeyInput.menuEnter)
-			System.exit(-1);
+		System.out.println("Resume " + resume + " restart " + restart + " quit " + quit);
+		
+		if(KeyInput.menuEnter)
+		{
+			if(resume)
+			{
+				Game.paused = false;
+				System.out.println("Resume " + resume);
+			}
+			else if(restart)
+			{
+				System.out.println("Restart " + Game.restart);
+				Game.restart = true;
+			}
+			else if(quit)
+				System.exit(-1);
+		}
 	}
 	
 	// Iscrtavanje pause screen-a
@@ -40,12 +55,20 @@ public class PauseScreen
 		if(resume)
 		{
 			g.drawString("> Resume <", 80, 120);
-			g.drawString("Quit", 80, 150);
+			g.drawString("Restart", 80, 150);
+			g.drawString("Quit", 80, 180);
+		}
+		else if(restart)
+		{
+			g.drawString("Resume", 80, 120);
+			g.drawString("> Restart <", 80, 150);
+			g.drawString("Quit", 80, 180);
 		}
 		else if(quit)
 		{
 			g.drawString("Resume", 80, 120);
-			g.drawString("> Quit <", 80, 150);
+			g.drawString("Restart", 80, 150);
+			g.drawString("> Quit <", 80, 180);
 		}
 	}
 }

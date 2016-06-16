@@ -14,7 +14,7 @@ public class Game extends Canvas implements Runnable
 	// Polja klase
 	public static final int width = 646, height = 480;
 	public static final int tileSize = 32;
-	public static boolean paused = false, gameOver = false, gameFinished = false;
+	public static boolean paused = false, gameOver = false, gameFinished = false, restart = false;
 	public static int level;
 	
 	private static final long serialVersionUID = 1L;
@@ -132,7 +132,17 @@ public class Game extends Canvas implements Runnable
 	private void tick()
 	{	
 		if(paused)
+		{
 			pScreen.tick();
+			
+			if(restart)
+			{
+				init();
+				System.out.println("restart " + restart);
+				restart = false;
+				paused = false;
+			}
+		}
 		else if(gameOver || gameFinished)
 		{
 			if(timer-- == 0)

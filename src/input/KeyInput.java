@@ -73,14 +73,18 @@ public class KeyInput extends KeyAdapter
 			menuEnter = keyboard[KeyEvent.VK_ENTER];
 			
 			if(PauseScreen.pauseState == PauseScreen.State.resume && menuDown)
+				PauseScreen.pauseState = PauseScreen.State.restart;
+			else if(PauseScreen.pauseState == PauseScreen.State.restart && menuDown)
 				PauseScreen.pauseState = PauseScreen.State.quit;
 			else if(PauseScreen.pauseState == PauseScreen.State.quit && menuDown)
 				PauseScreen.pauseState = PauseScreen.State.resume;
 			
-			if(PauseScreen.pauseState == PauseScreen.State.resume && menuUp)
+			else if(PauseScreen.pauseState == PauseScreen.State.resume && menuUp)
 				PauseScreen.pauseState = PauseScreen.State.quit;
-			else if(PauseScreen.pauseState == PauseScreen.State.quit && menuUp)
+			else if(PauseScreen.pauseState == PauseScreen.State.restart)
 				PauseScreen.pauseState = PauseScreen.State.resume;
+			else if(PauseScreen.pauseState == PauseScreen.State.quit && menuUp)
+				PauseScreen.pauseState = PauseScreen.State.restart;
 		}
 	}
 	
