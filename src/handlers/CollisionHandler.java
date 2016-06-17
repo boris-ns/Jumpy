@@ -1,9 +1,11 @@
 package handlers;
 
 import java.util.HashMap;
+
 import objects.Block;
 import objects.Boss;
 import objects.Coin;
+import objects.MovingBlock;
 import objects.Player;
 import objects.SmartWall;
 import sound.AudioPlayer;
@@ -69,9 +71,13 @@ public class CollisionHandler
 				p.setY(block.getY() - p.getHeight());
 				p.setFalling(false);
 				p.setJumping(false);
+			
+				if(block instanceof MovingBlock)
+					p.setX(p.getX() + block.getVelX());
 			}
 			else
 				p.setFalling(true);
+			
 
 			// Sprecava igraca da prodje kroz blokove krecuci se u levo
 			if(p.getBoundsLeft().intersects(block.getBounds()))

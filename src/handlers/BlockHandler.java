@@ -8,11 +8,12 @@ import objects.Block;
 public class BlockHandler 
 {
 	public LinkedList<Block> blocks = new LinkedList<Block>();
-	
+
 	public void tick()
 	{
-		for(int i = 0; i < blocks.size(); ++i)
-			blocks.get(i).tick();
+		// Pozivanje tick metoda svih Block objekata u igri
+		for(Block block : blocks)
+			block.tick();
 	}
 	
 	public void render(Graphics g)

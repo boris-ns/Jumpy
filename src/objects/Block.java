@@ -9,6 +9,7 @@ public class Block
 	// Polja koja opisuju objekat tipa Block 
 	public static final int size = 32;
 	protected float x, y;
+	protected float velX; // Samo za MovingBlock
 	protected Textures t;
 	
 	// Konstruktor
@@ -20,7 +21,6 @@ public class Block
 	}
 	
 	// Klasa Block nema metodu tick() jer Block objekti nemaju nikakve fizicke dogadjaje
-	// Aku tick mora postojati zbog MovingBlock-ova
 	public void tick() { }
 	
 	public void render(Graphics g)
@@ -38,4 +38,5 @@ public class Block
 	// Get metode
 	public float getX() { return x;}
 	public float getY() { return y;}
+	public float getVelX() { return velX;}
 }
