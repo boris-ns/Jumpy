@@ -9,6 +9,12 @@ public class BlockHandler
 {
 	public LinkedList<Block> blocks = new LinkedList<Block>();
 	
+	public void tick()
+	{
+		for(int i = 0; i < blocks.size(); ++i)
+			blocks.get(i).tick();
+	}
+	
 	public void render(Graphics g)
 	{
 		// Pozivanje render metoda svih Block objekata u igri

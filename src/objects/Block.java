@@ -20,7 +20,8 @@ public class Block
 	}
 	
 	// Klasa Block nema metodu tick() jer Block objekti nemaju nikakve fizicke dogadjaje
-	// public void tick() { }
+	// Aku tick mora postojati zbog MovingBlock-ova
+	public void tick() { }
 	
 	public void render(Graphics g)
 	{

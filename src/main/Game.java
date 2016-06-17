@@ -158,6 +158,7 @@ public class Game extends Canvas implements Runnable
 		{	
 			keyInput.tick(player, bHandler);
 			player.tick();
+			blockHandler.tick();
 			boss.tick((int)player.getX(), (int)player.getY());
 			camera.tick(player);			
 			hud.tick(player.getCoinsCollected(), player.getHealth());
@@ -282,6 +283,8 @@ public class Game extends Canvas implements Runnable
 					lHandler.lava.add(new Lava(i * tileSize, j * tileSize, textures));
 					spikeHandler.spikes.add(new Spike(i * tileSize, j * tileSize, textures));
 				}
+				else if(red == 100 && green == 100 && blue == 100)
+					blockHandler.blocks.add(new MovingBlock(i * tileSize, j * tileSize, textures));
 			}
 		}
 	}
