@@ -38,5 +38,11 @@ public class Block
 	// Get metode
 	public float getX() { return x;}
 	public float getY() { return y;}
-	public float getVelX() { return velX;}
+	public float getMovingDirection() 
+	{
+		if(velX > 0)
+			return 1.0f;
+		else
+			return -1.0f;
+	}
 }
