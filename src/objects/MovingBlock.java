@@ -4,13 +4,13 @@ import graphics.Textures;
 
 public class MovingBlock extends Block
 {
-	private int timer = 110;
+	private int timer = 200;
 	
 	public MovingBlock(float x, float y, Textures t) 
 	{
 		super(x, y, t);
 		
-		velX = 0.5f;
+		velX = 0.7f;
 	}
 
 	@Override
@@ -21,7 +21,7 @@ public class MovingBlock extends Block
 		if(--timer == 0)
 		{
 			velX *= -1;			
-			timer = 110;
+			timer = 200;
 		}
 	}
 }
