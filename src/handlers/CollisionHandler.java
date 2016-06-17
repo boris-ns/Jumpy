@@ -73,7 +73,7 @@ public class CollisionHandler
 				p.setJumping(false);
 			
 				if(block instanceof MovingBlock)
-					p.setX(p.getX() + block.getVelX());
+					p.setX(p.getX() + 1.4f * block.getMovingDirection());
 			}
 			else
 				p.setFalling(true);
