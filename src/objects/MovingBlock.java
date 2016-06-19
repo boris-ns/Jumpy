@@ -4,7 +4,7 @@ import graphics.Textures;
 
 public class MovingBlock extends Block
 {
-	private int timer = 200;
+	private int timer = 185;
 	
 	public MovingBlock(float x, float y, Textures t) 
 	{
@@ -21,7 +21,7 @@ public class MovingBlock extends Block
 		if(--timer == 0)
 		{
 			velX *= -1;			
-			timer = 200;
+			timer = 185;
 		}
 	}
 }
