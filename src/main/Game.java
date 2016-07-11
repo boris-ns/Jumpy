@@ -1,12 +1,45 @@
 package main;
 
-import java.awt.*;
-import java.awt.image.*;
-import graphics.*;
+import java.awt.AlphaComposite;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RadialGradientPaint;
+import java.awt.geom.Point2D;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+
+import graphics.BufferedImageLoader;
+import graphics.Hud;
+import graphics.Textures;
 import graphics.Window;
-import handlers.*;
+import handlers.BatHandler;
+import handlers.BlockHandler;
+import handlers.BossBulletsHandler;
+import handlers.BulletHandler;
+import handlers.CoinsHandler;
+import handlers.CollisionHandler;
+import handlers.EnemiesHandler;
+import handlers.HealthPackHandler;
+import handlers.LavaHandler;
+import handlers.RenderBlocksHandler;
+import handlers.SmartWallHandler;
+import handlers.SpikeHandler;
 import input.KeyInput;
-import objects.*;
+import objects.Bat;
+import objects.Block;
+import objects.Boss;
+import objects.Camera;
+import objects.Coin;
+import objects.Enemy;
+import objects.HealthPack;
+import objects.Lava;
+import objects.MovingBlock;
+import objects.Player;
+import objects.SmartWall;
+import objects.Spike;
 import sound.AudioPlayer;
 
 public class Game extends Canvas implements Runnable
@@ -185,8 +218,8 @@ public class Game extends Canvas implements Runnable
 		Graphics g = bs.getDrawGraphics();
 		Graphics2D g2d = (Graphics2D)g;
 		
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, width, height);
+		
+	
 		
 		for(int i = 0; i < width; i += 32)
 			for(int j = 0; j < height; j += 32)
@@ -207,13 +240,20 @@ public class Game extends Canvas implements Runnable
 		spikeHandler.render(g);
 		hpHandler.render(g);
 		batHandler.render(g);
-		lHandler.render(g);
+		lHandler.render(g);	
 		
-// TODO: Probaj da nadjes neki bolji nacin da realizuje Lamp effect jer ovaj uzima 25-30 MB dodatne memorije
+		g2d.translate(-camera.getX(), -camera.getY());	
+		
 		// Lamp effect
-		//g.drawImage(light, (int)player.getX() - light.getWidth() / 2, (int)player.getY() - light.getHeight() / 2, null);
+		Point2D center = new Point2D.Float((int)(camera.getX() + player.getX() - player.getWidth()), (int)(camera.getY() + player.getY() - player.getHeight() / 2));
+		float radius = 200.0f;
+		float[] dist = {0.0f, 1.0f};
+		Color[] colors = {new Color(0.0f, 0.0f, 0.0f, 0.0f), Color.black};
+		RadialGradientPaint p = new RadialGradientPaint(center, radius, dist, colors);
+		g2d.setPaint(p);
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.95f));
+		g2d.fillRect(0, 0, width, height);
 		
-		g2d.translate(-camera.getX(), -camera.getY());		
 		
 		if(paused)
 			pScreen.render(g);
@@ -233,6 +273,7 @@ public class Game extends Canvas implements Runnable
 			g.drawString("CONGRATULATIONS", 80, 150);
 		}
 		
+		g2d.dispose();
 		g.dispose();
 		bs.show();
 	}
