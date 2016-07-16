@@ -69,7 +69,7 @@ public class Game extends Canvas implements Runnable
 	private HealthPackHandler hpHandler;
 	private BatHandler batHandler;
 	private LavaHandler lHandler;
-	private BufferedImage level1 = null, level2 = null, light = null, backgroundTile;
+	private BufferedImage levelImg = null, backgroundTile;
 	private Camera camera;
 	private Textures textures = new Textures();
 	private Hud hud;
@@ -86,6 +86,7 @@ public class Game extends Canvas implements Runnable
 		
 		new Window(width, height, "Jumpy", this);		
 		
+		loader = new BufferedImageLoader();		
 		keyInput = new KeyInput();
 		addKeyListener(keyInput);	
 			
@@ -99,24 +100,41 @@ public class Game extends Canvas implements Runnable
 	}
 	
 	private void init()
-	{									
-		//player = new Player(70, 1450);	// Pozicija igraca na pocetnoj poziciji level1
-		//player = new Player(55 * 32, 80 * 32);	// Pozicija igraca na poziciji pred Boss fight
-		//player = new Player(45 * 32, 60*32);	
+	{		
+		if(level == 1)
+		{
+			player = new Player(70, 1450);	// Pozicija igraca na pocetnoj poziciji level1
+			//player = new Player(55 * 32, 80 * 32);	// Pozicija igraca na poziciji pred Boss fight
+			//player = new Player(45 * 32, 60*32);			
+			bossBHandler = new BossBulletsHandler();
+			boss = new Boss(44 * 32, 90 * 32, textures, bossBHandler);
+			
+			loadResObjects();
+			levelImg = loader.loadImage("/level1.png");
+		}
+		else if(level == 2)
+		{
+			player = new Player(2 * 32, 12 * 32); // Pozicija igraca za pocetak level2
+			//player = new Player(56 * 32, 26 * 32); // Pozicija igraca pred lavirint u level2
+			//player = new Player(36 * 32, 72 * 32); // Pozicija igraca pred Boss fight u level2
+			//player = new Player(56 * 32, 92 * 32);
+			bossBHandler = new BossBulletsHandler();
+			boss = new Boss(23 * 32, 82 * 32, textures, bossBHandler);
+			
+			loadResObjects();
+			levelImg = loader.loadImage("/level2.png");
+		}
 		
-		player = new Player(2 * 32, 12 * 32); // Pozicija igraca za pocetak level2
-		//player = new Player(56 * 32, 26 * 32); // Pozicija igraca pred lavirint u level2
-		//player = new Player(36 * 32, 72 * 32); // Pozicija igraca pred Boss fight u level2
-		//player = new Player(56 * 32, 92 * 32);
-		
+		loadImageLevel(levelImg);
+	}
+	
+	private void loadResObjects()
+	{
 		camera = new Camera(0, 0);
 		blockHandler = new BlockHandler();
 		rBlocksHandler = new RenderBlocksHandler();
 		coinsHandler = new CoinsHandler();
 		bHandler = new BulletHandler();
-		bossBHandler = new BossBulletsHandler();
-		//boss = new Boss(44 * 32, 90 * 32, textures, bossBHandler);
-		boss = new Boss(23 * 32, 82 * 32, textures, bossBHandler);
 		spikeHandler = new SpikeHandler();
 		enemiesHandler = new EnemiesHandler();
 		smartWallHandler = new SmartWallHandler();
@@ -125,15 +143,6 @@ public class Game extends Canvas implements Runnable
 		lHandler = new LavaHandler();
 		collisionHandler = new CollisionHandler(player, boss, blockHandler, coinsHandler, bHandler, bossBHandler, 
 				spikeHandler, enemiesHandler, smartWallHandler, hpHandler, batHandler);
-
-		loader = new BufferedImageLoader();		
-		light = loader.loadImage("/playerLight.png");
-		level1 = loader.loadImage("/level1.png");
-		level2 = loader.loadImage("/level2.png");
-		//loadImageLevel(level1);		
-		loadImageLevel(level2);
-		
-		level = 2;
 	}
 	
 //	private void initAfterGameOver()
@@ -218,9 +227,6 @@ public class Game extends Canvas implements Runnable
 		Graphics g = bs.getDrawGraphics();
 		Graphics2D g2d = (Graphics2D)g;
 		
-		
-	
-		
 		for(int i = 0; i < width; i += 32)
 			for(int j = 0; j < height; j += 32)
 				g.drawImage(backgroundTile, i, j, null);
@@ -245,15 +251,17 @@ public class Game extends Canvas implements Runnable
 		g2d.translate(-camera.getX(), -camera.getY());	
 		
 		// Lamp effect
-		Point2D center = new Point2D.Float((int)(camera.getX() + player.getX() - player.getWidth()), (int)(camera.getY() + player.getY() - player.getHeight() / 2));
-		float radius = 200.0f;
-		float[] dist = {0.0f, 1.0f};
-		Color[] colors = {new Color(0.0f, 0.0f, 0.0f, 0.0f), Color.black};
-		RadialGradientPaint p = new RadialGradientPaint(center, radius, dist, colors);
-		g2d.setPaint(p);
-		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.95f));
-		g2d.fillRect(0, 0, width, height);
-		
+		if(level == 2)
+		{
+			Point2D center = new Point2D.Float((int)(camera.getX() + player.getX() - player.getWidth()), (int)(camera.getY() + player.getY() - player.getHeight() / 2));
+			float radius = 200.0f;
+			float[] dist = {0.0f, 1.0f};
+			Color[] colors = {new Color(0.0f, 0.0f, 0.0f, 0.0f), Color.black};
+			RadialGradientPaint p = new RadialGradientPaint(center, radius, dist, colors);
+			g2d.setPaint(p);
+			g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.95f));
+			g2d.fillRect(0, 0, width, height);
+		}
 		
 		if(paused)
 			pScreen.render(g);
