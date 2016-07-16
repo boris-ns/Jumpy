@@ -237,8 +237,7 @@ public class Game extends Canvas implements Runnable
 		rBlocksHandler.render(g);
 		coinsHandler.render(g);
 		bHandler.render(g);
-		bossBHandler.render(g);
-		blockHandler.render(g);
+		bossBHandler.render(g);		
 		smartWallHandler.render(g);
 		hpHandler.render(g);
 		enemiesHandler.render(g);
@@ -248,10 +247,17 @@ public class Game extends Canvas implements Runnable
 		hpHandler.render(g);
 		batHandler.render(g);
 		lHandler.render(g);	
-
+		blockHandler.render(g);
+		
+		if(level == 1)
+			g2d.fillRect(0, 0, width * 3, height * 4);
+		
 		g2d.translate(-camera.getX(), -camera.getY());	
 		
 		// Lamp effect
+		
+	
+		
 		if(level == 2)
 		{
 			Point2D center = new Point2D.Float((int)(camera.getX() + player.getX() - player.getWidth()), (int)(camera.getY() + player.getY() - player.getHeight() / 2));
