@@ -40,6 +40,7 @@ import objects.MovingBlock;
 import objects.Player;
 import objects.SmartWall;
 import objects.Spike;
+import objects.Torch;
 import sound.AudioPlayer;
 
 public class Game extends Canvas implements Runnable
@@ -247,7 +248,7 @@ public class Game extends Canvas implements Runnable
 		hpHandler.render(g);
 		batHandler.render(g);
 		lHandler.render(g);	
-		
+
 		g2d.translate(-camera.getX(), -camera.getY());	
 		
 		// Lamp effect
@@ -334,6 +335,8 @@ public class Game extends Canvas implements Runnable
 				}
 				else if(red == 100 && green == 100 && blue == 100)
 					blockHandler.blocks.add(new MovingBlock(i * tileSize, j * tileSize, textures));
+				else if(red == 230 && green == 125 && blue == 0)
+					blockHandler.blocks.add(new Torch(i * tileSize, j * tileSize, textures));
 			}
 		}
 	}

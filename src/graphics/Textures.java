@@ -16,6 +16,7 @@ public class Textures
 	public BufferedImage[] batTiles = new BufferedImage[4];		// Niz tekstura Bat-a
 	public BufferedImage lava = null;							// Tekstura Water-a
 	public BufferedImage spikes = null;							// Textura za Spike
+	public BufferedImage torch = null;							// Textura za Torch
 	public BufferedImage healthPack = null;						// Textura za HealthPack
 	
 	// Konstruktor
@@ -44,6 +45,7 @@ public class Textures
 		spikes = blockSheet.grabImage(1, 3, 32, 32);
 		healthPack = blockSheet.grabImage(4, 1, 32, 32);
 		lava = blockSheet.grabImage(6, 1, 32, 32);
+		torch = blockSheet.grabImage(7, 1, 32, 32);
 		
 		coinTiles[0] = blockSheet.grabImage(1, 2, 32, 32);
 		coinTiles[1] = blockSheet.grabImage(2, 2, 32, 32);
