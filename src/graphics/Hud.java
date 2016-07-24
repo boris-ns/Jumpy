@@ -23,6 +23,8 @@ public class Hud
 		g.fillRect(15, 15, playerHealth, 12);
 		
 		g.setFont(new Font("Arial Black", 1, 18));
+		g.setColor(Color.BLACK);
+		g.drawString("Coins: " + coinsCollected, 17, 52);
 		g.setColor(Color.ORANGE);
 		g.drawString("Coins: " + coinsCollected, 15, 50);
 	}
