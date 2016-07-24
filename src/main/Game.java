@@ -103,8 +103,8 @@ public class Game extends Canvas implements Runnable
 	{		
 		if(level == 1)
 		{
-			player = new Player(70, 1450);	// Pozicija igraca na pocetnoj poziciji level1
-			//player = new Player(55 * 32, 80 * 32);	// Pozicija igraca na poziciji pred Boss fight
+			//player = new Player(70, 1450);	// Pozicija igraca na pocetnoj poziciji level1
+			player = new Player(55 * 32, 80 * 32);	// Pozicija igraca na poziciji pred Boss fight
 			//player = new Player(45 * 32, 60*32);			
 			bossBHandler = new BossBulletsHandler();
 			boss = new Boss(44 * 32, 90 * 32, textures, bossBHandler);
@@ -163,14 +163,19 @@ public class Game extends Canvas implements Runnable
 //			//	enemiesHandler, smartWallHandler);
 //	}
 	
-//	private void freeLists()
-//	{
-//		coinsHandler.coins.removeAll(coinsHandler.coins);
-//		bHandler.bullets.removeAll(bHandler.bullets);
-//		enemiesHandler.enemies.removeAll(enemiesHandler.enemies);
-//		smartWallHandler.smartWalls.removeAll(smartWallHandler.smartWalls);
-//	}
-//			
+	private void freeLists()
+	{
+		blockHandler.blocks.removeAll(blockHandler.blocks);
+		rBlocksHandler.blocks.removeAll(rBlocksHandler.blocks);
+		coinsHandler.coins.removeAll(coinsHandler.coins);
+		bHandler.bullets.removeAll(bHandler.bullets);
+		enemiesHandler.enemies.removeAll(enemiesHandler.enemies);
+		smartWallHandler.smartWalls.removeAll(smartWallHandler.smartWalls);
+		spikeHandler.spikes.removeAll(spikeHandler.spikes);
+		hpHandler.healthPack.removeAll(hpHandler.healthPack);
+		lHandler.lava.removeAll(lHandler.lava);
+	}
+			
 	private void tick()
 	{	
 		if(paused)
@@ -212,6 +217,13 @@ public class Game extends Canvas implements Runnable
 			hpHandler.tick();
 			batHandler.tick();
 		}	
+		
+		if(boss.getHealth() <= 0 && level == 1)
+		{
+			level = 2;
+			freeLists();
+			init();
+		}
 	}
 	
 	private void render()
@@ -273,12 +285,6 @@ public class Game extends Canvas implements Runnable
 			g.setFont(new Font("Arial Black", 1, 32));
 			g.setColor(Color.ORANGE);
 			g.drawString("GAME OVER", 200, 150);
-		}
-		
-		if(boss.getHealth() <= 0 && level == 1)
-		{
-			g.setFont(new Font("Arial Black", 1, 40));
-			g.drawString("CONGRATULATIONS", 80, 150);
 		}
 		
 		g2d.dispose();
