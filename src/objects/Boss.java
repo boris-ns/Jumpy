@@ -50,7 +50,7 @@ public class Boss
 			
 // TODO: playerY > 75 je za level2 , nadji neki bolji nacin da realizujes ovo a ne da moras da stavljas || 
 			// u svakom levelu gde se ovaj Boss ubaci
-			if(playerY > 85 * 32 || playerY > 75 * 32)
+			if((playerY > 85 * 32 && Game.level == 1) || (playerY > 75 * 32 && Game.level == 2))
 			{			
 				--timer;
 				if(timer == 0)
