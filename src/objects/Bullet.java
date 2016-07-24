@@ -15,7 +15,7 @@ public class Bullet
 	{
 		this.x = x + playerWidth / 2;
 		this.y = y + playerHeight / 2;
-		size = 4;
+		size = 7;
 	
 		// Provera smera kretanja igraca da bi se znalo u kom smeru se ispaljuje metak
 		if(playerLastVelX == 0) // Na pocetku igre metak se ispaljuje u desno
@@ -35,7 +35,7 @@ public class Bullet
 	{
 		// Postavljanje boje i iscrtavanje na koordinatama X,Y, dimenzija size x size
 		g.setColor(Color.white);
-		g.fillRect((int)x, (int)y, size, size);
+		g.fillRoundRect((int)x, (int)y, size, size, 10, 10);
 	}
 	
 	// Metoda getBounds() vraca kvadrat koji predstavlja okvir i sluzi za detekciju dodira sa drugim objektima
