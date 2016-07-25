@@ -34,6 +34,7 @@ import objects.Boss;
 import objects.Camera;
 import objects.Coin;
 import objects.Enemy;
+import objects.Fredy;
 import objects.HealthPack;
 import objects.Lava;
 import objects.MovingBlock;
@@ -56,6 +57,7 @@ public class Game extends Canvas implements Runnable
 	private BufferedImageLoader loader;
 	private KeyInput keyInput;
 	private Player player;
+	private Fredy fredy;
 	private Boss boss;
 	private BlockHandler blockHandler;
 	private RenderBlocksHandler rBlocksHandler;
@@ -103,8 +105,8 @@ public class Game extends Canvas implements Runnable
 	{		
 		if(level == 1)
 		{
-			//player = new Player(70, 1450, textures);	// Pozicija igraca na pocetnoj poziciji level1
-			player = new Player(55 * 32, 80 * 32, textures);	// Pozicija igraca na poziciji pred Boss fight
+			player = new Player(70, 1450, textures);	// Pozicija igraca na pocetnoj poziciji level1
+			//player = new Player(55 * 32, 80 * 32, textures);	// Pozicija igraca na poziciji pred Boss fight
 			//player = new Player(45 * 32, 60*32, textures);			
 			bossBHandler = new BossBulletsHandler();
 			boss = new Boss(44 * 32, 90 * 32, textures, bossBHandler);
@@ -141,6 +143,8 @@ public class Game extends Canvas implements Runnable
 		hpHandler = new HealthPackHandler();
 		batHandler = new BatHandler();
 		lHandler = new LavaHandler();
+		//fredy = new Fredy(25 * 32, 45 * 32, textures);
+		fredy = new Fredy(70, 1450, textures); // Pozicija u 1. sobi na 1. levelu
 		collisionHandler = new CollisionHandler(player, boss, blockHandler, coinsHandler, bHandler, bossBHandler, 
 				spikeHandler, enemiesHandler, smartWallHandler, hpHandler, batHandler);
 	}
@@ -205,6 +209,7 @@ public class Game extends Canvas implements Runnable
 		{	
 			keyInput.tick(player, bHandler);
 			player.tick();
+			fredy.tick(player.getX(), player.getY());
 			blockHandler.tick();
 			boss.tick((int)player.getX(), (int)player.getY());
 			camera.tick(player);			
@@ -255,6 +260,7 @@ public class Game extends Canvas implements Runnable
 		enemiesHandler.render(g);
 		boss.render(g);
 		player.render(g);
+		fredy.render(g);
 		spikeHandler.render(g);
 		hpHandler.render(g);
 		batHandler.render(g);
