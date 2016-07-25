@@ -17,6 +17,7 @@ public class Fredy
 	// Pomocna polja
 	private int timer = 20;
 	private boolean canIPlay = true;
+	private final int DISTANCE = 230;
 	
 	public Fredy(float x, float y, Textures t)
 	{
@@ -50,10 +51,13 @@ public class Fredy
 		else if(y >= 3000)
 			velY *= -1;	
 		
-		if(canIPlay && (x > playerX - 150 || x < playerX + 150) && (y > playerY - 150 || y < playerY + 150))
+		if(x > playerX - DISTANCE && x < playerX + DISTANCE && y > playerY - DISTANCE && y < playerY + DISTANCE)
 		{
-			canIPlay = false;
-			sfxGhost.loopPlay(-13.0f);
+			if(canIPlay)
+			{
+				sfxGhost.loopPlay(-15.0f);
+				canIPlay = false;
+			}
 		}
 		else
 		{

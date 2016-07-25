@@ -143,8 +143,8 @@ public class Game extends Canvas implements Runnable
 		hpHandler = new HealthPackHandler();
 		batHandler = new BatHandler();
 		lHandler = new LavaHandler();
-		//fredy = new Fredy(25 * 32, 45 * 32, textures);
-		fredy = new Fredy(70, 1450, textures); // Pozicija u 1. sobi na 1. levelu
+		fredy = new Fredy(25 * 32, 45 * 32, textures);
+		//fredy = new Fredy(70, 1450, textures); // Pozicija u 1. sobi na 1. levelu ZA DEBAGOVANJE
 		collisionHandler = new CollisionHandler(player, boss, blockHandler, coinsHandler, bHandler, bossBHandler, 
 				spikeHandler, enemiesHandler, smartWallHandler, hpHandler, batHandler);
 	}
