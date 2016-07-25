@@ -19,7 +19,7 @@ public class Player
 	private boolean falling , jumping, isPoisoned;
 	private float gravity = 1f;
 	private int health, damage, coinsCollected;
-	private Textures t = new Textures();
+	private Textures t;
 	private Animation walkLeftAnim, walkRightAnim;
 	private AudioPlayer sfxGameOver;
 	
@@ -27,10 +27,11 @@ public class Player
 	private int timer = 0, poisonedTimer;
 	
 	// Konstruktor
-	public Player(float x, float y)
+	public Player(float x, float y, Textures t)
 	{
 		this.x = x;
 		this.y = y;
+		this.t = t;
 		
 		lastVelX = 1;
 		width = 24;

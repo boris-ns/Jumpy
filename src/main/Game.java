@@ -103,9 +103,9 @@ public class Game extends Canvas implements Runnable
 	{		
 		if(level == 1)
 		{
-			//player = new Player(70, 1450);	// Pozicija igraca na pocetnoj poziciji level1
-			player = new Player(55 * 32, 80 * 32);	// Pozicija igraca na poziciji pred Boss fight
-			//player = new Player(45 * 32, 60*32);			
+			//player = new Player(70, 1450, textures);	// Pozicija igraca na pocetnoj poziciji level1
+			player = new Player(55 * 32, 80 * 32, textures);	// Pozicija igraca na poziciji pred Boss fight
+			//player = new Player(45 * 32, 60*32, textures);			
 			bossBHandler = new BossBulletsHandler();
 			boss = new Boss(44 * 32, 90 * 32, textures, bossBHandler);
 			
@@ -114,10 +114,10 @@ public class Game extends Canvas implements Runnable
 		}
 		else if(level == 2)
 		{
-			player = new Player(2 * 32, 12 * 32); // Pozicija igraca za pocetak level2
-			//player = new Player(56 * 32, 26 * 32); // Pozicija igraca pred lavirint u level2
-			//player = new Player(36 * 32, 72 * 32); // Pozicija igraca pred Boss fight u level2
-			//player = new Player(56 * 32, 92 * 32);
+			player = new Player(2 * 32, 12 * 32, textures); // Pozicija igraca za pocetak level2
+			//player = new Player(56 * 32, 26 * 32, textures); // Pozicija igraca pred lavirint u level2
+			//player = new Player(36 * 32, 72 * 32, textures); // Pozicija igraca pred Boss fight u level2
+			//player = new Player(56 * 32, 92 * 32, textures);
 			bossBHandler = new BossBulletsHandler();
 			boss = new Boss(23 * 32, 82 * 32, textures, bossBHandler);
 			
