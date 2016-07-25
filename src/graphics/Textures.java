@@ -14,6 +14,7 @@ public class Textures
 	public BufferedImage[] enemyTiles = new BufferedImage[4];	// Niz textura Enemy-a
 	public BufferedImage[] bossTiles = new BufferedImage[2];	// Niz textura Boss-a
 	public BufferedImage[] batTiles = new BufferedImage[4];		// Niz tekstura Bat-a
+	public BufferedImage[] fredyTiles = new BufferedImage[2]; 	// Niz teksutra za Fredy-a
 	public BufferedImage lava = null;							// Tekstura Water-a
 	public BufferedImage spikes = null;							// Textura za Spike
 	public BufferedImage torch = null;							// Textura za Torch
@@ -85,5 +86,8 @@ public class Textures
 		playerTiles[15] = playerSheet.grabImage(6, 3, 24, 48);
 		playerTiles[16] = playerSheet.grabImage(7, 3, 24, 48);
 		playerTiles[17] = playerSheet.grabImage(8, 3, 24, 48);
+		
+		fredyTiles[0] = playerSheet.grabImage(1, 4, 24, 48);
+		fredyTiles[1] = playerSheet.grabImage(2, 4, 24, 48);
 	}
 }
