@@ -77,7 +77,10 @@ public class Game extends Canvas implements Runnable
 	private Hud hud;
 	private PauseScreen pScreen;
 	private AudioPlayer bgMusic; // background music
+	
+	// Pomocna polja
 	private int timer = 150;
+	private int coinsCollected;
 	
 	// Konstruktor
 	public Game()
@@ -116,10 +119,11 @@ public class Game extends Canvas implements Runnable
 		}
 		else if(level == 2)
 		{
-			player = new Player(2 * 32, 12 * 32, textures); // Pozicija igraca za pocetak level2
+			//player = new Player(2 * 32, 12 * 32, textures); // Pozicija igraca za pocetak level2
 			//player = new Player(56 * 32, 26 * 32, textures); // Pozicija igraca pred lavirint u level2
 			//player = new Player(36 * 32, 72 * 32, textures); // Pozicija igraca pred Boss fight u level2
 			//player = new Player(56 * 32, 92 * 32, textures);
+			player.setCoinsCollected(coinsCollected);
 			bossBHandler = new BossBulletsHandler();
 			boss = new Boss(23 * 32, 82 * 32, textures, bossBHandler);
 			
@@ -221,6 +225,8 @@ public class Game extends Canvas implements Runnable
 			enemiesHandler.tick();
 			hpHandler.tick();
 			batHandler.tick();
+			
+			coinsCollected = player.getCoinsCollected();
 		}	
 		
 		if(boss.getHealth() <= 0 && level == 1)
