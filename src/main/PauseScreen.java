@@ -24,16 +24,16 @@ public class PauseScreen
 		restart = pauseState == State.restart;
 		quit = pauseState == State.quit;
 		
-		System.out.println("Resume " + resume + " restart " + restart + " quit " + quit);
+		//System.out.println("Resume " + resume + " restart " + restart + " quit " + quit);
 			
 		if(resume && KeyInput.menuEnter)
 		{
 			Game.paused = false;
-			System.out.println("Resume " + resume);
+			//System.out.println("Resume " + resume);
 		}
 		else if(restart && KeyInput.menuEnter)
 		{
-			System.out.println("Restart " + Game.restart);
+			//System.out.println("Restart " + Game.restart);
 			Game.restart = true;
 		}
 		else if(quit && KeyInput.menuEnter)
