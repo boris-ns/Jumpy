@@ -255,23 +255,7 @@ public class Game extends Canvas implements Runnable
 				g.drawImage(backgroundTile, i, j, null);
 		
 		g2d.translate(camera.getX(), camera.getY());
-		
-		blockHandler.render(g);
-		rBlocksHandler.render(g);
-		coinsHandler.render(g);
-		bHandler.render(g);
-		bossBHandler.render(g);		
-		smartWallHandler.render(g);
-		hpHandler.render(g);
-		enemiesHandler.render(g);
-		boss.render(g);
-		player.render(g);
-		fredy.render(g);
-		spikeHandler.render(g);
-		hpHandler.render(g);
-		batHandler.render(g);
-		lHandler.render(g);	
-		
+		renderObjects(g);
 		g2d.translate(-camera.getX(), -camera.getY());	
 		
 		// Lamp effect		
@@ -302,6 +286,25 @@ public class Game extends Canvas implements Runnable
 		g2d.dispose();
 		g.dispose();
 		bs.show();
+	}
+	
+	private void renderObjects(Graphics g)
+	{
+		blockHandler.render(g);
+		rBlocksHandler.render(g);
+		coinsHandler.render(g);
+		bHandler.render(g);
+		bossBHandler.render(g);		
+		smartWallHandler.render(g);
+		hpHandler.render(g);
+		enemiesHandler.render(g);
+		boss.render(g);
+		player.render(g);
+		fredy.render(g);
+		spikeHandler.render(g);
+		hpHandler.render(g);
+		batHandler.render(g);
+		lHandler.render(g);	
 	}
 	
 	// Metoda koja uzima sliku levela i pixele pretvara u stvarne blokove na osnovu njihovih boja
