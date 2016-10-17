@@ -2,12 +2,21 @@ package handlers;
 
 import java.awt.Graphics;
 import java.util.LinkedList;
+
 import objects.Enemy;
+import objects.Player;
 
 // Klasa koja predstavlja listu Enemy objekata u igri
 public class EnemiesHandler 
 {
 	public LinkedList<Enemy> enemies = new LinkedList<Enemy>();
+
+	private Player player;
+	
+	public EnemiesHandler(Player player)
+	{
+		this.player = player;
+	}
 	
 	public void tick()
 	{
@@ -18,7 +27,11 @@ public class EnemiesHandler
 			
 			// Ukoliko im je health <= 0 oni se brisu iz liste
 			if(enemies.get(i).getHealth() <= 0)
+			{
 				enemies.remove(i);
+				player.setBotsKilled(player.getBotsKilled() + 1);
+				System.out.println("Bots killed " + player.getBotsKilled());
+			}
 		}
 	}
 	

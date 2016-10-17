@@ -142,7 +142,7 @@ public class Game extends Canvas implements Runnable
 		coinsHandler = new CoinsHandler();
 		bHandler = new BulletHandler();
 		spikeHandler = new SpikeHandler();
-		enemiesHandler = new EnemiesHandler();
+		enemiesHandler = new EnemiesHandler(player);
 		smartWallHandler = new SmartWallHandler();
 		hpHandler = new HealthPackHandler();
 		batHandler = new BatHandler();
@@ -217,7 +217,7 @@ public class Game extends Canvas implements Runnable
 			blockHandler.tick();
 			boss.tick((int)player.getX(), (int)player.getY());
 			camera.tick(player);			
-			hud.tick(player.getCoinsCollected(), player.getHealth());
+			hud.tick(player.getCoinsCollected(), player.getHealth(), player.getShowSuperPowers(), player.getSuperPowerTimer());
 			coinsHandler.tick();
 			collisionHandler.tick();
 			bHandler.tick();

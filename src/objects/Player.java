@@ -22,9 +22,13 @@ public class Player
 	private Textures t;
 	private Animation walkLeftAnim, walkRightAnim;
 	private AudioPlayer sfxGameOver;
+	private int botsKilled;
 	
 	// Pomocna polja
 	private int timer = 0, poisonedTimer;
+	private boolean showSuperPowers;
+	private int oldDamage;
+	private int superPowerTimer = 600;
 	
 	// Konstruktor
 	public Player(float x, float y, Textures t)
@@ -42,6 +46,7 @@ public class Player
 		falling = true;
 		jumping = false;
 		isPoisoned = false;
+		botsKilled = 0;
 		
 		sfxGameOver = new AudioPlayer("/gameOver.mp3");
 	
@@ -97,8 +102,34 @@ public class Player
 			poisonedTimer = 40;
 		}
 		
+		handleSuperPowers();
+		
 		walkLeftAnim.runAnimation();
 		walkRightAnim.runAnimation();
+	}
+	
+	private void handleSuperPowers()
+	{		
+		// TODO: POVECAJ BOTSKILLED == 5-7
+		// RAZMOTRI POVECAJE TRAJANJA POWER UP-a
+		if(botsKilled == 1 && !showSuperPowers)
+		{
+			showSuperPowers = true;
+			superPowerTimer = 600;
+			oldDamage = damage;
+			damage = 100;
+			++botsKilled;
+			System.out.println("Damage " + damage);
+		}
+		
+		if(showSuperPowers)
+			--superPowerTimer;
+		
+		if(superPowerTimer == 0)
+		{
+			damage = oldDamage;
+			showSuperPowers = false;
+		}
 	}
 	
 	public void render(Graphics g)
@@ -216,6 +247,21 @@ public class Player
 		return isPoisoned;
 	}
 	
+	public int getBotsKilled()
+	{
+		return botsKilled;
+	}
+	
+	public boolean getShowSuperPowers()
+	{
+		return showSuperPowers;
+	}
+	
+	public int getSuperPowerTimer()
+	{
+		return superPowerTimer;
+	}
+	
 	// Set metode
 	public void setX(float x)
 	{ 
@@ -260,5 +306,10 @@ public class Player
 	public void setIsPoisoned(boolean isPoisoned)
 	{
 		this.isPoisoned = isPoisoned;
+	}
+	
+	public void setBotsKilled(int botsKilled)
+	{
+		this.botsKilled = botsKilled;
 	}
 }
