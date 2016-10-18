@@ -293,7 +293,7 @@ public class Game extends Canvas implements Runnable
 		blockHandler.render(g);
 		rBlocksHandler.render(g);
 		coinsHandler.render(g);
-		bHandler.render(g);
+		bHandler.render(g, player.getShowSuperPowers());
 		bossBHandler.render(g);		
 		smartWallHandler.render(g);
 		hpHandler.render(g);

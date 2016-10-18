@@ -31,11 +31,21 @@ public class Bullet
 		x += velX;
 	}
 	
-	public void render(Graphics g)
+	public void render(Graphics g, boolean showSuperPower)
 	{
 		// Postavljanje boje i iscrtavanje na koordinatama X,Y, dimenzija size x size
 		g.setColor(Color.white);
-		g.fillRoundRect((int)x, (int)y, size, size, 10, 10);
+		
+		if(showSuperPower)
+			g.fillRoundRect((int)x, (int)y, size * 2, size * 2, 10, 10);
+		else
+			g.fillRoundRect((int)x, (int)y, size, size, 10, 10);
+	}
+	
+	// Ova metoda postoji da bi BossBullet mogao da overriduje metodu koja nema showSuperPower
+	// parametar, jer je on bespotreban za BossBullet
+	protected void render(Graphics g)
+	{
 	}
 	
 	// Metoda getBounds() vraca kvadrat koji predstavlja okvir i sluzi za detekciju dodira sa drugim objektima

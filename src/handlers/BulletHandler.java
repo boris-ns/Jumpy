@@ -18,10 +18,10 @@ public class BulletHandler
 		}
 	}
 	
-	public void render(Graphics g)
+	public void render(Graphics g, boolean showSuperPowers)
 	{
 		// Pozivanje render metoda svih Bullet objekata u igri
 		for(Bullet bullet : bullets)
-			bullet.render(g);
+			bullet.render(g, showSuperPowers);
 	}
 }
