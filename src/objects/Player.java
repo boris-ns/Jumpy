@@ -125,7 +125,7 @@ public class Player
 		if(showSuperPowers)
 			--superPowerTimer;
 		
-		if(superPowerTimer == 0)
+		if(superPowerTimer == 0 && showSuperPowers)
 		{
 			damage = oldDamage;
 			showSuperPowers = false;
