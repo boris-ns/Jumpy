@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RadialGradientPaint;
+import java.awt.Toolkit;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -85,6 +86,7 @@ public class Game extends Canvas implements Runnable
 	// Konstruktor
 	public Game()
 	{
+		System.setProperty("sun.java2d.opengl", "true");
 		level = 1;
 		
 		System.out.println("Konstruktor !");
@@ -386,6 +388,7 @@ public class Game extends Canvas implements Runnable
 	@Override
 	public void run() 
 	{	
+		Toolkit.getDefaultToolkit().sync();
 		System.out.println("RUN !");
 
 		init();
