@@ -127,11 +127,6 @@ public class CollisionHandler
 					batH.bats.get(j).setVelX(batH.bats.get(j).getVelX() * (-1));
 				else if(batH.bats.get(j).getBoundsLeft().intersects(block.getBounds()))
 					batH.bats.get(j).setVelX(batH.bats.get(j).getVelX() * (-1));
-				
-//				if(batH.bats.get(j).getBounds().intersects(p.getBounds()))
-//				{
-//					// TODO: Player se otruje i samnjuje mu HP za 1 svakih 20 tickova i mora da nadje protivotrov
-//				}
 			}	
 			
 			// Detekcija dodira metkova koje ispaljuje Boss sa blokovima i igracem
