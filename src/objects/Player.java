@@ -112,13 +112,12 @@ public class Player
 	{		
 		// TODO: POVECAJ BOTSKILLED == 5-7
 		// RAZMOTRI POVECAJE TRAJANJA POWER UP-a
-		if(botsKilled == 1 && !showSuperPowers)
+		if(botsKilled != 0 && botsKilled % 10 == 0 && !showSuperPowers)
 		{
 			showSuperPowers = true;
 			superPowerTimer = 600;
 			oldDamage = damage;
 			damage = 100;
-			++botsKilled;
 			System.out.println("Damage " + damage);
 		}
 		
@@ -129,6 +128,9 @@ public class Player
 		{
 			damage = oldDamage;
 			showSuperPowers = false;
+			// Ode se mora povecati botsKilled inace ce stalno raditi powerUp, tako da umesto na svaki 10ti
+			// kill, pover up ce biti na svaki 9ti
+			++botsKilled;
 		}
 	}
 	
