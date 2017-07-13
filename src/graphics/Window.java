@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import main.Game;
 
-// Klasa koja kreira prozor
 public class Window extends JFrame
 {
 	private static final long serialVersionUID = 1L;

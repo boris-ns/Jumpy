@@ -5,6 +5,7 @@ import graphics.Animation;
 import graphics.Textures;
 import handlers.BossBulletsHandler;
 import main.Game;
+import sound.AudioClip;
 import sound.AudioPlayer;
 
 public class Boss 
@@ -19,7 +20,6 @@ public class Boss
 	// Pomocna polja 
 	private int timer = 25;
 	private BossBulletsHandler bbh;
-	private AudioPlayer shootingSFX;	
 	
 	// Konstruktor
 	public Boss(float x, float y, Textures t, BossBulletsHandler bbh)
@@ -32,7 +32,7 @@ public class Boss
 		velY = 1.5f;
 		health = 1000;
 		damage = 20;
-		shootingSFX = new AudioPlayer("/pistol.mp3");
+		
 		// Ubacivanje slika koje ucestvuju u animaciji Boss-a i menjaju se brzinom 4
 		animation = new Animation(4, t.bossTiles[0], t.bossTiles[1]);
 	}
@@ -55,7 +55,7 @@ public class Boss
 				--timer;
 				if(timer == 0)
 				{
-					shootingSFX.play(-10.0f);
+					AudioPlayer.play("Pistol");
 					bbh.bullets.add(new BossBullet((int)x, (int)y, (playerX < x + size / 2) ? -1 : 1, 
 							size, size));
 					timer = 25;

@@ -26,11 +26,8 @@ public class EnemiesHandler
 			enemies.get(i).tick();
 			
 			// Ukoliko im je health <= 0 oni se brisu iz liste
-			if(enemies.get(i).getHealth() <= 0)
-			{
+			if(enemies.get(i).getHealth() <= 0) {
 				enemies.remove(i);
-				player.setBotsKilled(player.getBotsKilled() + 1);
-				System.out.println("Bots killed " + player.getBotsKilled());
 			}
 		}
 	}

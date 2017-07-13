@@ -31,20 +31,16 @@ public class Bullet
 		x += velX;
 	}
 	
-	public void render(Graphics g, boolean showSuperPower)
-	{
+	public void render(Graphics g) {
 		// Postavljanje boje i iscrtavanje na koordinatama X,Y, dimenzija size x size
 		g.setColor(Color.white);
 		
-		if(showSuperPower)
-			g.fillRoundRect((int)x, (int)y, size * 2, size * 2, 10, 10);
-		else
-			g.fillRoundRect((int)x, (int)y, size, size, 10, 10);
+		g.fillRoundRect((int)x, (int)y, size, size, 10, 10);
 	}
 	
 	// Ova metoda postoji da bi BossBullet mogao da overriduje metodu koja nema showSuperPower
 	// parametar, jer je on bespotreban za BossBullet
-	protected void render(Graphics g)
+	protected void render2(Graphics g)
 	{
 	}
 	

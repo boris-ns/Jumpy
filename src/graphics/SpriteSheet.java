@@ -2,7 +2,6 @@ package graphics;
 
 import java.awt.image.BufferedImage;
 
-// Klasa koja ucitava veliku sliku(skup svih textura)
 public class SpriteSheet 
 {
 	private BufferedImage image;

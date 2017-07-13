@@ -7,6 +7,7 @@ import main.Game;
 import main.PauseScreen;
 import objects.Bullet;
 import objects.Player;
+import sound.AudioClip;
 import sound.AudioPlayer;
 
 // Klasa koja sluzi kao listener za tastaturu
@@ -20,7 +21,6 @@ public class KeyInput extends KeyAdapter
 	// Pomocna polja
 	private Player player;
 	private BulletHandler bHandler;
-	private AudioPlayer shootingSFX = new AudioPlayer("/pistol.mp3");
 	private int timer = 17;
 	
 	public void tick(Player player, BulletHandler bHandler)
@@ -49,7 +49,7 @@ public class KeyInput extends KeyAdapter
 		--timer; // NOTE: Nemoj stavljati u if dole jer je cudan osecaj kada se puca(Ne reaguje na 1 stisak space-a)
 		if(fire && timer <= 0)
 		{
-			shootingSFX.play(-10.0f);
+			AudioPlayer.play("Pistol");
 			bHandler.bullets.add(new Bullet((int)player.getX(), (int)player.getY(), player.getLastVelX(), player.getHeight(), player.getWidth()));
 			timer = 17;
 		}

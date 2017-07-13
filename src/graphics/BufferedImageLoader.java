@@ -4,7 +4,10 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-// Klasa koja sluzi za ucitavanje slike u BufferedImage objekat na osnovu putanje koja se prosledi
+/**
+ * Image loader
+ * @author boris-ns
+ */
 public class BufferedImageLoader 
 {
 	private BufferedImage image;

@@ -4,7 +4,7 @@ import java.awt.Graphics;
 
 import graphics.Textures;
 import main.Game;
-import sound.AudioPlayer;
+import sound.AudioClip;
 
 public class Fredy 
 {
@@ -12,7 +12,7 @@ public class Fredy
 	private final int WIDTH, HEIGHT;
 	private float x, y, velX, velY;
 	private Textures t;
-	private AudioPlayer sfxGhost;
+	private AudioClip sfxGhost;
 	
 	// Pomocna polja
 	private int timer = 20;
@@ -31,7 +31,7 @@ public class Fredy
 		WIDTH = 24;
 		HEIGHT = 48;
 		
-		sfxGhost = new AudioPlayer("/ghost.mp3");
+		sfxGhost = new AudioClip("/ghost.mp3", -10.0f);
 	}
 	
 	public void tick(float playerX, float playerY)
@@ -42,7 +42,7 @@ public class Fredy
 		// Odbijanje od krajeva levog i desnog zida
 		if(x <= 0)
 			velX *= -1;
-		else if(x >= Game.width * 3)
+		else if(x >= Game.WIDTH * 3)
 			velX *= -1;
 		
 		// Odbijanje od gornjeg zida

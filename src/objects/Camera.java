@@ -16,14 +16,14 @@ public class Camera
 	
 	public void tick(Player player)
 	{
-		y = -player.getY() + Game.width / 3;
+		y = -player.getY() + Game.WIDTH / 3;
 
 		// Postavljanje kamere na jednu od tri pozicija u zavisnosti X pozicije igraca
-		if(player.getX() > Game.width * 2 - Block.size * 2)
-			x = -Game.width * 2 + Block.size * 2 + 10;
-		else if(player.getX() > Game.width - Block.size)
-			x = -Game.width + Block.size + 7;
-		else if(player.getX() < Game.width - Block.size)
+		if(player.getX() > Game.WIDTH * 2 - Block.size * 2)
+			x = -Game.WIDTH * 2 + Block.size * 2 + 10;
+		else if(player.getX() > Game.WIDTH - Block.size)
+			x = -Game.WIDTH + Block.size + 7;
+		else if(player.getX() < Game.WIDTH - Block.size)
 			x = 0;		
 	}
 	

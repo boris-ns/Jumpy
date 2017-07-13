@@ -8,6 +8,7 @@ import objects.Coin;
 import objects.MovingBlock;
 import objects.Player;
 import objects.SmartWall;
+import sound.AudioClip;
 import sound.AudioPlayer;
 
 // Klasa koja sluzi za detekciju dodira izmedju svih objekata u igri
@@ -25,9 +26,6 @@ public class CollisionHandler
 	private SmartWallHandler swh;
 	private HealthPackHandler hph;
 	private BatHandler batH;
-	
-	// HashMap koji sluzi za skladistenje SFX-a
-	private HashMap<String, AudioPlayer> sfx;
 	
 	// Pomocna polja
 	private Block block;
@@ -49,8 +47,6 @@ public class CollisionHandler
 		this.swh = swh;		
 		this.hph = hph;
 		this.batH = batH;
-		
-		initSFX();
 	}
 	
 	public void tick()
@@ -156,7 +152,7 @@ public class CollisionHandler
 			// Ukoliko igrac dodirne Coin objekat,povecava se coinsCollected i pusta se odredjeni SFX
 			if(p.getBounds().intersects(coin.getBounds()) && !coin.getIsCollected())
 			{
-				sfx.get("Coin").play(-10.0f);
+				AudioPlayer.play("Coin");
 				p.setCoinsCollected(p.getCoinsCollected() + 1);
 				coin.setIsCollected(true);
 			}
@@ -168,7 +164,7 @@ public class CollisionHandler
 			// Ukoliko igrac dodirne Spike objekat, smanjuju mu se helti,odskace od Spike-a i pusta se odredjeni SFX
 			if(sh.spikes.get(i).getBounds().intersects(p.getBounds()))
 			{
-				sfx.get("Hurt").play(-10.0f);
+				AudioPlayer.play("Hurt");
 				p.setHealth(p.getHealth() - sh.spikes.get(i).getDamage());
 				p.setVelY(-15);
 				p.setJumping(true);
@@ -181,7 +177,7 @@ public class CollisionHandler
 			// Ukoliko dodje do dodira igraca i Enemy-a, smanjuju se igracevi helti, odskace od njega i pusta se odredjeni SFX
 			if(eh.enemies.get(i).getBounds().intersects(p.getBounds()))
 			{
-				sfx.get("Punch").play(-20.0f);
+				AudioPlayer.play("Punch");
 				p.setHealth(p.getHealth() - eh.enemies.get(i).getDamage());
 				p.setJumping(true);
 				p.setVelY(-15);
@@ -224,14 +220,14 @@ public class CollisionHandler
 			// Zatvaranje kapije u zavisnosti od smera dolaska igraca, pustanje odredjenog zvuka
 			if(p.getBoundsRight().intersects(swh.smartWalls.get(i).getBounds()) && !swh.smartWalls.get(i).getVisible())
 			{
-				sfx.get("Door").play(-10.0f);
+				AudioPlayer.play("Door");
 				p.setX(swh.smartWalls.get(i).getX() + SmartWall.size);
 				swh.smartWalls.get(i).setVisible(true);
 				swh.smartWalls.get(i + 1).setVisible(true);
 			}
 			else if(p.getBoundsLeft().intersects(swh.smartWalls.get(i).getBounds()) && !swh.smartWalls.get(i).getVisible())
 			{
-				sfx.get("Door").play(-10.0f);
+				AudioPlayer.play("Door");
 				p.setX(swh.smartWalls.get(i).getX() - p.getWidth());
 				swh.smartWalls.get(i).setVisible(true);
 				swh.smartWalls.get(i + 1).setVisible(true);
@@ -279,7 +275,7 @@ public class CollisionHandler
 				else
 					p.setHealth(p.getHealth() + hph.healthPack.get(i).getHeal());
 			
-				sfx.get("Heal").play(-10.0f);
+				AudioPlayer.play("Heal");
 				hph.healthPack.remove(i);
 			}
 		}
@@ -287,20 +283,8 @@ public class CollisionHandler
 		// Ako dodje do dodira izmedju Boss-a i igraca, helti igraca se odma postavljaju na 0 i pusta se odredjeni zvuk
 		if(p.getBounds().intersects(boss.getBoundsFull()) && boss.getHealth() > 0)
 		{
-			sfx.get("Punch").play(-20.0f);
+			AudioPlayer.play("Punch");
 			p.setHealth(0);
 		}
-	}
-	
-	// Ubacivanje svih SFX-a u HashMap
-	private void initSFX()
-	{
-		sfx = new HashMap<String, AudioPlayer>();
-		//sfx.put("Coin", new AudioPlayer("/coinflip.mp3")); // NOTE: Ako koristis ovaj sfx smanji zvuk na -20.0f
-		sfx.put("Coin", new AudioPlayer("/coinflipCut.mp3"));
-		sfx.put("Punch", new AudioPlayer("/punch.mp3"));
-		sfx.put("Door", new AudioPlayer("/jail_cell_door.mp3"));
-		sfx.put("Hurt", new AudioPlayer("/hurt.mp3"));
-		sfx.put("Heal", new AudioPlayer("/heal.mp3"));
 	}
 }

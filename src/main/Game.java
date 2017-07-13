@@ -44,11 +44,10 @@ import objects.SmartWall;
 import objects.Spike;
 import sound.AudioPlayer;
 
-public class Game extends Canvas implements Runnable
-{
-	// Polja klase
-	public static final int width = 646, height = 480;
-	public static final int tileSize = 32;
+public class Game extends Canvas implements Runnable {
+	
+	public static final int WIDTH = 646, HEIGHT = 480;
+	public static final int TILE_SIZE = 32;
 	public static boolean paused = false, gameOver = false, gameFinished = false, restart = false;
 	public static int level;
 	
@@ -57,6 +56,7 @@ public class Game extends Canvas implements Runnable
 	private Thread thread;
 	private BufferedImageLoader loader;
 	private KeyInput keyInput;
+	
 	private Player player;
 	private Fredy fredy;
 	private Boss boss;
@@ -77,21 +77,19 @@ public class Game extends Canvas implements Runnable
 	private Textures textures = new Textures();
 	private Hud hud;
 	private PauseScreen pScreen;
-	private AudioPlayer bgMusic; // background music
 	
-	// Pomocna polja
+	private AudioPlayer audioPlayer;
+	
 	private int timer = 150;
 	private int coinsCollected;
 	
-	// Konstruktor
-	public Game()
-	{
+	public Game() {
 		System.setProperty("sun.java2d.opengl", "true");
 		level = 1;
 		
 		System.out.println("Konstruktor !");
 		
-		new Window(width, height, "Jumpy", this);		
+		new Window(WIDTH, HEIGHT, "Jumpy", this);		
 		
 		loader = new BufferedImageLoader();		
 		keyInput = new KeyInput();
@@ -100,17 +98,17 @@ public class Game extends Canvas implements Runnable
 		//textures = new Textures();	
 		pScreen = new PauseScreen();
 		hud = new Hud();		
-		bgMusic = new AudioPlayer("/bgMusic.mp3");	
-		bgMusic.loopPlay(-20.0f);
+		backgroundTile = Textures.blockTiles[1];
 		
-		backgroundTile = textures.blockTiles[1];
+		audioPlayer = new AudioPlayer();
+		AudioPlayer.loopPlay("BgMusic");
 	}
 	
 	private void init()
 	{		
 		if(level == 1)
 		{
-			player = new Player(70, 1450, textures);	// Pozicija igraca na pocetnoj poziciji level1
+			player = new Player(70, 1450);	// Pozicija igraca na pocetnoj poziciji level1
 			//player = new Player(55 * 32, 80 * 32, textures);	// Pozicija igraca na poziciji pred Boss fight
 			//player = new Player(45 * 32, 60*32, textures);			
 			bossBHandler = new BossBulletsHandler();
@@ -219,7 +217,7 @@ public class Game extends Canvas implements Runnable
 			blockHandler.tick();
 			boss.tick((int)player.getX(), (int)player.getY());
 			camera.tick(player);			
-			hud.tick(player.getCoinsCollected(), player.getHealth(), player.getShowSuperPowers(), player.getSuperPowerTimer());
+			hud.tick(player.getCoinsCollected(), player.getHealth());
 			coinsHandler.tick();
 			collisionHandler.tick();
 			bHandler.tick();
@@ -252,8 +250,8 @@ public class Game extends Canvas implements Runnable
 		Graphics g = bs.getDrawGraphics();
 		Graphics2D g2d = (Graphics2D)g;
 		
-		for(int i = 0; i < width; i += 32)
-			for(int j = 0; j < height; j += 32)
+		for(int i = 0; i < WIDTH; i += 32)
+			for(int j = 0; j < HEIGHT; j += 32)
 				g.drawImage(backgroundTile, i, j, null);
 		
 		g2d.translate(camera.getX(), camera.getY());
@@ -270,9 +268,9 @@ public class Game extends Canvas implements Runnable
 			RadialGradientPaint p = new RadialGradientPaint(center, radius, dist, colors);
 			g2d.setPaint(p);
 			g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.95f));
-			g2d.fillRect(0, 0, width, height);
+			g2d.fillRect(0, 0, WIDTH, HEIGHT);
 		}
-		
+
 		if(paused)
 			pScreen.render(g);
 		else
@@ -295,7 +293,7 @@ public class Game extends Canvas implements Runnable
 		blockHandler.render(g);
 		rBlocksHandler.render(g);
 		coinsHandler.render(g);
-		bHandler.render(g, player.getShowSuperPowers());
+		bHandler.render(g);
 		bossBHandler.render(g);		
 		smartWallHandler.render(g);
 		hpHandler.render(g);
@@ -329,34 +327,34 @@ public class Game extends Canvas implements Runnable
 				blue = (pixel) & 0xff;
 				
 				if(red == 255 && green == 255 && blue == 255) 
-					blockHandler.blocks.add(new Block(i * tileSize, j * tileSize, textures));				
+					blockHandler.blocks.add(new Block(i * TILE_SIZE, j * TILE_SIZE, textures));				
 				else if(red == 180 && green == 180 && blue == 180)
-					rBlocksHandler.blocks.add(new Block(i * tileSize, j * tileSize, textures));	
+					rBlocksHandler.blocks.add(new Block(i * TILE_SIZE, j * TILE_SIZE, textures));	
 				else if(red == 255 && green == 255 && blue == 0)
-					coinsHandler.coins.add(new Coin(i * tileSize, j * tileSize, textures));			
+					coinsHandler.coins.add(new Coin(i * TILE_SIZE, j * TILE_SIZE, textures));			
 				else if(red == 255 && green == 0 && blue == 0)
-					spikeHandler.spikes.add(new Spike(i * tileSize, j * tileSize, textures));			
+					spikeHandler.spikes.add(new Spike(i * TILE_SIZE, j * TILE_SIZE, textures));			
 				else if(red == 255 && green == 0 && blue == 255)
-					enemiesHandler.enemies.add(new Enemy(i * tileSize, j * tileSize, 1, textures));				
+					enemiesHandler.enemies.add(new Enemy(i * TILE_SIZE, j * TILE_SIZE, 1, textures));				
 				else if(red == 255 && green == 200 && blue == 255)
-					enemiesHandler.enemies.add(new Enemy(i * tileSize, j * tileSize, 2, textures));			
+					enemiesHandler.enemies.add(new Enemy(i * TILE_SIZE, j * TILE_SIZE, 2, textures));			
 				else if(red == 0 && green == 255 && blue == 255)
-					smartWallHandler.smartWalls.add(new SmartWall(i * tileSize, j * tileSize, textures));
+					smartWallHandler.smartWalls.add(new SmartWall(i * TILE_SIZE, j * TILE_SIZE, textures));
 				else if(red == 0 && green == 0 && blue == 255)
-					hpHandler.healthPack.add(new HealthPack(i * tileSize, j * tileSize, textures));
+					hpHandler.healthPack.add(new HealthPack(i * TILE_SIZE, j * TILE_SIZE, textures));
 				else if(red == 255 && green == 128 && blue == 0)
-					batHandler.bats.add(new Bat(i * tileSize, j * tileSize, 1, textures));
+					batHandler.bats.add(new Bat(i * TILE_SIZE, j * TILE_SIZE, 1, textures));
 				else if(red == 255 && green == 128 && blue == 90)
-					batHandler.bats.add(new Bat(i * tileSize, j * tileSize, 2, textures));
+					batHandler.bats.add(new Bat(i * TILE_SIZE, j * TILE_SIZE, 2, textures));
 				else if(red == 0 && green == 161 && blue == 255)
-					lHandler.lava.add(new Lava(i * tileSize, j * tileSize, textures));
+					lHandler.lava.add(new Lava(i * TILE_SIZE, j * TILE_SIZE, textures));
 				else if(red == 5 && green == 90 && blue == 255)
 				{
-					lHandler.lava.add(new Lava(i * tileSize, j * tileSize, textures));
-					spikeHandler.spikes.add(new Spike(i * tileSize, j * tileSize, textures));
+					lHandler.lava.add(new Lava(i * TILE_SIZE, j * TILE_SIZE, textures));
+					spikeHandler.spikes.add(new Spike(i * TILE_SIZE, j * TILE_SIZE, textures));
 				}
 				else if(red == 100 && green == 100 && blue == 100)
-					blockHandler.blocks.add(new MovingBlock(i * tileSize, j * tileSize, textures));
+					blockHandler.blocks.add(new MovingBlock(i * TILE_SIZE, j * TILE_SIZE, textures));
 			}
 		}
 	}

@@ -2,27 +2,24 @@ package graphics;
 
 import java.awt.image.BufferedImage;
 
-// Klasa koja predstavlja skup svih tekstura
 public class Textures 
 {
-	private SpriteSheet playerSheet, blockSheet;
-	private BufferedImage player = null, blocks = null;
+	private static SpriteSheet playerSheet, blockSheet;
+	private static BufferedImage player = null, blocks = null;
 	
-	public BufferedImage[] playerTiles = new BufferedImage[18];	// Niz textura Player-a
-	public BufferedImage[] blockTiles = new BufferedImage[3];	// Niz textura Block-ova
-	public BufferedImage[] coinTiles = new BufferedImage[6];	// Niz textura Coins-a
-	public BufferedImage[] enemyTiles = new BufferedImage[4];	// Niz textura Enemy-a
-	public BufferedImage[] bossTiles = new BufferedImage[2];	// Niz textura Boss-a
-	public BufferedImage[] batTiles = new BufferedImage[4];		// Niz tekstura Bat-a
-	public BufferedImage[] fredyTiles = new BufferedImage[2]; 	// Niz teksutra za Fredy-a
-	public BufferedImage lava = null;							// Tekstura Water-a
-	public BufferedImage spikes = null;							// Textura za Spike
-	public BufferedImage torch = null;							// Textura za Torch
-	public BufferedImage healthPack = null;						// Textura za HealthPack
+	public static BufferedImage[] playerTiles = new BufferedImage[18];	// Niz textura Player-a
+	public static BufferedImage[] blockTiles = new BufferedImage[3];	// Niz textura Block-ova
+	public static BufferedImage[] coinTiles = new BufferedImage[6];	// Niz textura Coins-a
+	public static BufferedImage[] enemyTiles = new BufferedImage[4];	// Niz textura Enemy-a
+	public static BufferedImage[] bossTiles = new BufferedImage[2];	// Niz textura Boss-a
+	public static BufferedImage[] batTiles = new BufferedImage[4];		// Niz tekstura Bat-a
+	public static BufferedImage[] fredyTiles = new BufferedImage[2]; 	// Niz teksutra za Fredy-a
+	public static BufferedImage lava = null;							// Tekstura Water-a
+	public static BufferedImage spikes = null;							// Textura za Spike
+	public static BufferedImage torch = null;							// Textura za Torch
+	public static BufferedImage healthPack = null;						// Textura za HealthPack
 	
-	// Konstruktor
-	public Textures()
-	{	
+	public Textures() {	
 		BufferedImageLoader loader = new BufferedImageLoader();
 		
 		// Ucitavanje velikih slika
@@ -37,8 +34,7 @@ public class Textures
 	}
 	
 	// Uzimanje malih(pojedinacnih) textura iz velikih slika
-	private void getTextures()
-	{
+	private void getTextures() {
 		blockTiles[0] = blockSheet.grabImage(1, 1, 32, 32);
 		blockTiles[1] = blockSheet.grabImage(2, 1, 32, 32);
 		blockTiles[2] = blockSheet.grabImage(3, 1, 32, 32);

@@ -3,20 +3,16 @@ package graphics;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-// Klasa koja omogucava animiranje objekata u igri
 public class Animation 
 {
-	// Polja klase
 	private int speed;
 	private BufferedImage[] images;
 	
-	// Pomocna polja
 	private int index = 0;
 	private int count = 0;
 	private int frames;
 	private BufferedImage currentImg;
 
-	// Konstruktor
 	public Animation(int speed, BufferedImage... args)
 	{
 		this.speed = speed;

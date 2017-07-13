@@ -1,83 +1,42 @@
 package sound;
 
-import java.io.IOException;
-import javax.sound.sampled.*;
+import java.util.HashMap;
 
-public class AudioPlayer 
-{
-	private Clip clip; // clip-sound effect koji se pusta
+public class AudioPlayer {
+
+	public static HashMap<String, AudioClip> audioClips;
 	
-	// Konstruktor
-	public AudioPlayer(String path)
-	{
-		try 
-		{
-			AudioInputStream ais = AudioSystem.getAudioInputStream(getClass().getResourceAsStream(path));
-			AudioFormat baseFormat = ais.getFormat();
-			AudioFormat decodeFormat = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, baseFormat.getSampleRate(), 16,
-					baseFormat.getChannels(), baseFormat.getChannels() * 2, baseFormat.getSampleRate(), false);
-			
-			//Decoded ais
-			AudioInputStream dais = AudioSystem.getAudioInputStream(decodeFormat, ais);
-			clip = AudioSystem.getClip();
-			clip.open(dais);
-		} 
-		catch (UnsupportedAudioFileException e) 
-		{		
-			e.printStackTrace();
-		}
-		catch (IOException e) 
-		{
-			e.printStackTrace();
-		}
-		catch (LineUnavailableException e) 
-		{
-			e.printStackTrace();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
-	
-	// Metoda koja startuje SFX 
-	public void play(float volume)
-	{
-		playClip(volume);
-		clip.start();
-	}
-	
-	// Metoda koja startuje SFX i prilikom njegovog zavrsetka pusta ga opet
-	public void loopPlay(float volume)
-	{
-		playClip(volume);
-		clip.loop(Clip.LOOP_CONTINUOUSLY);
-	}
-	
-	// Metoda koja stopira SFX
-	public void stop()
-	{
-		if(clip.isRunning())
-			clip.stop();
-	}
-	
-	// Metoda koja zatvara SFX
-	public void close()
-	{
-		stop();
-		clip.close();
-	}
-	
-	// Metoda koja sluzi za podesavanje jacine zvuka sound effect-a
-	private void playClip(float volume)
-	{
-		if(clip == null)
-			return;
+	public AudioPlayer() {
+		audioClips = new HashMap<String, AudioClip>();
 		
-		stop();
+		audioClips.put("Coin", new AudioClip("/coinflipCut.mp3", -10.0f));
+		audioClips.put("Punch", new AudioClip("/punch.mp3", -20.0f));
+		audioClips.put("Door", new AudioClip("/jail_cell_door.mp3", -10.0f));
+		audioClips.put("Hurt", new AudioClip("/hurt.mp3", -10.0f));
+		audioClips.put("Heal", new AudioClip("/heal.mp3", -10.0f));
+		audioClips.put("BgMusic", new AudioClip("/bgMusic.mp3", -20.0f));
+		audioClips.put("Pistol", new AudioClip("/pistol.mp3", -10.0f));
+		audioClips.put("FredyGhost", new AudioClip("/ghost.mp3", -10.0f));
+		audioClips.put("GameOver", new AudioClip("/gameOver.mp3", -5.0f));
+	}
+	
+	public static boolean play(String audioClipName) {
+		if (!audioClips.containsKey(audioClipName)) {
+			return false;
+		}
 		
-		FloatControl gainControl = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
-		gainControl.setValue(volume);
-		clip.setFramePosition(0);
+		audioClips.get(audioClipName).play();
+		
+		return true;
+	}
+	
+	public static boolean loopPlay(String audioClipName) {
+		if (!audioClips.containsKey(audioClipName)) {
+			return false;
+		}
+		
+		audioClips.get("BgMusic").loopPlay(-20.0f);
+		
+		return true;
 	}
 }
